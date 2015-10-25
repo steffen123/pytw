@@ -27,7 +27,7 @@ class TabTargets(GridScrollTab):
 		self.name = "Targets"
 		self.msg = msg
 		self.sql = sql
-		self.headers = ("village_name", "battle_ts", "location_x", "location_y", "sword", "spear", "lcav", "scout", "delete")
+		self.headers = ("village_name", "battle_ts", "location_x", "location_y", "dist", "sword", "spear", "lcav", "scout", "delete")
 		self.unit_speeds = {"sword":22, "spear":18, "lcav":10, "scout":9}
 		self.combo_barbarian = None
 		self.draw()
@@ -86,6 +86,7 @@ class TabTargets(GridScrollTab):
 				continue
 			
 			delta_hours = (datetime.datetime.now() - datetime.datetime.strptime(target['battle_ts'], '%Y-%m-%d %H:%M:%S.%f')).seconds/3600
+			target["dist"] = self.calculate_distance(target['attacker_village_id'], target['defender_village_id'])
 			
 			if type(target['spied_wood']) == str:
 				target['spied_wood'] = 0
@@ -96,7 +97,7 @@ class TabTargets(GridScrollTab):
 			
 			for field in self.headers:
 				if field in ("sword", "spear", "lcav", "scout"):
-					oneway_time = self.calculate_oneway_time(target['attacker_village_id'], target['defender_village_id'], field)
+					oneway_time = self.calculate_oneway_time(target["dist"], field)
 					wood = target['spied_wood'] + round(48 * math.pow(1.163118, target['timber_camp']-1) / 1.6 * (delta_hours + oneway_time))
 					clay = target['spied_clay'] + round(48 * math.pow(1.163118, target['clay_pit']-1) / 1.6 * (delta_hours + oneway_time))
 					iron = target['spied_iron'] + round(48 * math.pow(1.163118, target['iron_mine']-1) / 1.6 * (delta_hours + oneway_time))
@@ -115,6 +116,8 @@ class TabTargets(GridScrollTab):
 					button.setProperty('defender_village_id', target['defender_village_id'])
 					button.clicked.connect(self.delete_button_clicked)
 					self.layout.addWidget(button, current_y, current_x, 1, 1)
+				elif field == "dist":
+					self.layout.addWidget(QLabel('%.1f' % target[field]), current_y, current_x, 1, 1)
 				else:
 					self.layout.addWidget(QLabel(str(target[field])), current_y, current_x, 1, 1)
 				
@@ -134,7 +137,10 @@ class TabTargets(GridScrollTab):
 		self.sql.insert(table='scheduled_attacks', param_dict={'attacker_village_id':attacker_village_id, 'defender_village_id':defender_village_id, 'is_attack':True, 'slowest_unit':attacking_unit, 'launch_ts':datetime.datetime.now(), 'arrival_ts':datetime.datetime.now() + datetime.timedelta(hours=oneway_time)}, debug=False)
 		self.draw()
 	
-	def calculate_oneway_time(self, attacker_village_id, defender_village_id, attacking_unit):
+	def calculate_oneway_time(self, distance, attacking_unit):
+		return distance * self.unit_speeds[attacking_unit] / 60
+	
+	def calculate_distance(self, attacker_village_id, defender_village_id):
 		attacker = self.sql.select(table="villages", param_list=('location_x', 'location_y'), where_param_dicts=({'field':'id', 'comparator':'=', 'value':attacker_village_id}, ), debug=False)
 		att_x = attacker[0]['location_x']
 		att_y = attacker[0]['location_y']
@@ -143,8 +149,7 @@ class TabTargets(GridScrollTab):
 		def_x = defender[0]['location_x']
 		def_y = defender[0]['location_y']
 		
-		time_in_h = math.sqrt(math.pow(att_x - def_x, 2) + math.pow(att_y - def_y, 2)) * self.unit_speeds[attacking_unit] / 60
-		return time_in_h
+		return math.sqrt(math.pow(att_x - def_x, 2) + math.pow(att_y - def_y, 2))
 	
 	def delete_button_clicked(self, TODO_dunno):
 		battle_id = self.sender().property('battle_id')
