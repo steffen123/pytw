@@ -87,11 +87,11 @@ class Pytw(QMainWindow):
 	def import_reports(self):
 		overall_start = datetime.datetime.now()
 		count = 0
-		for filename in os.listdir(os.path.join('.', 'reports')):
+		for filename in os.listdir(os.path.join('.', 'import', 'reports')):
 			file_start = datetime.datetime.now()
 			count += 1
-			with open(os.path.join('.', 'reports', filename), 'r') as infile:
-				print("importing", os.path.join('.', 'reports', filename))
+			with open(os.path.join('.', 'import', 'reports', filename), 'r') as infile:
+				print("importing", os.path.join('.', 'import', 'reports', filename))
 				self.report_parser.parse(infile.read())
 			print("   took", datetime.datetime.now()-file_start)
 		print('\n', count, "files, took", datetime.datetime.now()-overall_start)

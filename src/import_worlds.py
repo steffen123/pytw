@@ -29,7 +29,7 @@ class ImportWorlds(object):
 	def __init__(self, sql):
 		self.sql = sql
 		
-		for filepath in os.listdir(os.path.join('.', 'world_settings')):
+		for filepath in os.listdir(os.path.join('.', 'import', 'world_settings')):
 			domain = filepath.split('.')[0]
 			print(domain)
 			self.sql.insert(table='worlds', param_dict={'world_string':domain}, debug=False)

@@ -1,0 +1,9 @@
+*.kate-swp
+/.kdev4/
+*.kdev4
+*.pyc
+
+/re
+/typing
+
+/import/*
