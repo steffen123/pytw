@@ -1,0 +1,89 @@
+=immediate=
+
+=alpha1=
+check it works with FF-complete saves
+after import update status bar
+divert all output to file
+link zu alpha1 in die anleitung packen, diese veröffentlichen
+
+=later alphas=
+filter: no units/no wall, no wall, no units, all
+display target player name and increase window width
+check db version on startup
+avg % of loot capacity gotten for each target (over the last week)
+restore DB feature
+dont crash on failed import but display error
+shorten ts display to DD. MMM hh:mm
+check that i handle players with multiple villages correctly
+check that i handle conversion from player to barb correctly
+shrink button that reduces it to 1 row of displayed data
+filters: minimum loot, max distance
+store path of imported files -> on row delete offer to delete the report
+rename recreate_tables to delete_and_recreate_database
+clear expired scheduled attacks
+convert user_settings to ini file
+check if 1 spy is enough to get full info
+mehrdorfunterstützung
+pgsql run to ensure data types
+add selector for slowest unit intended to participate in attacks
+support multiple worlds
+	report-import changes
+	UI changes/filters
+	import details from world html files
+	support world options that differ from de122
+umfrage ins forum über künftige features:
+	deutsche übersetzung
+	support für anderssprachige welten
+	einfacher installer
+	kampfsimulator einbauen
+	support für mehrere welten
+	zeitplaner
+	automatischer datenaustausch mit dem stamm - damit wir nicht sinnlos raids auf die gleichen ziele schicken
+	flaggen
+	auto-erkennung inaktiver spieler
+	anderes
+
+add filter with min. res at arrival, display relevant info
+move files that have been imported to backup folder (same structure as main)
+	make recreate_tables move contents of backup folder back to main folder and run import
+display original and generated report side by side
+detect inactive players from map save
+	confirm with spy save: see if i detected units who are not at home
+		militia means player is active
+flags (the game concept)
+testsuite like in fpdb
+l10n
+check if it's permissible to use automated sharing with tribe
+take into account hiding_place and storage when calculating res
+list targets i need to spy due to wall=NULL
+make it work with complete site saved (ie instead of html-only)
+return IDs of imports from parser to display details of success in status bar
+make sure it works for incoming spies/attacks, too
+DB: add paladin names and weapons
+DB: add building costs and productions
+DB: add alarms
+DB: add rankings
+DB: add tribes table
+allied tribes
+update checker
+store map
+	egrep -Hrn nix * | grep Ph
+	list what i need to spy
+parse remaining battle report data
+complete parsing buildings from battle-spy report (4.htm might be "complete") -> cross-check vs points
+daylight saving time?
+mypy
+
+=v2=
+enter available units and have it say optimal sending combo
+optionally use premiums
+take into account target warehouse
+calculate home warehouse requirement for expected raid result and production for user-given itme period
+list outdated records
+
+=vFuture=
+calculate to send units separated by speed so that returns bunch up
+historical data -> check if my calculations were correct and if someone else is raiding it
+inline-display of resulting data
+sorting/filtering
+
