@@ -16,7 +16,7 @@ import math
 #PyQt modules
 #from PyQt5.QtCore import QObject, Qt
 #from PyQt5.QtSql import QSqlRelationalTableModel
-from PyQt5.QtWidgets import QComboBox, QLabel, QPushButton, QTextEdit
+from PyQt5.QtWidgets import QComboBox, QLabel, QLineEdit, QPushButton, QTextEdit
 
 #own modules
 from catlib.grid_scroll_tab import GridScrollTab
@@ -27,9 +27,14 @@ class TabTargets(GridScrollTab):
 		self.name = "Targets"
 		self.msg = msg
 		self.sql = sql
+		
 		self.headers = ("village_name", "battle_ts", "location_x", "location_y", "dist", "sword", "spear", "lcav", "scout", "delete")
 		self.unit_speeds = {"sword":22, "spear":18, "lcav":10, "scout":9}
+		
 		self.combo_barbarian = None
+		self.line_wall = None
+		self.line_units = None
+		
 		self.draw()
 	
 	def draw(self):
@@ -37,6 +42,16 @@ class TabTargets(GridScrollTab):
 			combo_barbarian_old_setting = self.combo_barbarian.currentIndex()
 		else:
 			combo_barbarian_old_setting = 0
+		
+		if self.line_wall:
+			line_wall_old_setting = self.line_wall.text()
+		else:
+			line_wall_old_setting = "0"
+		
+		if self.line_units:
+			line_units_old_setting = self.line_units.text()
+		else:
+			line_units_old_setting = "0"
 		
 		while(True): #TODO move this into superclass
 			item = self.layout.takeAt(0)
@@ -52,9 +67,28 @@ class TabTargets(GridScrollTab):
 			self.combo_barbarian.addItem(item)
 		self.combo_barbarian.setCurrentIndex(combo_barbarian_old_setting)
 		self.combo_barbarian.currentIndexChanged.connect(self.draw)
-		
 		self.layout.addWidget(self.combo_barbarian, current_y, current_x, 1, 1)
+		current_x += 1
+		
+		self.layout.addWidget(QLabel("max wall"), current_y, current_x, 1, 1)
+		current_x += 1
+		
+		self.line_wall = QLineEdit()
+		self.line_wall.insert(line_wall_old_setting)
+		self.line_wall.editingFinished.connect(self.draw)
+		self.layout.addWidget(self.line_wall, current_y, current_x, 1, 1)
+		current_x += 1
+		
+		self.layout.addWidget(QLabel("max units"), current_y, current_x, 1, 1)
+		current_x += 1
+		
+		self.line_units = QLineEdit()
+		self.line_units.insert(line_units_old_setting)
+		self.line_units.editingFinished.connect(self.draw)
+		self.layout.addWidget(self.line_units, current_y, current_x, 1, 1)
+		current_x = 0
 		current_y += 1
+		
 		
 		for header in self.headers:
 			if header in ("sword", "spear", "lcav", "scout"):
