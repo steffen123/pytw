@@ -38,7 +38,8 @@ Das Archiv irgendwohin entpacken. Eine "richtige Installation" ist für das eige
 - Falls bekannt: die Bitness (32bit oder 64bit)[/spoiler]
 
 [b]Starten[/b]
-Im Installationsverzeichnis pytw.pyw doppelklicken.
+Windows: Im Verzeichnis wo es entpackt ist pytw.bat doppelklicken.
+Linux: Im Verzeichnis wo es entpackt ist pytw.sh doppelklicken.
 
 [b]Bedienung[/b]
 Ganz normal im Browser einen Spionage- oder Angriffsbericht aufrufen. Diesen in das "import/reports/" Verzeichnis im Installationsverzeichnis abspeichern. Dies muss für jeden Bericht gemacht werden. Bitte nur die HTML-Datei abspeichern, nicht die komplette Seite (Firefox zumindest erlaubt das, falls andere Browser das nicht können halt die komplette Seite abspeichern). Der Dateiname ist völlig egal. Ich numeriere sie einfach durch. Es ist egal ob Bericht mehrfach gespeichert sind oder ob mehrere Berichte zu einem Ziel vorhanden sind - das Programm ignoriert ältere Berichte falls nötig.
