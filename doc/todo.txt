@@ -1,16 +1,19 @@
 =immediate=
 
 =alpha1=
-check it works with FF-complete saves
-after import update status bar
-divert all output to file
+git push
 link zu alpha1 in die anleitung packen, diese veröffentlichen
 
 =later alphas=
+avg % of loot capacity gotten for each target (over the last week)
+sort by distance
 filter: no units/no wall, no wall, no units, all
+after import update status bar
+
+divert all output to file
+check it works with FF-complete saves
 display target player name and increase window width
 check db version on startup
-avg % of loot capacity gotten for each target (over the last week)
 restore DB feature
 dont crash on failed import but display error
 shorten ts display to DD. MMM hh:mm

@@ -12,32 +12,30 @@ Pytw, das Angriffstool
 Per Die-Stämme-PM, hier im Stammesforum, oder per Mail an [mail]steffen@schaumburger.info[/mail].
 Viele Funktionen ließen sich ganz leicht einbauen also ruhig sagen was ihr braucht.
 
-[b]Anforderungen[/b]
-Software: Python 3.4 oder höher und PyQt 5 (verfügbar für alle Betriebssysteme)
+[spoiler=Anforderungen]Python 3.4 oder höher und PyQt 5 (verfügbar für alle Betriebssysteme)
+Links zum Download sind in den Installationsabschnitten[/spoiler]
 
-[b]Installation - Windows (64 bit)[/b]
-Python downloaden und installieren: https://www.python.org/ftp/python/3.4.3/python-3.4.3.amd64.msi
-PyQt downloaden und installieren: http://sourceforge.net/projects/pyqt/files/PyQt5/PyQt-5.5.1/PyQt5-5.5.1-gpl-Py3.4-Qt5.5.1-x64.exe/download
-Jetzt weitermachen bei "Installation - allgemeiner Teil"
+[spoiler=Installation - Windows (64 bit)]Python downloaden und installieren: https://www.python.org/ftp/python/3.4.3/python-3.4.3.amd64.msi
+Die Stämme erlaubt offenbar keine Links zu exe-Dateien. Daher müsst ihr das Leerzeichen im folgenden Link in "x64 exe" durch einen Punkt ersetzen.
+PyQt downloaden und installieren: http://sourceforge.net/projects/pyqt/files/PyQt5/PyQt-5.5.1/PyQt5-5.5.1-gpl-Py3.4-Qt5.5.1-x64 exe/download
+Jetzt weitermachen bei "Installation - allgemeiner Teil"[/spoiler]
 
-[b]Installation - Windows (32 bit)[/b]
-Python downloaden und installieren: https://www.python.org/ftp/python/3.4.3/python-3.4.3.msi
-PyQt downloaden und installieren: http://sourceforge.net/projects/pyqt/files/PyQt5/PyQt-5.5.1/PyQt5-5.5.1-gpl-Py3.4-Qt5.5.1-x32.exe/download
-Jetzt weitermachen bei "Installation - allgemeiner Teil"
+[spoiler=Installation - Windows (32 bit)]Python downloaden und installieren: https://www.python.org/ftp/python/3.4.3/python-3.4.3.msi
+Die Stämme erlaubt offenbar keine Links zu exe-Dateien. Daher müsst ihr das Leerzeichen im folgenden Link in "x32 exe" durch einen Punkt ersetzen.
+PyQt downloaden und installieren: http://sourceforge.net/projects/pyqt/files/PyQt5/PyQt-5.5.1/PyQt5-5.5.1-gpl-Py3.4-Qt5.5.1-x32 exe/download
+Jetzt weitermachen bei "Installation - allgemeiner Teil"[/spoiler]
 
-[b]Installation - andere Betriebssysteme[/b]
-Bitte anfragen.
+[spoiler=Installation - andere Betriebssysteme]Bitte anfragen.[/spoiler]
 
-[b]Installation - allgemeiner Teil"[/b]
-Das Programm selbst runterladen, entweder den alpha-Release oder die aktuelle Entwicklerversion:
+[spoiler=Installation - allgemeiner Teil]Das Programm selbst runterladen, entweder den alpha-Release oder die aktuelle Entwicklerversion:
 alpha1: TODO
 aktuelle Entwicklerversion: https://github.com/steffen123/pytw/archive/master.zip
+Das Archiv irgendwohin entpacken. Eine "richtige Installation" ist für das eigentliche Tool nicht notwendig.[/spoiler]
 
-[b]Installation (sonstige)[/b]
-Hängt vom Betriebssystem ab. Bitte Info und ich schreib die Anleitung für das jeweilige Betriebssystem. Brauche diese Details:
+[spoiler=Installation (sonstige)]Hängt vom Betriebssystem ab. Bitte Info und ich schreib die Anleitung für das jeweilige Betriebssystem. Brauche diese Details:
 - Betriebssystem (z.B. Gentoo Linux oder Windows)
 - Version des Betriebssystems
-- Falls bekannt: die Bitness (32bit oder 64bit)
+- Falls bekannt: die Bitness (32bit oder 64bit)[/spoiler]
 
 [b]Starten[/b]
 Im Installationsverzeichnis pytw.pyw doppelklicken.
@@ -55,8 +53,7 @@ Alpha. Das Programm ist noch sehr ungeschliffen und hat nur grundlegende Funktio
 [b]Bekannte auffällige Probleme[/b]
 1. Nicht direkt ein Bug, aber nervt etwas: Man muss jeden Bericht mit seinem Browser abspeichern.
 
-[b]Changelog[/b]
-alpha1: erste veröffentlichte Version
+[spoiler=Changelog]alpha1: erste veröffentlichte Version[/spoiler]
 
 [b]Beziehung zu InnoGames/Die Stämme; Spielregeln[/b]
-Dieses Programm ist nicht von InnoGames geprüft, authorisiert, empfohlen oder sonst irgendwas. So wie ich die Regeln verstehe kann ich mir aber nicht vorstellen, dass irgendwer auch nur auf Idee kommen könnte, dass dieses Tool etwas unerlaubtes macht.
+Dieses Programm ist nicht von InnoGames geprüft, authorisiert, empfohlen oder sonst irgendwas. So wie ich die Regeln verstehe kann ich mir aber nicht vorstellen, dass irgendwer auch nur auf Idee kommen könnte, dass dieses Tool etwas Unerlaubtes macht.
