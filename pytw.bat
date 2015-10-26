@@ -1,1 +1,1 @@
-python src\pytw.pyw
+start python src\pytw.pyw

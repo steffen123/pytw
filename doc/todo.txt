@@ -1,15 +1,12 @@
-=immediate=
-
-=alpha1=
-link zu alpha1 in die anleitung packen, diese veröffentlichen
+=alpha3=
+divert all output to file
+make batch file window close itself
+filter: no units/no wall, no wall, no units, all
 
 =later alphas=
 avg % of loot capacity gotten for each target (over the last week)
 sort by distance
-filter: no units/no wall, no wall, no units, all
 after import update status bar
-make batch file window close itself
-divert all output to file
 
 check it works with FF-complete saves
 display target player name and increase window width
