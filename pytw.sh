@@ -1,1 +1,1 @@
-./src/pytw.py
+./src/pytw.pyw
