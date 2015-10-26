@@ -129,6 +129,7 @@ class RecreateTables():
 		
 		table = (
 			{'not_null':True, 'name':'id', 'type':'PKEY'},
+			{'not_null':False, 'name':'file_path', 'type':'VARCHAR(500)'},
 			{'not_null':True, 'name':'attacker_village_id', 'type':'FKEY', 'fkey_table':'villages'},
 			{'not_null':True, 'name':'defender_village_id', 'type':'FKEY', 'fkey_table':'villages'},
 			{'not_null':True, 'name':'battle_ts', 'type':'DATETIME'},
