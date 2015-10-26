@@ -19,7 +19,7 @@ import math
 from PyQt5.QtWidgets import QComboBox, QLabel, QPushButton, QTextEdit
 
 #own modules
-from catlib.GridScrollTab import GridScrollTab
+from catlib.grid_scroll_tab import GridScrollTab
 
 class TabTargets(GridScrollTab):
 	def __init__(self, msg, sql):

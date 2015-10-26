@@ -13,7 +13,7 @@ from PyQt5.QtWidgets import QLabel
 #import typing
 
 #own modules
-from .GridScrollTab import GridScrollTab
+from .grid_scroll_tab import GridScrollTab
 
 class TabDBInfo(GridScrollTab):
 	def __init__(self, sql, name="DB Info"):

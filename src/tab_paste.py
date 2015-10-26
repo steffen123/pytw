@@ -15,7 +15,7 @@
 from PyQt5.QtWidgets import QLabel, QPushButton, QTextEdit
 
 #own modules
-from catlib.GridScrollTab import GridScrollTab
+from catlib.grid_scroll_tab import GridScrollTab
 
 class TabPaste(GridScrollTab):
 	def __init__(self, sql, parser):

@@ -22,7 +22,7 @@ import sys
 
 #own modules
 from catlib.messenger import Messenger
-from catlib.SQLFeeder import SQLFeeder
+from catlib.SQL_feeder import SQLFeeder
 from user_settings import SQLFEEDER_BACKEND
 
 class ImportWorlds(object):

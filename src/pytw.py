@@ -31,8 +31,8 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QTabWidget
 from report_parser import ReportParser
 from tab_targets import TabTargets
 from catlib.messenger import Messenger
-from catlib.SQLFeeder import SQLFeeder
-from catlib.TabDBInfo import TabDBInfo
+from catlib.SQL_feeder import SQLFeeder
+from catlib.tab_DB_info import TabDBInfo
 from user_settings import SQLFEEDER_BACKEND
 
 class Pytw(QMainWindow):
@@ -56,7 +56,7 @@ class Pytw(QMainWindow):
 			self.version = infile.readlines()[0][:-1]
 		self.msg.message_debug("Version %s" % self.version)
 		self.setWindowTitle("Pytw %s" % self.version)
-		self.resize(900, 800) #TODO flexibilise
+		self.resize(950, 800) #TODO flexibilise
 		
 		#General tab init
 		self.tab_widget = QTabWidget()
