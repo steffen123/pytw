@@ -1,7 +1,10 @@
 =alpha3=
 divert all output to file
-make batch file window close itself
-filter: no units/no wall, no wall, no units, all
+store path of imported files -> on row delete offer to move or delete the report
+move files that have been imported to backup folder (same structure as main)
+	make recreate_tables move contents of backup folder back to main folder and run import
+
+filter: no units/no wall, no wall, no units, <100 units, all
 
 =later alphas=
 avg % of loot capacity gotten for each target (over the last week)
@@ -18,7 +21,6 @@ check that i handle players with multiple villages correctly
 check that i handle conversion from player to barb correctly
 shrink button that reduces it to 1 row of displayed data
 filters: minimum loot, max distance
-store path of imported files -> on row delete offer to delete the report
 rename recreate_tables to delete_and_recreate_database
 clear expired scheduled attacks
 convert user_settings to ini file
@@ -44,8 +46,6 @@ umfrage ins forum über künftige features:
 	anderes
 
 add filter with min. res at arrival, display relevant info
-move files that have been imported to backup folder (same structure as main)
-	make recreate_tables move contents of backup folder back to main folder and run import
 display original and generated report side by side
 detect inactive players from map save
 	confirm with spy save: see if i detected units who are not at home

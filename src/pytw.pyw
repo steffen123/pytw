@@ -88,6 +88,8 @@ class Pytw(QMainWindow):
 		overall_start = datetime.datetime.now()
 		count = 0
 		for filename in os.listdir(os.path.join('.', 'import', 'reports')):
+			if filename == '.keep':
+				continue
 			file_start = datetime.datetime.now()
 			count += 1
 			with open(os.path.join('.', 'import', 'reports', filename), 'r') as infile:
