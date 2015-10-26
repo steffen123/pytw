@@ -6,5 +6,8 @@
 /re
 /typing
 
-/import/*
+/import/maps
+/import/reports/*.htm*
+/import/reports_old
+/import/world_settings
 /game_infos/Formeln.htm
