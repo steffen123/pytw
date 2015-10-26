@@ -92,9 +92,10 @@ class Pytw(QMainWindow):
 				continue
 			file_start = datetime.datetime.now()
 			count += 1
-			with open(os.path.join('.', 'import', 'reports', filename), 'r') as infile:
+			file_path = os.path.join('.', 'import', 'reports', filename)
+			with open(file_path, 'r') as infile:
 				print("importing", os.path.join('.', 'import', 'reports', filename))
-				self.report_parser.parse(infile.read())
+				self.report_parser.parse(infile.read(), file_path)
 			print("   took", datetime.datetime.now()-file_start)
 		print('\n', count, "files, took", datetime.datetime.now()-overall_start)
 		if count > 0:

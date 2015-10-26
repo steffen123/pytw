@@ -1,6 +1,6 @@
 =alpha3=
 divert all output to file
-store path of imported files -> on row delete offer to move or delete the report
+on row delete offer to move or delete the report
 move files that have been imported to backup folder (same structure as main)
 	make recreate_tables move contents of backup folder back to main folder and run import
 
