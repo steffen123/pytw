@@ -1,14 +1,16 @@
-Pytw, das Angriffstool
+[b]Pytw, das Angriffstool[/b]
 
 [b]Funktionen[/b]
 - Liest Spionage- und Kampfreporte und speichert sie in eine Datenbank
-- Erkennt sichere Ziele (d.h. ohne Truppen oder Wall)
-- Berechnet anhand der Gebäude, der Entfernung und des Berichtsalters wieviel man bei dem jeweiligen Ziel mitnehmen kann
+- Filtern zwischen Spielern und Barbaren
+- Filtern nach Wall-Stufe und Einheitenanzahl (min, max, oder genaue Zahl)
+- Zeigt die möglichen Ziele tabelarisch an
+- Berechnet anhand der Gebäude, der Entfernung, Geschwindigkeit der einzusetzenden Einheit und des Berichtsalters wieviel man bei dem jeweiligen Ziel mitnehmen kann
 - Kann nur Spieler anzeigen (default), nur Barbaren, oder beides
 - Programm arbeitet komplett auf eurem Rechner und ist nicht von Webdiensten oder irgendwas abhängig (und es nutzt solche auch nicht)
 - Freie Software, d.h. kann gemäß der AGPL-Lizenz von jedem verändert oder geteilt (wiederveröffentlicht) werden.
 
-[b]Bugreports, Wünsche, Kontakt[/b]
+[b]Bugreports, Vorschläge, Kommentare[/b]
 Per Die-Stämme-PM, hier im Stammesforum, oder per Mail an steffen@schaumburger.info
 Viele Funktionen ließen sich ganz leicht einbauen also ruhig sagen was ihr braucht.
 
@@ -28,13 +30,16 @@ Jetzt weitermachen bei "Installation - allgemeiner Teil"[/spoiler]
 [spoiler=Installation - andere Betriebssysteme]Bitte anfragen.[/spoiler]
 
 [spoiler=Installation - allgemeiner Teil]Das Programm selbst runterladen, entweder den alpha-Release oder die aktuelle Entwicklerversion:
-alpha2: https://github.com/steffen123/pytw/archive/alpha2.zip
+aktuelle alpha3: https://github.com/steffen123/pytw/archive/alpha3.zip
 aktuelle Entwicklerversion: https://github.com/steffen123/pytw/archive/master.zip
 Das Archiv irgendwohin entpacken. Eine "richtige Installation" ist für das eigentliche Tool nicht notwendig.[/spoiler]
 
 [spoiler=Installation (sonstige)]Hängt vom Betriebssystem ab. Bitte Info und ich schreib die Anleitung für das jeweilige Betriebssystem. Brauche diese Details:
 - Betriebssystem (z.B. Gentoo Linux oder Windows)
 - Version des Betriebssystems[/spoiler]
+
+[spoiler=Updaten]Einfach die neue Programm-Version (nur das Programm selber) runterladen und entpacken. Dann die bisher gespeicherten Reporte aus dem import-Verzeichnis der alten Version in das Import-Verzeichnis der neuen Version kopieren und fertig.
+Die alte Version kann unabhängig von der neuen weiter verwendet werden. Alternativ kann man sie natürlich auch löschen.[/spoiler]
 
 [b]Starten[/b]
 Windows: Im Verzeichnis wo es entpackt ist pytw.bat doppelklicken.
@@ -60,11 +65,13 @@ Alpha. Das Programm ist noch sehr ungeschliffen und hat nur grundlegende Funktio
 
 [spoiler=Changelog]
 [b]alpha1 26.10.2015[/b]
-erste veröffentlichte Version
+- erste veröffentlichte Version
 [b]alpha2 26.10.2015[/b]
-batch-Datei für Windows
-[b]alpha3 TODO[/b]
-make batch window close itself[/spoiler]
+- batch-Datei für Windows
+[b]alpha3 27.10.2015[/b]
+- diverse kleine Komfort-Verbesserungen
+- Zeigt nun auch Wall-Stufe und Einheitenanzahl am Ziel an
+- Kann nach Wall-Stufe und Einheitenanzahl filtern[/spoiler]
 
 [b]Beziehung zu InnoGames/Die Stämme; Spielregeln[/b]
 Dieses Programm ist nicht von InnoGames geprüft, authorisiert, empfohlen oder sonst irgendwas. Da es aber keinerlei Handlungen in DS auslöst ist es erlaubt.
