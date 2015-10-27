@@ -37,6 +37,7 @@ class TabTargets(GridScrollTab):
 		self.line_wall = None
 		self.combo_units = None
 		self.line_units = None
+		self.line_loot = None
 		
 		self.draw()
 	
@@ -46,25 +47,34 @@ class TabTargets(GridScrollTab):
 		else:
 			combo_barbarian_old_setting = 0
 		
+		
 		if self.combo_wall:
 			combo_wall_old_setting = self.combo_wall.currentIndex()
 		else:
 			combo_wall_old_setting = 0
-		
-		if self.combo_units:
-			combo_units_old_setting = self.combo_units.currentIndex()
-		else:
-			combo_units_old_setting = 0
 		
 		if self.line_wall:
 			line_wall_old_setting = self.line_wall.text()
 		else:
 			line_wall_old_setting = "0"
 		
+		
+		if self.combo_units:
+			combo_units_old_setting = self.combo_units.currentIndex()
+		else:
+			combo_units_old_setting = 0
+		
 		if self.line_units:
 			line_units_old_setting = self.line_units.text()
 		else:
 			line_units_old_setting = "0"
+		
+		
+		if self.line_loot:
+			line_loot_old_setting = self.line_loot.text()
+		else:
+			line_loot_old_setting = "600"
+		
 		
 		while(True): #TODO move this into superclass
 			item = self.layout.takeAt(0)
@@ -76,6 +86,7 @@ class TabTargets(GridScrollTab):
 		current_x = 0
 		current_y = 0
 		
+		
 		self.combo_barbarian = QComboBox()
 		for item in ("only Players", "only Barbarian", "Player+Barb"):
 			self.combo_barbarian.addItem(item)
@@ -84,8 +95,9 @@ class TabTargets(GridScrollTab):
 		self.layout.addWidget(self.combo_barbarian, current_y, current_x, 1, 1)
 		current_x += 1
 		
+		
 		self.combo_wall = QComboBox()
-		for item in ("max wall", "min wall", "= wall"):
+		for item in ("max. wall", "min. wall", "= wall"):
 			self.combo_wall.addItem(item)
 		self.combo_wall.setCurrentIndex(combo_wall_old_setting)
 		self.combo_wall.currentIndexChanged.connect(self.draw)
@@ -98,8 +110,9 @@ class TabTargets(GridScrollTab):
 		self.layout.addWidget(self.line_wall, current_y, current_x, 1, 1)
 		current_x += 1
 		
+		
 		self.combo_units = QComboBox()
-		for item in ("max units", "min units", "= units"):
+		for item in ("max. units", "min. units", "= units"):
 			self.combo_units.addItem(item)
 		self.combo_units.setCurrentIndex(combo_units_old_setting)
 		self.combo_units.currentIndexChanged.connect(self.draw)
@@ -110,6 +123,16 @@ class TabTargets(GridScrollTab):
 		self.line_units.insert(line_units_old_setting)
 		self.line_units.editingFinished.connect(self.draw)
 		self.layout.addWidget(self.line_units, current_y, current_x, 1, 1)
+		current_x += 1
+		
+		
+		self.layout.addWidget(QLabel("min. loot with spears"), current_y, current_x, 1, 1)
+		current_x += 1
+		
+		self.line_loot = QLineEdit()
+		self.line_loot.insert(line_loot_old_setting)
+		self.line_loot.editingFinished.connect(self.draw)
+		self.layout.addWidget(self.line_loot, current_y, current_x, 1, 1)
 		current_x = 0
 		current_y += 1
 		
@@ -161,17 +184,34 @@ class TabTargets(GridScrollTab):
 			if is_current_attack_target:
 				continue
 			
-			target['unit_count'] = target['defender_spears_sent'] + target['defender_swords_sent'] + target['defender_axes_sent'] + target['defender_archers_sent'] + target['defender_scouts_sent'] + target['defender_lcav_sent'] + target['defender_mounted_archers_sent'] + target['defender_hcav_sent'] + target['defender_rams_sent'] + target['defender_catapults_sent'] + target['defender_paladin_sent'] + target['defender_nobleman_sent'] + target['defender_militia_sent']
-			
 			delta_hours = (datetime.datetime.now() - datetime.datetime.strptime(target['battle_ts'], '%Y-%m-%d %H:%M:%S.%f')).seconds/3600
 			target["dist"] = self.calculate_distance(target['attacker_village_id'], target['defender_village_id'])
 			
-			if type(target['spied_wood']) == str:
+			if target['spied_wood'] == '':
 				target['spied_wood'] = 0
-			if type(target['spied_clay']) == str:
+			if target['spied_clay'] == '':
 				target['spied_clay'] = 0
-			if type(target['spied_iron']) == str:
+			if target['spied_iron'] == '':
 				target['spied_iron'] = 0
+			
+			if type(target['spied_wood']) == str:
+				target['spied_wood'] = int(target['spied_wood'])
+			if type(target['spied_clay']) == str:
+				target['spied_clay'] = int(target['spied_clay'])
+			if type(target['spied_iron']) == str:
+				target['spied_iron'] = int(target['spied_clay'])
+			
+			
+			spear_oneway_time = self.calculate_oneway_time(target["dist"], "spear")
+			spear_wood = target['spied_wood'] + round(48 * math.pow(1.163118, target['timber_camp']-1) / 1.6 * (delta_hours + spear_oneway_time))
+			spear_clay = target['spied_clay'] + round(48 * math.pow(1.163118, target['clay_pit']-1) / 1.6 * (delta_hours + spear_oneway_time))
+			spear_iron = target['spied_iron'] + round(48 * math.pow(1.163118, target['iron_mine']-1) / 1.6 * (delta_hours + spear_oneway_time))
+			spear_expected_loot = spear_wood + spear_clay + spear_iron
+			if spear_expected_loot < int(self.line_loot.text()):
+				continue
+			
+			
+			target['unit_count'] = target['defender_spears_sent'] + target['defender_swords_sent'] + target['defender_axes_sent'] + target['defender_archers_sent'] + target['defender_scouts_sent'] + target['defender_lcav_sent'] + target['defender_mounted_archers_sent'] + target['defender_hcav_sent'] + target['defender_rams_sent'] + target['defender_catapults_sent'] + target['defender_paladin_sent'] + target['defender_nobleman_sent'] + target['defender_militia_sent']
 			
 			for field in self.headers:
 				if field in ("ram", "sword", "spear", "lcav", "scout"):
