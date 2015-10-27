@@ -29,8 +29,8 @@ class TabTargets(GridScrollTab):
 		self.msg = msg
 		self.sql = sql
 		
-		self.headers = ("report", "village_name", "battle_ts", "location_x", "location_y", "dist", "sword", "spear", "lcav", "scout", "delete")
-		self.unit_speeds = {"sword":22, "spear":18, "lcav":10, "scout":9}
+		self.headers = ("report", "village_name", "battle_ts", "location_x", "location_y", "dist", "ram", "sword", "spear", "lcav", "scout", "delete")
+		self.unit_speeds = {"ram":30, "sword":22, "spear":18, "lcav":10, "scout":9}
 		
 		self.combo_barbarian = None
 		self.combo_wall = None
@@ -115,7 +115,7 @@ class TabTargets(GridScrollTab):
 		
 		
 		for header in self.headers:
-			if header in ("sword", "spear", "lcav", "scout"):
+			if header in ("ram", "sword", "spear", "lcav", "scout"):
 				self.layout.addWidget(QLabel("attack with"), current_y, current_x, 1, 1)
 			elif header in ("battle_ts"):
 				self.layout.addWidget(QLabel("report_time"), current_y, current_x, 1, 1)
@@ -172,7 +172,7 @@ class TabTargets(GridScrollTab):
 				target['spied_iron'] = 0
 			
 			for field in self.headers:
-				if field in ("sword", "spear", "lcav", "scout"):
+				if field in ("ram", "sword", "spear", "lcav", "scout"):
 					oneway_time = self.calculate_oneway_time(target["dist"], field)
 					wood = target['spied_wood'] + round(48 * math.pow(1.163118, target['timber_camp']-1) / 1.6 * (delta_hours + oneway_time))
 					clay = target['spied_clay'] + round(48 * math.pow(1.163118, target['clay_pit']-1) / 1.6 * (delta_hours + oneway_time))

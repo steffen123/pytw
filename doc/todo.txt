@@ -1,6 +1,6 @@
 =alpha3=
 display wall level and unit count
-
+kampfsim-button
 
 =later alphas=
 screenshot mit beschriftung als anleitung
