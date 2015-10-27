@@ -9,6 +9,7 @@
 #python stdlib
 import datetime
 import math
+import webbrowser
 
 #mypy
 #import typing
@@ -28,7 +29,7 @@ class TabTargets(GridScrollTab):
 		self.msg = msg
 		self.sql = sql
 		
-		self.headers = ("village_name", "battle_ts", "location_x", "location_y", "dist", "sword", "spear", "lcav", "scout", "delete")
+		self.headers = ("report", "village_name", "battle_ts", "location_x", "location_y", "dist", "sword", "spear", "lcav", "scout", "delete")
 		self.unit_speeds = {"sword":22, "spear":18, "lcav":10, "scout":9}
 		
 		self.combo_barbarian = None
@@ -153,7 +154,7 @@ class TabTargets(GridScrollTab):
 		where_literal += self.line_units.text() #TODO input error handling
 		
 		
-		targets = self.sql.select(table="battles INNER JOIN villages ON battles.defender_village_id = villages.id", param_list=('location_x', 'location_y', 'village_name', 'battle_ts', 'spied_wood', 'spied_clay', 'spied_iron', 'timber_camp', 'clay_pit', 'iron_mine', 'attacker_village_id', 'defender_village_id', 'battles.id'), where_param_dicts=None, where_literal=where_literal, debug=False)
+		targets = self.sql.select(table="battles INNER JOIN villages ON battles.defender_village_id = villages.id", param_list=('location_x', 'location_y', 'village_name', 'battle_ts', 'spied_wood', 'spied_clay', 'spied_iron', 'timber_camp', 'clay_pit', 'iron_mine', 'attacker_village_id', 'defender_village_id', 'battles.id', 'file_path'), where_param_dicts=None, where_literal=where_literal, debug=False)
 		
 		for target in targets:
 			is_current_attack_target = self.sql.select(table="scheduled_attacks", param_list=('defender_village_id', ), where_param_dicts=({'field':'defender_village_id', 'comparator':'=', 'value':target['defender_village_id']}, {'field':'arrival_ts', 'comparator':'>', 'value':"'"+str(datetime.datetime.now())+"'"}), debug=False)
@@ -190,6 +191,11 @@ class TabTargets(GridScrollTab):
 					button.setProperty('battle_id', target['battles.id'])
 					button.setProperty('defender_village_id', target['defender_village_id'])
 					button.clicked.connect(self.delete_button_clicked)
+					self.layout.addWidget(button, current_y, current_x, 1, 1)
+				elif field == "report":
+					button = QPushButton("view")
+					button.setProperty('file_path', target['file_path'])
+					button.clicked.connect(self.report_button_clicked)
 					self.layout.addWidget(button, current_y, current_x, 1, 1)
 				elif field == "dist":
 					self.layout.addWidget(QLabel('%.1f' % target[field]), current_y, current_x, 1, 1)
@@ -234,3 +240,7 @@ class TabTargets(GridScrollTab):
 		self.sql._execute("JUST RUN IT", 'DELETE FROM villages WHERE id = %d' % defender_village_id, False)
 		
 		self.draw()
+	
+	def report_button_clicked(self, TODO_dunno):
+		file_path = self.sender().property('file_path')
+		webbrowser.open(file_path)

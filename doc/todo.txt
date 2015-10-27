@@ -1,16 +1,22 @@
 =alpha3=
-divert all output to file
-on row delete offer to move or delete the report
-move files that have been imported to backup folder (same structure as main)
-	make recreate_tables move contents of backup folder back to main folder and run import
+display wall level and unit count
 
-filter: no units/no wall, no wall, no units, <100 units, all
 
 =later alphas=
+screenshot mit beschriftung als anleitung
+die zahlen in der GUI erklären
+move files that have been imported to backup folder (same structure as main)
+	make recreate_tables move contents of backup folder back to main folder and run import
+display location like DS does
+divert all output to file
+on row delete offer to move or delete the report
 avg % of loot capacity gotten for each target (over the last week)
 sort by distance
 after import update status bar
+save current settings on exit
 
+hide wall level/unit count if they are set to max/equal 0
+calculate total en-route res
 check it works with FF-complete saves
 display target player name and increase window width
 check db version on startup
