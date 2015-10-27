@@ -58,8 +58,13 @@ Alpha. Das Programm ist noch sehr ungeschliffen und hat nur grundlegende Funktio
 [b]Bekannte auffällige Probleme[/b]
 1. Nicht direkt ein Bug, aber nervt etwas: Man muss jeden Bericht mit seinem Browser abspeichern.
 
-[spoiler=Changelog]alpha1: erste veröffentlichte Version
-alpha2: batch-Datei für Windows[/spoiler]
+[spoiler=Changelog]
+[b]alpha1 26.10.2015[/b]
+erste veröffentlichte Version
+[b]alpha2 26.10.2015[/b]
+batch-Datei für Windows
+[b]alpha3 TODO[/b]
+make batch window close itself[/spoiler]
 
 [b]Beziehung zu InnoGames/Die Stämme; Spielregeln[/b]
-Dieses Programm ist nicht von InnoGames geprüft, authorisiert, empfohlen oder sonst irgendwas. So wie ich die Regeln verstehe kann ich mir nicht vorstellen, dass irgendwer auch nur auf Idee kommen könnte, dass dieses Tool etwas Unerlaubtes macht.
+Dieses Programm ist nicht von InnoGames geprüft, authorisiert, empfohlen oder sonst irgendwas. Da es aber keinerlei Handlungen in DS auslöst ist es erlaubt.
