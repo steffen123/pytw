@@ -179,7 +179,7 @@ class TabTargets(GridScrollTab):
 					iron = target['spied_iron'] + round(48 * math.pow(1.163118, target['iron_mine']-1) / 1.6 * (delta_hours + oneway_time))
 					expected_loot = wood + clay + iron
 					
-					button = QPushButton(field + str(expected_loot))
+					button = QPushButton('%s: %d res' % (field, expected_loot))
 					button.setProperty('attacker_village_id', target['attacker_village_id'])
 					button.setProperty('defender_village_id', target['defender_village_id'])
 					button.setProperty('attacking_unit', field)
