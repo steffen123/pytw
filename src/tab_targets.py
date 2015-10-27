@@ -29,7 +29,7 @@ class TabTargets(GridScrollTab):
 		self.msg = msg
 		self.sql = sql
 		
-		self.headers = ("report", "village_name", "battle_ts", "location_x", "location_y", "dist", "ram", "sword", "spear", "lcav", "scout", "delete")
+		self.headers = ("report", "village_name", "battle_ts", "location_x", "location_y", "wall", "unit_count", "dist", "ram", "sword", "spear", "lcav", "scout", "delete")
 		self.unit_speeds = {"ram":30, "sword":22, "spear":18, "lcav":10, "scout":9}
 		
 		self.combo_barbarian = None
@@ -154,12 +154,14 @@ class TabTargets(GridScrollTab):
 		where_literal += self.line_units.text() #TODO input error handling
 		
 		
-		targets = self.sql.select(table="battles INNER JOIN villages ON battles.defender_village_id = villages.id", param_list=('location_x', 'location_y', 'village_name', 'battle_ts', 'spied_wood', 'spied_clay', 'spied_iron', 'timber_camp', 'clay_pit', 'iron_mine', 'attacker_village_id', 'defender_village_id', 'battles.id', 'file_path'), where_param_dicts=None, where_literal=where_literal, debug=False)
+		targets = self.sql.select(table="battles INNER JOIN villages ON battles.defender_village_id = villages.id", param_list=('location_x', 'location_y', 'village_name', 'battle_ts', 'spied_wood', 'spied_clay', 'spied_iron', 'timber_camp', 'clay_pit', 'iron_mine', 'attacker_village_id', 'defender_village_id', 'battles.id', 'file_path', 'wall', 'defender_spears_sent', 'defender_swords_sent', 'defender_axes_sent', 'defender_archers_sent', 'defender_scouts_sent', 'defender_lcav_sent', 'defender_mounted_archers_sent', 'defender_hcav_sent', 'defender_rams_sent', 'defender_catapults_sent', 'defender_paladin_sent', 'defender_nobleman_sent', 'defender_militia_sent'), where_param_dicts=None, where_literal=where_literal, debug=False)
 		
 		for target in targets:
 			is_current_attack_target = self.sql.select(table="scheduled_attacks", param_list=('defender_village_id', ), where_param_dicts=({'field':'defender_village_id', 'comparator':'=', 'value':target['defender_village_id']}, {'field':'arrival_ts', 'comparator':'>', 'value':"'"+str(datetime.datetime.now())+"'"}), debug=False)
 			if is_current_attack_target:
 				continue
+			
+			target['unit_count'] = target['defender_spears_sent'] + target['defender_swords_sent'] + target['defender_axes_sent'] + target['defender_archers_sent'] + target['defender_scouts_sent'] + target['defender_lcav_sent'] + target['defender_mounted_archers_sent'] + target['defender_hcav_sent'] + target['defender_rams_sent'] + target['defender_catapults_sent'] + target['defender_paladin_sent'] + target['defender_nobleman_sent'] + target['defender_militia_sent']
 			
 			delta_hours = (datetime.datetime.now() - datetime.datetime.strptime(target['battle_ts'], '%Y-%m-%d %H:%M:%S.%f')).seconds/3600
 			target["dist"] = self.calculate_distance(target['attacker_village_id'], target['defender_village_id'])
