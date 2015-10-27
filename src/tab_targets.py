@@ -32,7 +32,9 @@ class TabTargets(GridScrollTab):
 		self.unit_speeds = {"sword":22, "spear":18, "lcav":10, "scout":9}
 		
 		self.combo_barbarian = None
+		self.combo_wall = None
 		self.line_wall = None
+		self.combo_units = None
 		self.line_units = None
 		
 		self.draw()
@@ -42,6 +44,16 @@ class TabTargets(GridScrollTab):
 			combo_barbarian_old_setting = self.combo_barbarian.currentIndex()
 		else:
 			combo_barbarian_old_setting = 0
+		
+		if self.combo_wall:
+			combo_wall_old_setting = self.combo_wall.currentIndex()
+		else:
+			combo_wall_old_setting = 0
+		
+		if self.combo_units:
+			combo_units_old_setting = self.combo_units.currentIndex()
+		else:
+			combo_units_old_setting = 0
 		
 		if self.line_wall:
 			line_wall_old_setting = self.line_wall.text()
@@ -59,6 +71,7 @@ class TabTargets(GridScrollTab):
 				break
 			item.widget().deleteLater()
 		
+		
 		current_x = 0
 		current_y = 0
 		
@@ -70,7 +83,12 @@ class TabTargets(GridScrollTab):
 		self.layout.addWidget(self.combo_barbarian, current_y, current_x, 1, 1)
 		current_x += 1
 		
-		self.layout.addWidget(QLabel("max wall"), current_y, current_x, 1, 1)
+		self.combo_wall = QComboBox()
+		for item in ("max wall", "min wall", "= wall"):
+			self.combo_wall.addItem(item)
+		self.combo_wall.setCurrentIndex(combo_wall_old_setting)
+		self.combo_wall.currentIndexChanged.connect(self.draw)
+		self.layout.addWidget(self.combo_wall, current_y, current_x, 1, 1)
 		current_x += 1
 		
 		self.line_wall = QLineEdit()
@@ -79,7 +97,12 @@ class TabTargets(GridScrollTab):
 		self.layout.addWidget(self.line_wall, current_y, current_x, 1, 1)
 		current_x += 1
 		
-		self.layout.addWidget(QLabel("max units"), current_y, current_x, 1, 1)
+		self.combo_units = QComboBox()
+		for item in ("max units", "min units", "= units"):
+			self.combo_units.addItem(item)
+		self.combo_units.setCurrentIndex(combo_units_old_setting)
+		self.combo_units.currentIndexChanged.connect(self.draw)
+		self.layout.addWidget(self.combo_units, current_y, current_x, 1, 1)
 		current_x += 1
 		
 		self.line_units = QLineEdit()
@@ -101,18 +124,36 @@ class TabTargets(GridScrollTab):
 		current_y += 1
 		current_x = 0
 		
-		where_param_dicts = []
-		for field in ('wall', 'defender_spears_sent', 'defender_swords_sent', 'defender_axes_sent', 'defender_archers_sent', 'defender_scouts_sent', 'defender_lcav_sent', 'defender_mounted_archers_sent', 'defender_hcav_sent', 'defender_rams_sent', 'defender_catapults_sent', 'defender_paladin_sent', 'defender_nobleman_sent', 'defender_militia_sent'):
-			where_param_dicts.append({'field':field, 'comparator':'=', 'value':0})
 		
 		if self.combo_barbarian.currentIndex() == 0:
-			where_literal = 'AND village_name != "Barbarendorf" AND village_name != "Bonusdorf"'
+			where_literal = 'village_name != "Barbarendorf" AND village_name != "Bonusdorf" AND '
 		elif self.combo_barbarian.currentIndex() == 1:
-			where_literal = 'AND (village_name = "Barbarendorf" OR village_name = "Bonusdorf")'
+			where_literal = '(village_name = "Barbarendorf" OR village_name = "Bonusdorf") AND '
 		else:
 			where_literal = ''
 		
-		targets = self.sql.select(table="battles INNER JOIN villages ON battles.defender_village_id = villages.id", param_list=('location_x', 'location_y', 'village_name', 'battle_ts', 'spied_wood', 'spied_clay', 'spied_iron', 'timber_camp', 'clay_pit', 'iron_mine', 'attacker_village_id', 'defender_village_id', 'battles.id'), where_param_dicts=where_param_dicts, where_literal=where_literal, debug=False)
+		if self.combo_wall.currentIndex() == 0:
+			where_literal += 'wall <= '
+		elif self.combo_wall.currentIndex() == 1:
+			where_literal += 'wall >= '
+		else:
+			where_literal += 'wall = '
+		
+		where_literal += self.line_wall.text() #TODO input error handling
+		
+		where_literal += ' AND (defender_spears_sent + defender_swords_sent + defender_axes_sent + defender_archers_sent + defender_scouts_sent + defender_lcav_sent + defender_mounted_archers_sent + defender_hcav_sent + defender_rams_sent + defender_catapults_sent + defender_paladin_sent + defender_nobleman_sent + defender_militia_sent) '
+		
+		if self.combo_units.currentIndex() == 0:
+			where_literal += '<= '
+		elif self.combo_units.currentIndex() == 1:
+			where_literal += '>= '
+		else:
+			where_literal += '= '
+		
+		where_literal += self.line_units.text() #TODO input error handling
+		
+		
+		targets = self.sql.select(table="battles INNER JOIN villages ON battles.defender_village_id = villages.id", param_list=('location_x', 'location_y', 'village_name', 'battle_ts', 'spied_wood', 'spied_clay', 'spied_iron', 'timber_camp', 'clay_pit', 'iron_mine', 'attacker_village_id', 'defender_village_id', 'battles.id'), where_param_dicts=None, where_literal=where_literal, debug=False)
 		
 		for target in targets:
 			is_current_attack_target = self.sql.select(table="scheduled_attacks", param_list=('defender_village_id', ), where_param_dicts=({'field':'defender_village_id', 'comparator':'=', 'value':target['defender_village_id']}, {'field':'arrival_ts', 'comparator':'>', 'value':"'"+str(datetime.datetime.now())+"'"}), debug=False)
