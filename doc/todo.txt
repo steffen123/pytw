@@ -2,11 +2,11 @@
 filter by player distance
 filter by barb distance
 sort by date of last attack
-make sure i deduct battle losses (of walls and units)
-select slowest unit to attack with in drop-down menu
-make sure i parse tribe correctly, make configurable list of dont-attack tribes
 
 =later alphas=
+extra scout button
+make sure i deduct battle losses (of walls and units)
+make sure i parse tribe correctly, make configurable list of dont-attack tribes
 filter by minimum points for barb
 detect inactive players, filter by that
 	confirm with spy save: see if i detected units who are not at home

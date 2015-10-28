@@ -29,7 +29,7 @@ class TabTargets(GridScrollTab):
 		self.msg = msg
 		self.sql = sql
 		
-		self.headers = ("report", "village_name", "battle_ts", "location_x", "location_y", "wall", "unit_count", "spied_res", "dist", "ram", "sword", "spear", "lcav", "scout", "delete")
+		self.headers = ("report", "village_name", "battle_ts", "location_x", "location_y", "wall", "unit_count", "attack", "delete")
 		self.unit_speeds = {"ram":30, "sword":22, "spear":18, "lcav":10, "scout":9}
 		
 		self.combo_barbarian = None
@@ -37,6 +37,7 @@ class TabTargets(GridScrollTab):
 		self.line_wall = None
 		self.combo_units = None
 		self.line_units = None
+		self.combo_speed = None
 		self.line_loot = None
 		
 		self.draw()
@@ -69,6 +70,11 @@ class TabTargets(GridScrollTab):
 		else:
 			line_units_old_setting = "0"
 		
+		
+		if self.combo_speed:
+			combo_speed_old_setting = self.combo_speed.currentIndex()
+		else:
+			combo_speed_old_setting = 0
 		
 		if self.line_loot:
 			line_loot_old_setting = self.line_loot.text()
@@ -126,7 +132,14 @@ class TabTargets(GridScrollTab):
 		current_x += 1
 		
 		
-		self.layout.addWidget(QLabel("min. loot with spears"), current_y, current_x, 1, 1)
+		self.combo_speed = QComboBox()
+		self.combo_speed_strings = []
+		for unit_name in self.unit_speeds.keys():
+			self.combo_speed.addItem("min. loot with %s" % unit_name)
+			self.combo_speed_strings.append(unit_name)
+		self.combo_speed.setCurrentIndex(combo_speed_old_setting)
+		self.combo_speed.currentIndexChanged.connect(self.draw)
+		self.layout.addWidget(self.combo_speed, current_y, current_x, 1, 1)
 		current_x += 1
 		
 		self.line_loot = QLineEdit()
@@ -138,12 +151,7 @@ class TabTargets(GridScrollTab):
 		
 		
 		for header in self.headers:
-			if header in ("ram", "sword", "spear", "lcav", "scout"):
-				self.layout.addWidget(QLabel("attack with"), current_y, current_x, 1, 1)
-			elif header in ("battle_ts"):
-				self.layout.addWidget(QLabel("report_time"), current_y, current_x, 1, 1)
-			else:
-				self.layout.addWidget(QLabel(header), current_y, current_x, 1, 1)
+			self.layout.addWidget(QLabel(header), current_y, current_x, 1, 1)
 			current_x += 1
 		current_y += 1
 		current_x = 0
@@ -203,29 +211,24 @@ class TabTargets(GridScrollTab):
 			
 			target['spied_res'] = target['spied_wood'] + target['spied_clay'] + target['spied_iron']
 			
-			spear_oneway_time = self.calculate_oneway_time(target["dist"], "spear")
-			spear_wood = target['spied_wood'] + round(48 * math.pow(1.163118, target['timber_camp']-1) / 1.6 * (delta_hours + spear_oneway_time))
-			spear_clay = target['spied_clay'] + round(48 * math.pow(1.163118, target['clay_pit']-1) / 1.6 * (delta_hours + spear_oneway_time))
-			spear_iron = target['spied_iron'] + round(48 * math.pow(1.163118, target['iron_mine']-1) / 1.6 * (delta_hours + spear_oneway_time))
-			spear_expected_loot = spear_wood + spear_clay + spear_iron
-			if spear_expected_loot < int(self.line_loot.text()):
+			attacking_unit = self.combo_speed_strings[self.combo_speed.currentIndex()]
+			oneway_time = self.calculate_oneway_time(target["dist"], attacking_unit)
+			wood = target['spied_wood'] + round(48 * math.pow(1.163118, target['timber_camp']-1) / 1.6 * (delta_hours + oneway_time))
+			clay = target['spied_clay'] + round(48 * math.pow(1.163118, target['clay_pit']-1) / 1.6 * (delta_hours + oneway_time))
+			iron = target['spied_iron'] + round(48 * math.pow(1.163118, target['iron_mine']-1) / 1.6 * (delta_hours + oneway_time))
+			expected_loot = wood + clay + iron
+			if expected_loot < int(self.line_loot.text()):
 				continue
 			
 			
 			target['unit_count'] = target['defender_spears_sent'] + target['defender_swords_sent'] + target['defender_axes_sent'] + target['defender_archers_sent'] + target['defender_scouts_sent'] + target['defender_lcav_sent'] + target['defender_mounted_archers_sent'] + target['defender_hcav_sent'] + target['defender_rams_sent'] + target['defender_catapults_sent'] + target['defender_paladin_sent'] + target['defender_nobleman_sent'] + target['defender_militia_sent']
 			
 			for field in self.headers:
-				if field in ("ram", "sword", "spear", "lcav", "scout"):
-					oneway_time = self.calculate_oneway_time(target["dist"], field)
-					wood = target['spied_wood'] + round(48 * math.pow(1.163118, target['timber_camp']-1) / 1.6 * (delta_hours + oneway_time))
-					clay = target['spied_clay'] + round(48 * math.pow(1.163118, target['clay_pit']-1) / 1.6 * (delta_hours + oneway_time))
-					iron = target['spied_iron'] + round(48 * math.pow(1.163118, target['iron_mine']-1) / 1.6 * (delta_hours + oneway_time))
-					expected_loot = wood + clay + iron
-					
-					button = QPushButton('%s: %d res' % (field, expected_loot))
+				if field == "attack":
+					button = QPushButton('loot %d' % expected_loot)
 					button.setProperty('attacker_village_id', target['attacker_village_id'])
 					button.setProperty('defender_village_id', target['defender_village_id'])
-					button.setProperty('attacking_unit', field)
+					button.setProperty('attacking_unit', attacking_unit)
 					button.setProperty('oneway_time', oneway_time)
 					button.clicked.connect(self.attack_button_clicked)
 					self.layout.addWidget(button, current_y, current_x, 1, 1)
