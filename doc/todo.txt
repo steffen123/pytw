@@ -1,17 +1,24 @@
 =alpha4=
-kampfsim-button
-store all reports and not just newest
-activity filter
-save current settings on exit
-screenshot mit beschriftung als anleitung
-sort by distance
-move files that have been imported to backup folder (same structure as main)
-	make recreate_tables move contents of backup folder back to main folder and run import
-detect inactive players from map save
-	confirm with spy save: see if i detected units who are not at home
-		militia means player is active
+filter by player distance
+filter by barb distance
+sort by date of last attack
+make sure i deduct battle losses (of walls and units)
+select slowest unit to attack with in drop-down menu
+make sure i parse tribe correctly, make configurable list of dont-attack tribes
 
 =later alphas=
+filter by minimum points for barb
+detect inactive players, filter by that
+	confirm with spy save: see if i detected units who are not at home
+		militia means player is active
+store all reports into DB, not just the newest
+move files that have been imported to backup folder (same structure as main)
+	make recreate_tables move contents of backup folder back to main folder and run import
+save current settings on exit
+screenshot mit beschriftung als anleitung
+maybe: 6h min time between attacks if <50% loot capacity
+PA only?: kampfsim-button
+	https://de122.die-staemme.de/game.php?screen=place&mode=sim&simulate&att_spear=184&def_spear=112&att_sword=100&def_sword=112&att_axe=102&def_axe=156&att_archer=78&att_spy=71&def_spy=14&att_light=135&att_catapult=5&att_knight=1&def_knight=1&building=wall&att_flag=2&def_flag=0&moral=100&luck=0
 update_checker
 display location like DS does
 divert all output to file

@@ -29,7 +29,7 @@ class TabTargets(GridScrollTab):
 		self.msg = msg
 		self.sql = sql
 		
-		self.headers = ("report", "village_name", "battle_ts", "location_x", "location_y", "wall", "unit_count", "dist", "ram", "sword", "spear", "lcav", "scout", "delete")
+		self.headers = ("report", "village_name", "battle_ts", "location_x", "location_y", "wall", "unit_count", "spied_res", "dist", "ram", "sword", "spear", "lcav", "scout", "delete")
 		self.unit_speeds = {"ram":30, "sword":22, "spear":18, "lcav":10, "scout":9}
 		
 		self.combo_barbarian = None
@@ -201,6 +201,7 @@ class TabTargets(GridScrollTab):
 			if type(target['spied_iron']) == str:
 				target['spied_iron'] = int(target['spied_clay'])
 			
+			target['spied_res'] = target['spied_wood'] + target['spied_clay'] + target['spied_iron']
 			
 			spear_oneway_time = self.calculate_oneway_time(target["dist"], "spear")
 			spear_wood = target['spied_wood'] + round(48 * math.pow(1.163118, target['timber_camp']-1) / 1.6 * (delta_hours + spear_oneway_time))
