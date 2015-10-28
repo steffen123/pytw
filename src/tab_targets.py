@@ -29,7 +29,7 @@ class TabTargets(GridScrollTab):
 		self.msg = msg
 		self.sql = sql
 		
-		self.headers = ("report", "village_name", "battle_ts", "location_x", "location_y", "wall", "unit_count", "attack", "delete")
+		self.headers = ("report", "village_name", "battle_ts", "location_x", "location_y", "wall", "unit_count", "spied_res", "distance", "attack", "delete")
 		self.unit_speeds = {"ram":30, "sword":22, "spear":18, "lcav":10, "scout":9}
 		
 		self.combo_barbarian = None
@@ -39,6 +39,7 @@ class TabTargets(GridScrollTab):
 		self.line_units = None
 		self.combo_speed = None
 		self.line_loot = None
+		self.line_distance = None
 		
 		self.draw()
 	
@@ -80,6 +81,12 @@ class TabTargets(GridScrollTab):
 			line_loot_old_setting = self.line_loot.text()
 		else:
 			line_loot_old_setting = "600"
+		
+		
+		if self.line_distance:
+			line_distance_old_setting = self.line_distance.text()
+		else:
+			line_distance_old_setting = "50.0"
 		
 		
 		while(True): #TODO move this into superclass
@@ -146,6 +153,16 @@ class TabTargets(GridScrollTab):
 		self.line_loot.insert(line_loot_old_setting)
 		self.line_loot.editingFinished.connect(self.draw)
 		self.layout.addWidget(self.line_loot, current_y, current_x, 1, 1)
+		current_x += 1
+		
+		self.layout.addWidget(QLabel("max. distance"), current_y, current_x, 1, 1)
+		current_x += 1
+		
+		self.line_distance = QLineEdit()
+		self.line_distance.insert(line_distance_old_setting)
+		self.line_distance.editingFinished.connect(self.draw)
+		self.layout.addWidget(self.line_distance, current_y, current_x, 1, 1)
+		max_distance = float(line_distance_old_setting.replace(',','.'))
 		current_x = 0
 		current_y += 1
 		
@@ -193,7 +210,9 @@ class TabTargets(GridScrollTab):
 				continue
 			
 			delta_hours = (datetime.datetime.now() - datetime.datetime.strptime(target['battle_ts'], '%Y-%m-%d %H:%M:%S.%f')).seconds/3600
-			target["dist"] = self.calculate_distance(target['attacker_village_id'], target['defender_village_id'])
+			target["distance"] = self.calculate_distance(target['attacker_village_id'], target['defender_village_id'])
+			if target["distance"] > max_distance:
+				continue
 			
 			if target['spied_wood'] == '':
 				target['spied_wood'] = 0
@@ -212,7 +231,7 @@ class TabTargets(GridScrollTab):
 			target['spied_res'] = target['spied_wood'] + target['spied_clay'] + target['spied_iron']
 			
 			attacking_unit = self.combo_speed_strings[self.combo_speed.currentIndex()]
-			oneway_time = self.calculate_oneway_time(target["dist"], attacking_unit)
+			oneway_time = self.calculate_oneway_time(target["distance"], attacking_unit)
 			wood = target['spied_wood'] + round(48 * math.pow(1.163118, target['timber_camp']-1) / 1.6 * (delta_hours + oneway_time))
 			clay = target['spied_clay'] + round(48 * math.pow(1.163118, target['clay_pit']-1) / 1.6 * (delta_hours + oneway_time))
 			iron = target['spied_iron'] + round(48 * math.pow(1.163118, target['iron_mine']-1) / 1.6 * (delta_hours + oneway_time))
@@ -243,7 +262,7 @@ class TabTargets(GridScrollTab):
 					button.setProperty('file_path', target['file_path'])
 					button.clicked.connect(self.report_button_clicked)
 					self.layout.addWidget(button, current_y, current_x, 1, 1)
-				elif field == "dist":
+				elif field == "distance":
 					self.layout.addWidget(QLabel('%.1f' % target[field]), current_y, current_x, 1, 1)
 				else:
 					self.layout.addWidget(QLabel(str(target[field])), current_y, current_x, 1, 1)

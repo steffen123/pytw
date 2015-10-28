@@ -1,9 +1,9 @@
 =alpha4=
-filter by player distance
-filter by barb distance
 sort by date of last attack
+order min loot drop down and set spears as default
 
 =later alphas=
+save current settings on exit
 extra scout button
 make sure i deduct battle losses (of walls and units)
 make sure i parse tribe correctly, make configurable list of dont-attack tribes
@@ -14,7 +14,6 @@ detect inactive players, filter by that
 store all reports into DB, not just the newest
 move files that have been imported to backup folder (same structure as main)
 	make recreate_tables move contents of backup folder back to main folder and run import
-save current settings on exit
 screenshot mit beschriftung als anleitung
 maybe: 6h min time between attacks if <50% loot capacity
 PA only?: kampfsim-button
