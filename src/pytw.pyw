@@ -56,7 +56,7 @@ class Pytw(QMainWindow):
 			self.version = infile.readlines()[0][:-1]
 		self.msg.message_debug("Version %s" % self.version)
 		self.setWindowTitle("Pytw %s" % self.version)
-		self.resize(1600, 500) #TODO flexibilise
+		self.resize(1200, 500) #TODO flexibilise
 		
 		#General tab init
 		self.tab_widget = QTabWidget()
@@ -71,7 +71,7 @@ class Pytw(QMainWindow):
 			print("DB seems invalid, please fix or recreate tables")
 			self.quit()
 		
-		self.report_parser = ReportParser(self.sql)
+		self.report_parser = ReportParser(self.msg, self.sql)
 		
 		self.add_tab(TabTargets(self.msg, self.sql))
 		self.add_tab(TabDBInfo(self.sql))

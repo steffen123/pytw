@@ -1,3 +1,4 @@
+#!/usr/bin/env python3.4
 # -*- coding: utf8 -*-
 
 # Copyright (C) 2015 Steffen Schaumburg and contributors, see docs/contributors.txt <steffen@schaumburger.info>
@@ -10,6 +11,7 @@
 #python std lib
 import datetime
 import re
+import sys
 
 #mypy
 #import typing
@@ -20,9 +22,12 @@ import re
 #from PyQt5.QtWidgets import QLabel, QPushButton, QTextEdit
 
 #own modules
+from catlib.messenger import Messenger
+from catlib.SQL_feeder import SQLFeeder
+from user_settings import SQLFEEDER_BACKEND
 
 class ReportParser(object):
-	def __init__(self, sql):
+	def __init__(self, msg, sql):
 		self.sql = sql
 		
 		self.building_list = ('Hauptgebäude', 'Kaserne', 'Schmiede', 'Versammlungsplatz', 'Statue', 'Holzfällerlager', 'Lehmgrube', 'Eisenmine', 'Bauernhof', 'Speicher', 'Versteck', 'Wall') #TODO complete
@@ -80,6 +85,7 @@ class ReportParser(object):
 		return village_id
 	
 	def parse(self, input_whole, file_path):
+		input_whole = input_whole.replace('<span class="grey">.</span>', '')
 		dict_timestamp = None
 		dict_winner = None
 		dict_spy_winner = None
@@ -208,3 +214,14 @@ class ReportParser(object):
 			
 			self.sql.insert(table='battles', param_dict={'attacker_village_id':attacker_village_id, 'defender_village_id':defender_village_id, 'battle_ts':battle_ts, 'attacker_won':attacker_won, 'looted_wood':dict_loot['wood'], 'looted_clay':dict_loot['clay'], 'looted_iron':dict_loot['iron'], 'spied_wood':dict_spied_resources['spied_wood'], 'spied_clay':dict_spied_resources['spied_clay'], 'spied_iron':dict_spied_resources['spied_iron'], 'headquarters':dict_buildings['Hauptgebäude'], 'barracks':dict_buildings['Kaserne'], 'smithy':dict_buildings['Schmiede'], 'rally_point':dict_buildings['Versammlungsplatz'], 'statue':dict_buildings['Statue'], 'timber_camp':dict_buildings['Holzfällerlager'], 'clay_pit':dict_buildings['Lehmgrube'], 'iron_mine':dict_buildings['Eisenmine'], 'farm':dict_buildings['Bauernhof'], 'warehouse':dict_buildings['Speicher'], 'hiding_place':dict_buildings['Versteck'], 'wall':dict_buildings['Wall'], 'attacker_spears_sent':dicts_unit_counts[0]['spear'], 'attacker_swords_sent':dicts_unit_counts[0]['sword'], 'attacker_axes_sent':dicts_unit_counts[0]['axe'], 'attacker_archers_sent':dicts_unit_counts[0]['archer'], 'attacker_scouts_sent':dicts_unit_counts[0]['scout'], 'attacker_lcav_sent':dicts_unit_counts[0]['lcav'], 'attacker_mounted_archers_sent':dicts_unit_counts[0]['marcher'], 'attacker_hcav_sent':dicts_unit_counts[0]['hcav'], 'attacker_rams_sent':dicts_unit_counts[0]['ram'], 'attacker_catapults_sent':dicts_unit_counts[0]['catapult'], 'attacker_paladin_sent':dicts_unit_counts[0]['paladin'], 'attacker_nobleman_sent':dicts_unit_counts[0]['nobleman'], 'attacker_spears_lost':dicts_unit_counts[1]['spear'], 'attacker_swords_lost':dicts_unit_counts[1]['sword'], 'attacker_axes_lost':dicts_unit_counts[1]['axe'], 'attacker_archers_lost':dicts_unit_counts[1]['archer'], 'attacker_scouts_lost':dicts_unit_counts[1]['scout'], 'attacker_lcav_lost':dicts_unit_counts[1]['lcav'], 'attacker_mounted_archers_lost':dicts_unit_counts[1]['marcher'], 'attacker_hcav_lost':dicts_unit_counts[1]['hcav'], 'attacker_rams_lost':dicts_unit_counts[1]['ram'], 'attacker_catapults_lost':dicts_unit_counts[1]['catapult'], 'attacker_paladin_lost':dicts_unit_counts[1]['paladin'], 'attacker_nobleman_lost':dicts_unit_counts[1]['nobleman'], 'defender_spears_sent':dicts_unit_counts[2]['spear'], 'defender_swords_sent':dicts_unit_counts[2]['sword'], 'defender_axes_sent':dicts_unit_counts[2]['axe'], 'defender_archers_sent':dicts_unit_counts[2]['archer'], 'defender_scouts_sent':dicts_unit_counts[2]['scout'], 'defender_lcav_sent':dicts_unit_counts[2]['lcav'], 'defender_mounted_archers_sent':dicts_unit_counts[2]['marcher'], 'defender_hcav_sent':dicts_unit_counts[2]['hcav'], 'defender_rams_sent':dicts_unit_counts[2]['ram'], 'defender_catapults_sent':dicts_unit_counts[2]['catapult'], 'defender_paladin_sent':dicts_unit_counts[2]['paladin'], 'defender_nobleman_sent':dicts_unit_counts[2]['nobleman'], 'defender_militia_sent':dicts_unit_counts[2]['militia'], 'defender_spears_lost':dicts_unit_counts[3]['spear'], 'defender_swords_lost':dicts_unit_counts[3]['sword'], 'defender_axes_lost':dicts_unit_counts[3]['axe'], 'defender_archers_lost':dicts_unit_counts[3]['archer'], 'defender_scouts_lost':dicts_unit_counts[3]['scout'], 'defender_lcav_lost':dicts_unit_counts[3]['lcav'], 'defender_mounted_archers_lost':dicts_unit_counts[3]['marcher'], 'defender_hcav_lost':dicts_unit_counts[3]['hcav'], 'defender_rams_lost':dicts_unit_counts[3]['ram'], 'defender_catapults_lost':dicts_unit_counts[3]['catapult'], 'defender_paladin_lost':dicts_unit_counts[3]['paladin'], 'defender_nobleman_lost':dicts_unit_counts[3]['nobleman'], 'defender_militia_lost':dicts_unit_counts[3]['militia'], 'file_path':file_path}, debug=False)
 		
+
+if __name__ == '__main__':
+	msg = Messenger(None, "pytw", False)
+	sql = SQLFeeder(msg, SQLFEEDER_BACKEND, 'pytw')
+	report_parser = ReportParser(msg, sql)
+	
+	with open(sys.argv[1], 'r') as infile:
+		print("importing", sys.argv[1])
+		report_parser.parse(infile.read(), sys.argv[1])
+	
+	sys.exit(0)
