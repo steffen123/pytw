@@ -30,7 +30,7 @@ Jetzt weitermachen bei "Installation - allgemeiner Teil"[/spoiler]
 [spoiler=Installation - andere Betriebssysteme]Bitte anfragen.[/spoiler]
 
 [spoiler=Installation - allgemeiner Teil]Das Programm selbst runterladen, entweder den alpha-Release oder die aktuelle Entwicklerversion:
-aktuelle alpha3: https://github.com/steffen123/pytw/archive/alpha3.zip
+aktuelle alpha4: https://github.com/steffen123/pytw/archive/alpha4.zip
 aktuelle Entwicklerversion: https://github.com/steffen123/pytw/archive/master.zip
 Das Archiv irgendwohin entpacken. Eine "richtige Installation" ist für das eigentliche Tool nicht notwendig.[/spoiler]
 
@@ -55,7 +55,7 @@ Für optimale Nutzung des Programms (und sowieso) sollte man bei jedem Angriff e
 
 [b]Angreifen[/b]
 Dies ist optional, aber für die Übersichtlichkeit gut wenn man viele Angriffe macht.
-Für jedes Ziel sind rechts eine Reihe von Buttons. Wenn du einen Angriff losschickst klicke den entsprechenden Button für die langsamste Einheit (Bögen und Äxte sind so schnell wie Speere) am. Dann versteckt das Programm das Ziel für die Zeitdauer bis die Truppe beim Ziel eintrifft.
+Wenn du einen Angriff losschickst wähle oben den Einheitentyp der langsamsten Einheit (Bögen und Äxte sind so schnell wie Speere, Katapulte so schnell wie Rämme) und klicke bei dem angegriffenen Ziel auf den Button. Dann versteckt das Programm das Ziel für die Zeitdauer bis die Truppe beim Ziel eintrifft.
 
 [b]Entwicklungsstand[/b]
 Alpha. Das Programm ist noch sehr ungeschliffen und hat nur grundlegende Funktionen. Eventuelle Probleme kann ich aber i.d.R. schnell beheben. Ich benutze es jetzt seit einigen Tagen für dutzende Angriffe pro Tag und hatte bisher keine Probleme. Es ist auch nur Englisch, aber es kommen insgesamt nur 20 Wörter oder so vor, ich hoffe das geht.
@@ -71,7 +71,12 @@ Alpha. Das Programm ist noch sehr ungeschliffen und hat nur grundlegende Funktio
 [b]alpha3 27.10.2015[/b]
 - diverse kleine Komfort-Verbesserungen
 - Zeigt nun auch Wall-Stufe und Einheitenanzahl am Ziel an
-- Kann nach Wall-Stufe und Einheitenanzahl filtern[/spoiler]
+- Kann nach Wall-Stufe und Einheitenanzahl filtern
+[b]alpha4 29.10.2015[/b]
+- diverse kleine Komfort-Verbesserungen
+- Bugfixe für Loot und erspähte Res
+- Filtern nach Entfernung und min. Loot (Einheit wählbar)
+- erspähte Res anzeigen[/spoiler]
 
 [b]Beziehung zu InnoGames/Die Stämme; Spielregeln[/b]
 Dieses Programm ist nicht von InnoGames geprüft, authorisiert, empfohlen oder sonst irgendwas. Da es aber keinerlei Handlungen in DS auslöst ist es erlaubt.

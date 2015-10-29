@@ -1,8 +1,6 @@
-=alpha4=
+=alpha5=
 screenshot mit beschriftung als anleitung
 806.htm
-
-=alpha5=
 check >1k looted res, units etc are also parsed correctly
 	let report_parser not commit to DB
 save current settings on exit (ini file, with defaults from user_settings.py, overridable at CLI)
