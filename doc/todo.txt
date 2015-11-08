@@ -1,27 +1,41 @@
 =alpha5=
+change scheduled_attacks to calculate time stamps on click, not on display
+
+pytw: speicher+versteck berücksichtigen, display last loot
+pytw: put db in proper locations
+pytw: parser from CLI: use different db
+
+in distance column display: distance/time
+display location like DS does
+filter by max travel time
+filter by spied res
+check if versteck exceeds/equals speicher
+
+=user friendlyness=
+readme: das programm, und alles was es benötigt, läuft komplett lokal.
 screenshot mit beschriftung als anleitung
-806.htm
+save current settings on exit (ini file, with defaults from user_settings.py, overridable at CLI)
+order the loot drop down by speed, display speed, and set spears as default (orderedDict?)
+divert all output to file
+on row delete offer to move or delete the report(s)
+after import update status bar
+DB changer: tool that copies scheduled_attacks from an old DB
+
+=bugs=
 check >1k looted res, units etc are also parsed correctly
 	let report_parser not commit to DB
-save current settings on exit (ini file, with defaults from user_settings.py, overridable at CLI)
-filter by max time to target
-in distance column display: distance/time
-order the loot drop down by speed, display speed, and set spears as default (orderedDict?)
+806.htm
+clicking X doesnt cause it to go through regular shutdown
+make sure i deduct deff losses
+
+=later alphas=
+store all reports into DB, not just the newest
 detect inactive players, filter by that
 	confirm with spy save: see if i detected units who are not at home
 		militia means player is active
-store all reports into DB, not just the newest
-display location like DS does
-divert all output to file
-on row delete offer to move or delete the report
 avg % of loot capacity gotten for each target (over the last week)
-after import update status bar
-clicking X doesnt cause it to go through regular shutdown
 check sqlite docs if parallel running should work
 DB change: building reductions in battles
-DB changer: tool that copies scheduled_attacks from an old DB
-
-=later alphas=
 profile support
 sort by date of last attack
 extra scout button or even tab

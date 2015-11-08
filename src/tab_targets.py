@@ -29,7 +29,7 @@ class TabTargets(GridScrollTab):
 		self.msg = msg
 		self.sql = sql
 		
-		self.headers = ("report", "village_name", "battle_ts", "location_x", "location_y", "wall", "unit_count", "spied_res", "last_loot", "distance", "attack", "delete")
+		self.headers = ("report", "village_name", "report date", "location", "wall", "unit_count", "spied_res", "last_loot", "distance", "attack", "delete")
 		self.unit_speeds = {'ram':30, 'sword':22, 'spear':18, 'lcav':10, 'scout':9} #TODO migrate to below
 		self.units = {'spears':{'loot_capacity':25}, 'swords':{'loot_capacity':15}, 'axes':{'loot_capacity':10}, 'archers':{'loot_capacity':10}, 'scouts':{'loot_capacity':0}, 'lcav':{'loot_capacity':80}, 'mounted_archers':{'loot_capacity':50}, 'hcav':{'loot_capacity':50}, 'rams':{'loot_capacity':0}, 'catapults':{'loot_capacity':0}, 'paladin':{'loot_capacity':100}, 'noblemen':{'loot_capacity':0}, 'militia':{'loot_capacity':0}}
 		
@@ -273,8 +273,12 @@ class TabTargets(GridScrollTab):
 					self.layout.addWidget(button, current_y, current_x, 1, 1)
 				elif field == "distance":
 					self.layout.addWidget(QLabel('%.1f' % target[field]), current_y, current_x, 1, 1)
+				elif field == "report date":
+					self.layout.addWidget(QLabel(datetime.datetime.strptime(target['battle_ts'], '%Y-%m-%d %H:%M:%S.%f').strftime('%d%b %H:%M')), current_y, current_x, 1, 1) #TODO remove crazy conversion once DB returns it properly +'000'
 				elif field == "last_loot":
 					self.layout.addWidget(QLabel('%s/%s' % (total_looted, total_loot_capacity)), current_y, current_x, 1, 1)
+				elif field == "location":
+					self.layout.addWidget(QLabel('%d|%d' % (target['location_x'], target['location_y'])), current_y, current_x, 1, 1)
 				else:
 					self.layout.addWidget(QLabel(str(target[field])), current_y, current_x, 1, 1)
 				

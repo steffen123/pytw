@@ -3,7 +3,7 @@
 [b]Funktionen[/b]
 - Liest Spionage- und Kampfreporte und speichert sie in eine Datenbank
 - Filtern zwischen Spielern und Barbaren
-- Filtern nach Wall-Stufe und Einheitenanzahl (min, max, oder genaue Zahl)
+- Filtern nach Wall-Stufe und Einheitenanzahl (min, max, oder genaue Zahl), Entfernung und min. Loot
 - Zeigt die möglichen Ziele tabelarisch an
 - Berechnet anhand der Gebäude, der Entfernung, Geschwindigkeit der einzusetzenden Einheit und des Berichtsalters wieviel man bei dem jeweiligen Ziel mitnehmen kann
 - Kann nur Spieler anzeigen (default), nur Barbaren, oder beides
