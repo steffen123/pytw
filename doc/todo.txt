@@ -1,12 +1,13 @@
 =alpha5=
 change scheduled_attacks to calculate time stamps on click, not on display
+display location like DS does
+pgsql run to ensure data types
 
 pytw: speicher+versteck berücksichtigen, display last loot
 pytw: put db in proper locations
 pytw: parser from CLI: use different db
 
 in distance column display: distance/time
-display location like DS does
 filter by max travel time
 filter by spied res
 check if versteck exceeds/equals speicher
@@ -22,6 +23,7 @@ after import update status bar
 DB changer: tool that copies scheduled_attacks from an old DB
 
 =bugs=
+on 210 it showed loot, even though it was merely spied
 check >1k looted res, units etc are also parsed correctly
 	let report_parser not commit to DB
 806.htm
@@ -72,9 +74,7 @@ filter max distance
 rename recreate_tables to delete_and_recreate_database
 clear expired scheduled attacks
 convert user_settings to ini file
-check if 1 spy is enough to get full info
 mehrdorfunterstützung
-pgsql run to ensure data types
 add selector for slowest unit intended to participate in attacks
 umfrage ins forum über künftige features:
 	deutsche übersetzung
@@ -98,11 +98,10 @@ list targets i need to spy due to wall=NULL
 make it work with complete site saved (ie instead of html-only)
 return IDs of imports from parser to display details of success in status bar
 make sure it works for incoming spies/attacks, too
-DB: add paladin names and weapons
-DB: add building costs and productions
-DB: add alarms
-DB: add rankings
-DB: add tribes table
+add paladin names and weapons
+add building costs and productions
+add rankings
+add tribes table
 allied tribes
 update checker
 store map

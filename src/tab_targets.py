@@ -295,7 +295,7 @@ class TabTargets(GridScrollTab):
 		attacking_unit = self.sender().property('attacking_unit')
 		oneway_time = self.sender().property('oneway_time')
 		
-		self.sql.insert(table='scheduled_attacks', param_dict={'attacker_village_id':attacker_village_id, 'defender_village_id':defender_village_id, 'is_attack':True, 'slowest_unit':attacking_unit, 'launch_ts':datetime.datetime.now(), 'arrival_ts':datetime.datetime.now() + datetime.timedelta(hours=oneway_time)}, debug=False)
+		self.sql.insert(table='scheduled_attacks', param_dict={'attacker_village_id':attacker_village_id, 'defender_village_id':defender_village_id, 'is_attack':True, 'slowest_unit':attacking_unit, 'launch_ts':datetime.datetime.now(), 'arrival_ts':datetime.datetime.now() + datetime.timedelta(hours=oneway_time), 'return_ts':datetime.datetime.now() + datetime.timedelta(hours=2*oneway_time)}, debug=False)
 		self.draw()
 	
 	def calculate_oneway_time(self, distance, attacking_unit):
