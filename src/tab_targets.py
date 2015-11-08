@@ -246,7 +246,6 @@ class TabTargets(GridScrollTab):
 				if unit_name == 'militia':
 					continue
 				
-				print(target)
 				total_loot_capacity += (target['attacker_%s_sent' % unit_name] - target['attacker_%s_lost' % unit_name]) * unit_dict['loot_capacity']
 			total_looted = target['looted_wood'] + target['looted_clay'] + target['looted_iron']
 			

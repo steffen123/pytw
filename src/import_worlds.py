@@ -29,13 +29,15 @@ class ImportWorlds(object):
 	def __init__(self, sql):
 		self.sql = sql
 		
+		import_count = 0
 		for filepath in os.listdir(os.path.join('.', 'import', 'world_settings')):
 			domain = filepath.split('.')[0]
-			print(domain)
 			self.sql.insert(table='worlds', param_dict={'world_string':domain}, debug=False)
 			world_id = self.sql.last_insert_id()
 			
 			self.sql.insert(table='players', param_dict={'inno_player_id':0, 'player_name':'Barbaren', 'world_id':world_id}, debug=False) #TODO: tribe abbreviation
+			import_count += 1
+		print("Imported %d worlds" % import_count)
 
 if __name__ == '__main__':
 	messenger = Messenger(args=None, name="pytw", has_GUI=False)
