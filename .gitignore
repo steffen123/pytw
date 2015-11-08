@@ -8,6 +8,7 @@
 
 /import/maps
 /import/reports/*.htm*
-/import/reports_old
+/import/reports-deleted_renamed_players
+/import/reports-older-than-current-scan-cycle
 /import/world_settings
 /game_infos/Formeln.htm
