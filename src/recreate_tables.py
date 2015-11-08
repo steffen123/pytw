@@ -76,9 +76,9 @@ class RecreateTables():
 			
 			#noblemen
 			{'not_null':False, 'name':'noble_price_increase', 'type':'VARCHAR(12)', 'comment':'valid values: gold'},
-			{'not_null':False, 'name':'nobleman_distance', 'type':'INT16'},
-			{'not_null':False, 'name':'nobleman_attack_min', 'type':'INT16'},
-			{'not_null':False, 'name':'nobleman_attack_max', 'type':'INT16'},
+			{'not_null':False, 'name':'noblemen_distance', 'type':'INT16'},
+			{'not_null':False, 'name':'noblemen_attack_min', 'type':'INT16'},
+			{'not_null':False, 'name':'noblemen_attack_max', 'type':'INT16'},
 			{'not_null':False, 'name':'loyalty_per_hour', 'type':'INT16'},
 			
 			#configuration
@@ -97,12 +97,36 @@ class RecreateTables():
 		
 		table = (
 			{'not_null':True, 'name':'id', 'type':'PKEY'},
+			{'not_null':True, 'name':'world_id', 'type':'FKEY', 'fkey_table':'worlds'},
+			{'not_null':True, 'name':'alarm_ts', 'type':'DATETIME'},
+			{'not_null':True, 'name':'completed', 'type':'BOOLEAN', 'default':False},
+			{'not_null':True, 'name':'importance', 'type':'INT16'},
+			{'not_null':True, 'name':'user_note', 'type':'VARCHAR(500)'},
+		)
+		self.sql.create_table('alarms', "TODO", table, False)
+		
+		table = (
+			{'not_null':True, 'name':'id', 'type':'PKEY'},
+			{'not_null':True, 'name':'world_id', 'type':'FKEY', 'fkey_table':'worlds'},
 			{'not_null':True, 'name':'inno_player_id', 'type':'INT64'},
 			{'not_null':True, 'name':'player_name', 'type':'VARCHAR(100)'},
-			{'not_null':True, 'name':'world_id', 'type':'FKEY', 'fkey_table':'worlds', 'comment':'format: language plus number, e.g. de122'},
+			{'not_null':False, 'name':'last_activity_detected_ts', 'type':'DATETIME'},
 			{'not_null':False, 'name':'tribe_abbreviation', 'type':'VARCHAR(100)'},
 		)
 		self.sql.create_table('players', "TODO", table, False)
+		
+		table = (
+			{'not_null':True, 'name':'id', 'type':'PKEY'},
+			{'not_null':True, 'name':'world_id', 'type':'FKEY', 'fkey_table':'worlds'},
+			{'not_null':True, 'name':'inno_player_id', 'type':'INT64'},
+			{'not_null':True, 'name':'continent', 'type':'VARCHAR(4)'},
+			{'not_null':True, 'name':'ranking_ts', 'type':'DATETIME'},
+			{'not_null':True, 'name':'score', 'type':'INT32'},
+			{'not_null':False, 'name':'continent_score', 'type':'INT32'},
+			{'not_null':True, 'name':'rank', 'type':'INT32'},
+			{'not_null':False, 'name':'continent_rank', 'type':'INT32'},
+		)
+		self.sql.create_table('player_rankings', "TODO", table, False)
 		
 		table = (
 			{'not_null':True, 'name':'id', 'type':'PKEY'},
@@ -124,6 +148,7 @@ class RecreateTables():
 			{'not_null':True, 'name':'slowest_unit', 'type':'VARCHAR(10)'},
 			{'not_null':True, 'name':'launch_ts', 'type':'DATETIME'},
 			{'not_null':True, 'name':'arrival_ts', 'type':'DATETIME'},
+			{'not_null':True, 'name':'return_ts', 'type':'DATETIME'},
 		)
 		self.sql.create_table('scheduled_attacks', "TODO", table, False)
 		
@@ -133,6 +158,10 @@ class RecreateTables():
 			{'not_null':True, 'name':'attacker_village_id', 'type':'FKEY', 'fkey_table':'villages'},
 			{'not_null':True, 'name':'defender_village_id', 'type':'FKEY', 'fkey_table':'villages'},
 			{'not_null':True, 'name':'battle_ts', 'type':'DATETIME'},
+			
+			{'not_null':False, 'name':'flag_attack_strength', 'type':'INT16'}, #TODO change to not_null to True on this block
+			{'not_null':False, 'name':'flag_defense_strength', 'type':'INT16'}, #TODO change to not_null to True on this block
+			{'not_null':False, 'name':'flag_loot_capacity', 'type':'INT16'}, #TODO change to not_null to True on this block
 			
 			{'not_null':True, 'name':'attacker_won', 'type':'BOOLEAN'},
 			{'not_null':False, 'name':'looted_wood', 'type':'INT32'},
@@ -161,6 +190,10 @@ class RecreateTables():
 			{'not_null':False, 'name':'hiding_place', 'type':'INT16'},
 			{'not_null':False, 'name':'wall', 'type':'INT16'},
 			
+			{'not_null':False, 'name':'ram_damage', 'type':'INT16', 'comment':'number of levels taken'},
+			{'not_null':False, 'name':'catapult_target', 'type':'VARCHAR(30)'},
+			{'not_null':False, 'name':'catapult_damage', 'type':'INT16', 'comment':'number of levels taken'},
+			
 			{'not_null':False, 'name':'attacker_luck', 'type':'INT16'}, #TODO no not_null
 			{'not_null':False, 'name':'morale', 'type':'INT16'},
 			
@@ -175,7 +208,7 @@ class RecreateTables():
 			{'not_null':False, 'name':'away_rams', 'type':'INT32'},
 			{'not_null':False, 'name':'away_catapults', 'type':'INT32'},
 			{'not_null':False, 'name':'away_paladin', 'type':'INT32'},
-			{'not_null':False, 'name':'away_nobleman', 'type':'INT32'},
+			{'not_null':False, 'name':'away_noblemen', 'type':'INT32'},
 			
 			{'not_null':False, 'name':'attacker_spears_sent', 'type':'INT32'},
 			{'not_null':False, 'name':'attacker_swords_sent', 'type':'INT32'},
@@ -188,7 +221,8 @@ class RecreateTables():
 			{'not_null':False, 'name':'attacker_rams_sent', 'type':'INT32'},
 			{'not_null':False, 'name':'attacker_catapults_sent', 'type':'INT32'},
 			{'not_null':False, 'name':'attacker_paladin_sent', 'type':'INT32'},
-			{'not_null':False, 'name':'attacker_nobleman_sent', 'type':'INT32'},
+			{'not_null':False, 'name':'attacker_paladin_weapon', 'type':'VARCHAR(50)'},
+			{'not_null':False, 'name':'attacker_noblemen_sent', 'type':'INT32'},
 			
 			{'not_null':False, 'name':'attacker_spears_lost', 'type':'INT32'},
 			{'not_null':False, 'name':'attacker_swords_lost', 'type':'INT32'},
@@ -201,7 +235,7 @@ class RecreateTables():
 			{'not_null':False, 'name':'attacker_rams_lost', 'type':'INT32'},
 			{'not_null':False, 'name':'attacker_catapults_lost', 'type':'INT32'},
 			{'not_null':False, 'name':'attacker_paladin_lost', 'type':'INT32'},
-			{'not_null':False, 'name':'attacker_nobleman_lost', 'type':'INT32'},
+			{'not_null':False, 'name':'attacker_noblemen_lost', 'type':'INT32'},
 			
 			{'not_null':False, 'name':'defender_spears_sent', 'type':'INT32'},
 			{'not_null':False, 'name':'defender_swords_sent', 'type':'INT32'},
@@ -214,7 +248,8 @@ class RecreateTables():
 			{'not_null':False, 'name':'defender_rams_sent', 'type':'INT32'},
 			{'not_null':False, 'name':'defender_catapults_sent', 'type':'INT32'},
 			{'not_null':False, 'name':'defender_paladin_sent', 'type':'INT32'},
-			{'not_null':False, 'name':'defender_nobleman_sent', 'type':'INT32'},
+			{'not_null':False, 'name':'defender_paladin_weapon', 'type':'VARCHAR(50)'},
+			{'not_null':False, 'name':'defender_noblemen_sent', 'type':'INT32'},
 			{'not_null':False, 'name':'defender_militia_sent', 'type':'INT32'},
 			
 			{'not_null':False, 'name':'defender_spears_lost', 'type':'INT32'},
@@ -228,7 +263,7 @@ class RecreateTables():
 			{'not_null':False, 'name':'defender_rams_lost', 'type':'INT32'},
 			{'not_null':False, 'name':'defender_catapults_lost', 'type':'INT32'},
 			{'not_null':False, 'name':'defender_paladin_lost', 'type':'INT32'},
-			{'not_null':False, 'name':'defender_nobleman_lost', 'type':'INT32'},
+			{'not_null':False, 'name':'defender_noblemen_lost', 'type':'INT32'},
 			{'not_null':False, 'name':'defender_militia_lost', 'type':'INT32'},
 		)
 		self.sql.create_table('battles', "TODO", table, False)

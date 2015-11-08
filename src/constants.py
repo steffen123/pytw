@@ -9,4 +9,4 @@
 #other 3rd party libs
 #import typing
 
-DB_VERSION = 1
+DB_VERSION = 2
