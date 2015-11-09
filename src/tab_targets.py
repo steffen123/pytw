@@ -81,7 +81,7 @@ class TabTargets(GridScrollTab):
 		if self.line_loot:
 			line_loot_old_setting = self.line_loot.text()
 		else:
-			line_loot_old_setting = "600"
+			line_loot_old_setting = "0"
 		
 		
 		if self.line_distance:
