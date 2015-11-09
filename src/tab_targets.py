@@ -23,15 +23,14 @@ from PyQt5.QtWidgets import QComboBox, QLabel, QLineEdit, QPushButton, QTextEdit
 from catlib.grid_scroll_tab import GridScrollTab
 
 class TabTargets(GridScrollTab):
-	def __init__(self, msg, sql):
+	def __init__(self, msg, sql, game_data):
 		super(TabTargets, self).__init__()
 		self.name = "Targets"
 		self.msg = msg
 		self.sql = sql
+		self.game_data = game_data
 		
 		self.headers = ("report", "village_name", "report date", "location", "wall", "unit_count", "spied_res", "last_loot", "distance", "attack", "delete")
-		self.unit_speeds = {'ram':30, 'sword':22, 'spear':18, 'lcav':10, 'scout':9} #TODO migrate to below
-		self.units = {'spears':{'loot_capacity':25}, 'swords':{'loot_capacity':15}, 'axes':{'loot_capacity':10}, 'archers':{'loot_capacity':10}, 'scouts':{'loot_capacity':0}, 'lcav':{'loot_capacity':80}, 'mounted_archers':{'loot_capacity':50}, 'hcav':{'loot_capacity':50}, 'rams':{'loot_capacity':0}, 'catapults':{'loot_capacity':0}, 'paladin':{'loot_capacity':100}, 'noblemen':{'loot_capacity':0}, 'militia':{'loot_capacity':0}}
 		
 		self.combo_barbarian = None
 		self.combo_wall = None
@@ -142,7 +141,7 @@ class TabTargets(GridScrollTab):
 		
 		self.combo_speed = QComboBox()
 		self.combo_speed_strings = []
-		for unit_name in self.unit_speeds.keys():
+		for unit_name in self.game_data.unit_speeds.keys():
 			self.combo_speed.addItem("min. loot with %s" % unit_name)
 			self.combo_speed_strings.append(unit_name)
 		self.combo_speed.setCurrentIndex(combo_speed_old_setting)
@@ -211,7 +210,7 @@ class TabTargets(GridScrollTab):
 				continue
 			
 			delta_hours = (datetime.datetime.now() - datetime.datetime.strptime(target['battle_ts'], '%Y-%m-%d %H:%M:%S.%f')).seconds/3600
-			target["distance"] = self.calculate_distance(target['attacker_village_id'], target['defender_village_id'])
+			target["distance"] = self.game_data.calculate_distance(target['attacker_village_id'], target['defender_village_id'])
 			if target["distance"] > max_distance:
 				continue
 			
@@ -232,7 +231,7 @@ class TabTargets(GridScrollTab):
 			target['spied_res'] = target['spied_wood'] + target['spied_clay'] + target['spied_iron']
 			
 			attacking_unit = self.combo_speed_strings[self.combo_speed.currentIndex()]
-			oneway_time = self.calculate_oneway_time(target["distance"], attacking_unit)
+			oneway_time = self.game_data.calculate_oneway_time(target["distance"], attacking_unit)
 			wood = target['spied_wood'] + round(48 * math.pow(1.163118, target['timber_camp']-1) / 1.6 * (delta_hours + oneway_time))
 			clay = target['spied_clay'] + round(48 * math.pow(1.163118, target['clay_pit']-1) / 1.6 * (delta_hours + oneway_time))
 			iron = target['spied_iron'] + round(48 * math.pow(1.163118, target['iron_mine']-1) / 1.6 * (delta_hours + oneway_time))
@@ -242,7 +241,7 @@ class TabTargets(GridScrollTab):
 			
 			
 			total_loot_capacity = 0
-			for unit_name, unit_dict in self.units.items():
+			for unit_name, unit_dict in self.game_data.units.items():
 				if unit_name == 'militia':
 					continue
 				
@@ -297,20 +296,6 @@ class TabTargets(GridScrollTab):
 		
 		self.sql.insert(table='scheduled_attacks', param_dict={'attacker_village_id':attacker_village_id, 'defender_village_id':defender_village_id, 'is_attack':True, 'slowest_unit':attacking_unit, 'launch_ts':datetime.datetime.now(), 'arrival_ts':datetime.datetime.now() + datetime.timedelta(hours=oneway_time), 'return_ts':datetime.datetime.now() + datetime.timedelta(hours=2*oneway_time)}, debug=False)
 		self.draw()
-	
-	def calculate_oneway_time(self, distance, attacking_unit):
-		return distance * self.unit_speeds[attacking_unit] / 60
-	
-	def calculate_distance(self, attacker_village_id, defender_village_id):
-		attacker = self.sql.select(table="villages", param_list=('location_x', 'location_y'), where_param_dicts=({'field':'id', 'comparator':'=', 'value':attacker_village_id}, ), debug=False)
-		att_x = attacker[0]['location_x']
-		att_y = attacker[0]['location_y']
-		
-		defender = self.sql.select(table="villages", param_list=('location_x', 'location_y'), where_param_dicts=({'field':'id', 'comparator':'=', 'value':defender_village_id}, ), debug=False)
-		def_x = defender[0]['location_x']
-		def_y = defender[0]['location_y']
-		
-		return math.sqrt(math.pow(att_x - def_x, 2) + math.pow(att_y - def_y, 2))
 	
 	def delete_button_clicked(self, TODO_dunno):
 		battle_id = self.sender().property('battle_id')

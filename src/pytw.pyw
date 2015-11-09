@@ -28,11 +28,12 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QTabWidget
 #own modules
 #TODO from RecreateTables import RecreateTables
 #TODO from import_worlds import ImportWorlds
-from report_parser import ReportParser
-from tab_targets import TabTargets
 from catlib.messenger import Messenger
 from catlib.SQL_feeder import SQLFeeder
 from catlib.tab_DB_info import TabDBInfo
+from report_parser import ReportParser
+from game_data import GameData
+from tab_targets import TabTargets
 from user_settings import SQLFEEDER_BACKEND
 
 class Pytw(QMainWindow):
@@ -48,8 +49,9 @@ class Pytw(QMainWindow):
 		self.msg.message_debug("Args: %s" % str(self.args))
 		self.home_path = self.msg.home_path
 		
-		#setup the sqlite DB
+		#setup the sqlite DB and data
 		self.sql = SQLFeeder(self.msg, SQLFEEDER_BACKEND, 'pytw')
+		self.game_data = GameData(self.sql)
 		
 		#setup window
 		with open(os.path.join('src', 'version.ini'), 'r') as infile:
@@ -73,7 +75,7 @@ class Pytw(QMainWindow):
 		
 		self.report_parser = ReportParser(self.msg, self.sql)
 		
-		self.add_tab(TabTargets(self.msg, self.sql))
+		self.add_tab(TabTargets(self.msg, self.sql, self.game_data))
 		self.add_tab(TabDBInfo(self.sql))
 		
 		self.setup_toolbar()
