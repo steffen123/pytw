@@ -5,7 +5,7 @@
 - Filtern zwischen Spielern und Barbaren
 - Filtern nach Wall-Stufe und Einheitenanzahl (min, max, oder genaue Zahl), Entfernung und min. Loot
 - Zeigt die möglichen Ziele tabelarisch an
-- Berechnet anhand der Gebäude, der Entfernung, Geschwindigkeit der einzusetzenden Einheit und des Berichtsalters wieviel man bei dem jeweiligen Ziel mitnehmen kann
+- Berechnet anhand der Gebäude, der Entfernung, Geschwindigkeit der einzusetzenden Einheit und des Berichtsalters wieviel man bei dem jeweiligen Ziel mitnehmen kann. Speicher&Versteck werden dabei berücksichtigt.
 - Kann nur Spieler anzeigen (default), nur Barbaren, oder beides
 - Programm arbeitet komplett auf eurem Rechner und ist nicht von Webdiensten oder irgendwas abhängig (und es nutzt solche auch nicht)
 - Freie Software, d.h. kann gemäß der AGPL-Lizenz von jedem verändert oder geteilt (wiederveröffentlicht) werden.
@@ -30,7 +30,7 @@ Jetzt weitermachen bei "Installation - allgemeiner Teil"[/spoiler]
 [spoiler=Installation - andere Betriebssysteme]Bitte anfragen.[/spoiler]
 
 [spoiler=Installation - allgemeiner Teil]Das Programm selbst runterladen, entweder den alpha-Release oder die aktuelle Entwicklerversion:
-aktuelle alpha4: https://github.com/steffen123/pytw/archive/alpha4.zip
+aktuelle alpha5: https://github.com/steffen123/pytw/archive/alpha5.zip
 aktuelle Entwicklerversion: https://github.com/steffen123/pytw/archive/master.zip
 Das Archiv irgendwohin entpacken. Eine "richtige Installation" ist für das eigentliche Tool nicht notwendig.[/spoiler]
 
@@ -76,7 +76,13 @@ Alpha. Das Programm ist noch sehr ungeschliffen und hat nur grundlegende Funktio
 - diverse kleine Komfort-Verbesserungen
 - Bugfixe für Loot und erspähte Res
 - Filtern nach Entfernung und min. Loot (Einheit wählbar)
-- erspähte Res anzeigen[/spoiler]
+- erspähte Res anzeigen
+[b]alpha5 10.11.2015[/b]
+- Berücksichtigt jetzt Speicher und Versteck
+- Verbesserte Anzeige von Ziel-Koordinaten und erwartetem Loot
+- Zeigt Loot vom letzten mal an
+- Neues DB-Schema
+[/spoiler]
 
 [b]Beziehung zu InnoGames/Die Stämme; Spielregeln[/b]
-Dieses Programm ist nicht von InnoGames geprüft, authorisiert, empfohlen oder sonst irgendwas. Da es aber keinerlei Handlungen in DS auslöst ist es erlaubt.
+Dieses Programm ist nicht von InnoGames geprüft, authorisiert, empfohlen oder sonst irgendwas. Da es aber keinerlei Handlungen in DS auslöst ist es nicht Gegenstand der DS-Spielregeln.
