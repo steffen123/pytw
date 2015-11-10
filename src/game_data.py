@@ -17,7 +17,7 @@ class GameData():
 		self.sql = sql
 		
 		self.units = {'spears':{'loot_capacity':25}, 'swords':{'loot_capacity':15}, 'axes':{'loot_capacity':10}, 'archers':{'loot_capacity':10}, 'scouts':{'loot_capacity':0}, 'lcav':{'loot_capacity':80}, 'mounted_archers':{'loot_capacity':50}, 'hcav':{'loot_capacity':50}, 'rams':{'loot_capacity':0}, 'catapults':{'loot_capacity':0}, 'paladin':{'loot_capacity':100}, 'noblemen':{'loot_capacity':0}, 'militia':{'loot_capacity':0}}
-		self.unit_speeds = {'ram':30, 'sword':22, 'spear':18, 'lcav':10, 'scout':9} #TODO migrate to above
+		self.unit_speeds = {'rams':30, 'swords':22, 'spears':18, 'lcav':10, 'scouts':9} #TODO migrate to above
 	
 	def distance(self, attacker_village_id, defender_village_id):
 		attacker = self.sql.select(table="villages", param_list=('location_x', 'location_y'), where_param_dicts=({'field':'id', 'comparator':'=', 'value':attacker_village_id}, ), debug=False)

@@ -261,7 +261,10 @@ class TabTargets(GridScrollTab):
 			
 			for field in self.headers:
 				if field == "attack":
-					button = QPushButton('loot %d' % expected_loot)
+					if self.game_data.units[attacking_unit]['loot_capacity'] > 0:
+						button = QPushButton("%dres, %.1f%s" % (expected_loot, expected_loot/self.game_data.units[attacking_unit]['loot_capacity'], attacking_unit))
+					else:
+						button = QPushButton("%dres" % expected_loot)
 					button.setProperty('attacker_village_id', target['attacker_village_id'])
 					button.setProperty('defender_village_id', target['defender_village_id'])
 					button.setProperty('attacking_unit', attacking_unit)
