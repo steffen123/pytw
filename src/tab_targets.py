@@ -202,7 +202,7 @@ class TabTargets(GridScrollTab):
 		where_literal += self.line_units.text() #TODO input error handling
 		
 		
-		targets = self.sql.select(table="battles INNER JOIN villages ON battles.defender_village_id = villages.id", param_list=('location_x', 'location_y', 'village_name', 'battle_ts', 'spied_wood', 'spied_clay', 'spied_iron', 'timber_camp', 'clay_pit', 'iron_mine', 'attacker_village_id', 'defender_village_id', 'battles.id', 'file_path', 'wall', 'defender_spears_sent', 'defender_swords_sent', 'defender_axes_sent', 'defender_archers_sent', 'defender_scouts_sent', 'defender_lcav_sent', 'defender_mounted_archers_sent', 'defender_hcav_sent', 'defender_rams_sent', 'defender_catapults_sent', 'defender_paladin_sent', 'defender_noblemen_sent', 'defender_militia_sent', 'attacker_spears_sent', 'attacker_swords_sent', 'attacker_axes_sent', 'attacker_archers_sent', 'attacker_scouts_sent', 'attacker_lcav_sent', 'attacker_mounted_archers_sent', 'attacker_hcav_sent', 'attacker_rams_sent', 'attacker_catapults_sent', 'attacker_paladin_sent', 'attacker_noblemen_sent', 'attacker_spears_lost', 'attacker_swords_lost', 'attacker_axes_lost', 'attacker_archers_lost', 'attacker_scouts_lost', 'attacker_lcav_lost', 'attacker_mounted_archers_lost', 'attacker_hcav_lost', 'attacker_rams_lost', 'attacker_catapults_lost', 'attacker_paladin_lost', 'attacker_noblemen_lost', 'looted_wood', 'looted_clay', 'looted_iron'), where_param_dicts=None, where_literal=where_literal, debug=False)
+		targets = self.sql.select(table="battles INNER JOIN villages ON battles.defender_village_id = villages.id", param_list=('location_x', 'location_y', 'village_name', 'battle_ts', 'spied_wood', 'spied_clay', 'spied_iron', 'timber_camp', 'clay_pit', 'iron_mine', 'attacker_village_id', 'defender_village_id', 'battles.id', 'file_path', 'wall', 'defender_spears_sent', 'defender_swords_sent', 'defender_axes_sent', 'defender_archers_sent', 'defender_scouts_sent', 'defender_lcav_sent', 'defender_mounted_archers_sent', 'defender_hcav_sent', 'defender_rams_sent', 'defender_catapults_sent', 'defender_paladin_sent', 'defender_noblemen_sent', 'defender_militia_sent', 'attacker_spears_sent', 'attacker_swords_sent', 'attacker_axes_sent', 'attacker_archers_sent', 'attacker_scouts_sent', 'attacker_lcav_sent', 'attacker_mounted_archers_sent', 'attacker_hcav_sent', 'attacker_rams_sent', 'attacker_catapults_sent', 'attacker_paladin_sent', 'attacker_noblemen_sent', 'attacker_spears_lost', 'attacker_swords_lost', 'attacker_axes_lost', 'attacker_archers_lost', 'attacker_scouts_lost', 'attacker_lcav_lost', 'attacker_mounted_archers_lost', 'attacker_hcav_lost', 'attacker_rams_lost', 'attacker_catapults_lost', 'attacker_paladin_lost', 'attacker_noblemen_lost', 'looted_wood', 'looted_clay', 'looted_iron', 'hiding_place', 'warehouse'), where_param_dicts=None, where_literal=where_literal, debug=False)
 		
 		for target in targets:
 			is_current_attack_target = self.sql.select(table="scheduled_attacks", param_list=('defender_village_id', ), where_param_dicts=({'field':'defender_village_id', 'comparator':'=', 'value':target['defender_village_id']}, {'field':'arrival_ts', 'comparator':'>', 'value':"'"+str(datetime.datetime.now())+"'"}), debug=False)
@@ -210,7 +210,7 @@ class TabTargets(GridScrollTab):
 				continue
 			
 			delta_hours = (datetime.datetime.now() - datetime.datetime.strptime(target['battle_ts'], '%Y-%m-%d %H:%M:%S.%f')).seconds/3600
-			target["distance"] = self.game_data.calculate_distance(target['attacker_village_id'], target['defender_village_id'])
+			target["distance"] = self.game_data.distance(target['attacker_village_id'], target['defender_village_id'])
 			if target["distance"] > max_distance:
 				continue
 			
@@ -231,10 +231,19 @@ class TabTargets(GridScrollTab):
 			target['spied_res'] = target['spied_wood'] + target['spied_clay'] + target['spied_iron']
 			
 			attacking_unit = self.combo_speed_strings[self.combo_speed.currentIndex()]
-			oneway_time = self.game_data.calculate_oneway_time(target["distance"], attacking_unit)
+			oneway_time = self.game_data.oneway_time(target["distance"], attacking_unit)
+			
 			wood = target['spied_wood'] + round(48 * math.pow(1.163118, target['timber_camp']-1) / 1.6 * (delta_hours + oneway_time))
 			clay = target['spied_clay'] + round(48 * math.pow(1.163118, target['clay_pit']-1) / 1.6 * (delta_hours + oneway_time))
 			iron = target['spied_iron'] + round(48 * math.pow(1.163118, target['iron_mine']-1) / 1.6 * (delta_hours + oneway_time))
+			
+			max_storage = self.game_data.max_storage(target['warehouse'], target['hiding_place'])
+			if wood > max_storage:
+				wood = max_storage
+			if clay > max_storage:
+				clay = max_storage
+			if iron > max_storage:
+				iron = max_storage
 			expected_loot = wood + clay + iron
 			if expected_loot < int(self.line_loot.text()):
 				continue
