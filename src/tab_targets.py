@@ -23,183 +23,50 @@ from PyQt5.QtWidgets import QComboBox, QLabel, QLineEdit, QPushButton, QTextEdit
 from catlib.grid_scroll_tab import GridScrollTab
 
 class TabTargets(GridScrollTab):
-	def __init__(self, msg, sql, game_data):
+	def __init__(self, msg, sql, game_data, filter):
 		super(TabTargets, self).__init__()
 		self.name = "Targets"
 		self.msg = msg
 		self.sql = sql
 		self.game_data = game_data
+		self.filter = filter
 		
 		self.headers = ("report", "village_name", "report date", "location", "wall", "unit_count", "spied_res", "last_loot", "distance", "attack", "delete")
-		
-		self.combo_barbarian = None
-		self.combo_wall = None
-		self.line_wall = None
-		self.combo_units = None
-		self.line_units = None
-		self.combo_speed = None
-		self.line_loot = None
-		self.line_distance = None
 		
 		self.draw()
 	
 	def draw(self):
-		if self.combo_barbarian:
-			combo_barbarian_old_setting = self.combo_barbarian.currentIndex()
-		else:
-			combo_barbarian_old_setting = 0
-		
-		
-		if self.combo_wall:
-			combo_wall_old_setting = self.combo_wall.currentIndex()
-		else:
-			combo_wall_old_setting = 0
-		
-		if self.line_wall:
-			line_wall_old_setting = self.line_wall.text()
-		else:
-			line_wall_old_setting = "0"
-		
-		
-		if self.combo_units:
-			combo_units_old_setting = self.combo_units.currentIndex()
-		else:
-			combo_units_old_setting = 0
-		
-		if self.line_units:
-			line_units_old_setting = self.line_units.text()
-		else:
-			line_units_old_setting = "0"
-		
-		
-		if self.combo_speed:
-			combo_speed_old_setting = self.combo_speed.currentIndex()
-		else:
-			combo_speed_old_setting = 0
-		
-		if self.line_loot:
-			line_loot_old_setting = self.line_loot.text()
-		else:
-			line_loot_old_setting = "0"
-		
-		
-		if self.line_distance:
-			line_distance_old_setting = self.line_distance.text()
-		else:
-			line_distance_old_setting = "50.0"
-		
-		
 		while(True): #TODO move this into superclass
 			item = self.layout.takeAt(0)
 			if not item:
 				break
 			item.widget().deleteLater()
 		
-		
 		current_x = 0
 		current_y = 0
 		
 		
-		self.combo_barbarian = QComboBox()
-		for item in ("only Players", "only Barbarian", "Player+Barb"):
-			self.combo_barbarian.addItem(item)
-		self.combo_barbarian.setCurrentIndex(combo_barbarian_old_setting)
-		self.combo_barbarian.currentIndexChanged.connect(self.draw)
-		self.layout.addWidget(self.combo_barbarian, current_y, current_x, 1, 1)
-		current_x += 1
+		if self.filter['player or barb'] == 'only players':
+			where_literal = 'village_name != "Barbarendorf" AND village_name != "Bonusdorf" AND '
+		elif self.filter['player or barb'] == 'only barbarians':
+			where_literal = '(village_name = "Barbarendorf" OR village_name = "Bonusdorf") AND '
+		else:
+			where_literal = ''
 		
 		
-		self.combo_wall = QComboBox()
-		for item in ("max. wall", "min. wall", "= wall"):
-			self.combo_wall.addItem(item)
-		self.combo_wall.setCurrentIndex(combo_wall_old_setting)
-		self.combo_wall.currentIndexChanged.connect(self.draw)
-		self.layout.addWidget(self.combo_wall, current_y, current_x, 1, 1)
-		current_x += 1
+		where_literal += 'wall %s %s ' % (self.filter['wall comparator'], self.filter['wall'])
 		
-		self.line_wall = QLineEdit()
-		self.line_wall.insert(line_wall_old_setting)
-		self.line_wall.editingFinished.connect(self.draw)
-		self.layout.addWidget(self.line_wall, current_y, current_x, 1, 1)
-		current_x += 1
+		where_literal += 'AND (defender_spears_sent + defender_swords_sent + defender_axes_sent + defender_archers_sent + defender_scouts_sent + defender_lcav_sent + defender_mounted_archers_sent + defender_hcav_sent + defender_rams_sent + defender_catapults_sent + defender_paladin_sent + defender_noblemen_sent + defender_militia_sent) %s %s ' % (self.filter['unit count comparator'], self.filter['unit count'])
 		
+		where_literal += 'AND (spied_wood + spied_clay + spied_iron) %s %s ' % (self.filter['spied res comparator'], self.filter['spied res'])
 		
-		self.combo_units = QComboBox()
-		for item in ("max. units", "min. units", "= units"):
-			self.combo_units.addItem(item)
-		self.combo_units.setCurrentIndex(combo_units_old_setting)
-		self.combo_units.currentIndexChanged.connect(self.draw)
-		self.layout.addWidget(self.combo_units, current_y, current_x, 1, 1)
-		current_x += 1
-		
-		self.line_units = QLineEdit()
-		self.line_units.insert(line_units_old_setting)
-		self.line_units.editingFinished.connect(self.draw)
-		self.layout.addWidget(self.line_units, current_y, current_x, 1, 1)
-		current_x += 1
-		
-		
-		self.combo_speed = QComboBox()
-		self.combo_speed_strings = []
-		for unit_name in self.game_data.unit_speeds.keys():
-			self.combo_speed.addItem("min. loot with %s" % unit_name)
-			self.combo_speed_strings.append(unit_name)
-		self.combo_speed.setCurrentIndex(combo_speed_old_setting)
-		self.combo_speed.currentIndexChanged.connect(self.draw)
-		self.layout.addWidget(self.combo_speed, current_y, current_x, 1, 1)
-		current_x += 1
-		
-		self.line_loot = QLineEdit()
-		self.line_loot.insert(line_loot_old_setting)
-		self.line_loot.editingFinished.connect(self.draw)
-		self.layout.addWidget(self.line_loot, current_y, current_x, 1, 1)
-		current_x += 1
-		
-		self.layout.addWidget(QLabel("max. distance"), current_y, current_x, 1, 1)
-		current_x += 1
-		
-		self.line_distance = QLineEdit()
-		self.line_distance.insert(line_distance_old_setting)
-		self.line_distance.editingFinished.connect(self.draw)
-		self.layout.addWidget(self.line_distance, current_y, current_x, 1, 1)
-		max_distance = float(line_distance_old_setting.replace(',','.'))
-		current_x = 0
-		current_y += 1
-		
+		where_literal += 'AND (looted_wood + looted_clay + looted_iron) %s %s ' % (self.filter['last loot comparator'], self.filter['last loot'])
 		
 		for header in self.headers:
 			self.layout.addWidget(QLabel(header), current_y, current_x, 1, 1)
 			current_x += 1
 		current_y += 1
 		current_x = 0
-		
-		
-		if self.combo_barbarian.currentIndex() == 0:
-			where_literal = 'village_name != "Barbarendorf" AND village_name != "Bonusdorf" AND '
-		elif self.combo_barbarian.currentIndex() == 1:
-			where_literal = '(village_name = "Barbarendorf" OR village_name = "Bonusdorf") AND '
-		else:
-			where_literal = ''
-		
-		if self.combo_wall.currentIndex() == 0:
-			where_literal += 'wall <= '
-		elif self.combo_wall.currentIndex() == 1:
-			where_literal += 'wall >= '
-		else:
-			where_literal += 'wall = '
-		
-		where_literal += self.line_wall.text() #TODO input error handling
-		
-		where_literal += ' AND (defender_spears_sent + defender_swords_sent + defender_axes_sent + defender_archers_sent + defender_scouts_sent + defender_lcav_sent + defender_mounted_archers_sent + defender_hcav_sent + defender_rams_sent + defender_catapults_sent + defender_paladin_sent + defender_noblemen_sent + defender_militia_sent) '
-		
-		if self.combo_units.currentIndex() == 0:
-			where_literal += '<= '
-		elif self.combo_units.currentIndex() == 1:
-			where_literal += '>= '
-		else:
-			where_literal += '= '
-		
-		where_literal += self.line_units.text() #TODO input error handling
 		
 		
 		targets = self.sql.select(table="battles INNER JOIN villages ON battles.defender_village_id = villages.id", param_list=('location_x', 'location_y', 'village_name', 'battle_ts', 'spied_wood', 'spied_clay', 'spied_iron', 'timber_camp', 'clay_pit', 'iron_mine', 'attacker_village_id', 'defender_village_id', 'battles.id', 'file_path', 'wall', 'defender_spears_sent', 'defender_swords_sent', 'defender_axes_sent', 'defender_archers_sent', 'defender_scouts_sent', 'defender_lcav_sent', 'defender_mounted_archers_sent', 'defender_hcav_sent', 'defender_rams_sent', 'defender_catapults_sent', 'defender_paladin_sent', 'defender_noblemen_sent', 'defender_militia_sent', 'attacker_spears_sent', 'attacker_swords_sent', 'attacker_axes_sent', 'attacker_archers_sent', 'attacker_scouts_sent', 'attacker_lcav_sent', 'attacker_mounted_archers_sent', 'attacker_hcav_sent', 'attacker_rams_sent', 'attacker_catapults_sent', 'attacker_paladin_sent', 'attacker_noblemen_sent', 'attacker_spears_lost', 'attacker_swords_lost', 'attacker_axes_lost', 'attacker_archers_lost', 'attacker_scouts_lost', 'attacker_lcav_lost', 'attacker_mounted_archers_lost', 'attacker_hcav_lost', 'attacker_rams_lost', 'attacker_catapults_lost', 'attacker_paladin_lost', 'attacker_noblemen_lost', 'looted_wood', 'looted_clay', 'looted_iron', 'hiding_place', 'warehouse'), where_param_dicts=None, where_literal=where_literal, debug=False)
@@ -211,7 +78,7 @@ class TabTargets(GridScrollTab):
 			
 			delta_hours = (datetime.datetime.now() - datetime.datetime.strptime(target['battle_ts'], '%Y-%m-%d %H:%M:%S.%f')).seconds/3600
 			target["distance"] = self.game_data.distance(target['attacker_village_id'], target['defender_village_id'])
-			if target["distance"] > max_distance:
+			if not self.multi_compare(target["distance"], self.filter['distance comparator'], float(self.filter['distance'])):
 				continue
 			
 			if target['spied_wood'] == '':
@@ -230,8 +97,7 @@ class TabTargets(GridScrollTab):
 			
 			target['spied_res'] = target['spied_wood'] + target['spied_clay'] + target['spied_iron']
 			
-			attacking_unit = self.combo_speed_strings[self.combo_speed.currentIndex()]
-			oneway_time = self.game_data.oneway_time(target["distance"], attacking_unit)
+			oneway_time = self.game_data.oneway_time(target["distance"], self.filter['slowest unit'])
 			
 			wood = target['spied_wood'] + round(48 * math.pow(1.163118, target['timber_camp']-1) / 1.6 * (delta_hours + oneway_time))
 			clay = target['spied_clay'] + round(48 * math.pow(1.163118, target['clay_pit']-1) / 1.6 * (delta_hours + oneway_time))
@@ -245,7 +111,8 @@ class TabTargets(GridScrollTab):
 			if iron > max_storage:
 				iron = max_storage
 			expected_loot = wood + clay + iron
-			if expected_loot < int(self.line_loot.text()):
+			
+			if not self.multi_compare(expected_loot, self.filter['expected loot comparator'], int(self.filter['expected loot'])):
 				continue
 			
 			
@@ -261,13 +128,13 @@ class TabTargets(GridScrollTab):
 			
 			for field in self.headers:
 				if field == "attack":
-					if self.game_data.units[attacking_unit]['loot_capacity'] > 0:
-						button = QPushButton("%dres, %.1f%s" % (expected_loot, expected_loot/self.game_data.units[attacking_unit]['loot_capacity'], attacking_unit))
+					if self.game_data.units[self.filter['slowest unit']]['loot_capacity'] > 0:
+						button = QPushButton("%dres, %.1f%s" % (expected_loot, expected_loot/self.game_data.units[self.filter['slowest unit']]['loot_capacity'], self.filter['slowest unit']))
 					else:
 						button = QPushButton("%dres" % expected_loot)
 					button.setProperty('attacker_village_id', target['attacker_village_id'])
 					button.setProperty('defender_village_id', target['defender_village_id'])
-					button.setProperty('attacking_unit', attacking_unit)
+					button.setProperty('attacking_unit', self.filter['slowest unit'])
 					button.setProperty('oneway_time', oneway_time)
 					button.clicked.connect(self.attack_button_clicked)
 					self.layout.addWidget(button, current_y, current_x, 1, 1)
@@ -297,9 +164,6 @@ class TabTargets(GridScrollTab):
 			current_y += 1
 			current_x = 0
 	
-	def add_clicked(self, meh): #TODO reorder methods
-		self.parser.parse(self.paste_area.toPlainText())
-	
 	def attack_button_clicked(self, TODO_dunno):
 		attacker_village_id = self.sender().property('attacker_village_id')
 		defender_village_id = self.sender().property('defender_village_id')
@@ -317,6 +181,25 @@ class TabTargets(GridScrollTab):
 		self.sql._execute("JUST RUN IT", 'DELETE FROM villages WHERE id = %d' % defender_village_id, False)
 		
 		self.draw()
+	
+	def multi_compare(self, value_1, comparator, value_2):
+		if comparator == '>':
+			if value_1 > value_2:
+				return True
+		elif comparator == '>=':
+			if value_1 >= value_2:
+				return True
+		elif comparator == '=':
+			if value_1 == value_2:
+				return True
+		elif comparator == '<=':
+			if value_1 <= value_2:
+				return True
+		elif comparator == '<':
+			if value_1 < value_2:
+				return True
+		
+		return False
 	
 	def report_button_clicked(self, TODO_dunno):
 		file_path = self.sender().property('file_path')

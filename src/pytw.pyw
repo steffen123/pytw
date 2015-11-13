@@ -33,6 +33,7 @@ from catlib.SQL_feeder import SQLFeeder
 from catlib.tab_DB_info import TabDBInfo
 from report_parser import ReportParser
 from game_data import GameData
+from tab_filter import TabFilter
 from tab_targets import TabTargets
 from user_settings import SQLFEEDER_BACKEND
 
@@ -58,7 +59,7 @@ class Pytw(QMainWindow):
 			self.version = infile.readlines()[0][:-1]
 		self.msg.message_debug("Version %s" % self.version)
 		self.setWindowTitle("Pytw %s" % self.version)
-		self.resize(1100, 800) #TODO flexibilise
+		self.resize(1200, 800) #TODO flexibilise
 		
 		#General tab init
 		self.tab_widget = QTabWidget()
@@ -75,7 +76,8 @@ class Pytw(QMainWindow):
 		
 		self.report_parser = ReportParser(self.msg, self.sql)
 		
-		self.add_tab(TabTargets(self.msg, self.sql, self.game_data))
+		self.add_tab(TabFilter(self.msg, self.game_data))
+		self.add_tab(TabTargets(self.msg, self.sql, self.game_data, self.tabs['Filter'].filter))
 		self.add_tab(TabDBInfo(self.sql))
 		
 		self.setup_toolbar()
