@@ -16,8 +16,7 @@ class GameData():
 	def __init__(self, sql):
 		self.sql = sql
 		
-		self.units = {'spears':{'loot_capacity':25}, 'swords':{'loot_capacity':15}, 'axes':{'loot_capacity':10}, 'archers':{'loot_capacity':10}, 'scouts':{'loot_capacity':0}, 'lcav':{'loot_capacity':80}, 'mounted_archers':{'loot_capacity':50}, 'hcav':{'loot_capacity':50}, 'rams':{'loot_capacity':0}, 'catapults':{'loot_capacity':0}, 'paladin':{'loot_capacity':100}, 'noblemen':{'loot_capacity':0}, 'militia':{'loot_capacity':0}}
-		self.unit_speeds = {'rams':30, 'swords':22, 'spears':18, 'lcav':10, 'scouts':9} #TODO migrate to above
+		self.units = {'spears':{'speed':18, 'loot_capacity':25}, 'swords':{'speed':22, 'loot_capacity':15}, 'axes':{'speed':18, 'loot_capacity':10}, 'archers':{'speed':18, 'loot_capacity':10}, 'scouts':{'speed':9, 'loot_capacity':0}, 'lcav':{'speed':10, 'loot_capacity':80}, 'mounted_archers':{'speed':10, 'loot_capacity':50}, 'hcav':{'speed':11, 'loot_capacity':50}, 'rams':{'speed':30, 'loot_capacity':0}, 'catapults':{'speed':30, 'loot_capacity':0}, 'paladin':{'speed':10, 'loot_capacity':100}, 'noblemen':{'speed':35, 'loot_capacity':0}, 'militia':{'speed':0, 'loot_capacity':0}}
 	
 	def distance(self, attacker_village_id, defender_village_id):
 		attacker = self.sql.select(table="villages", param_list=('location_x', 'location_y'), where_param_dicts=({'field':'id', 'comparator':'=', 'value':attacker_village_id}, ), debug=False)
@@ -36,4 +35,4 @@ class GameData():
 		return storage - hiding_place
 	
 	def oneway_time(self, distance, attacking_unit):
-		return distance * self.unit_speeds[attacking_unit] / 60
+		return distance * self.units[attacking_unit]['speed'] / 60

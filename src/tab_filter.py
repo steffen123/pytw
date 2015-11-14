@@ -89,7 +89,7 @@ class TabFilter(GridScrollTab):
 		
 		self.combo_speed = QComboBox()
 		count = 0
-		for unit_name in sorted(self.game_data.unit_speeds.keys()):
+		for unit_name in sorted(self.game_data.units.keys()):
 			self.combo_speed.addItem(unit_name)
 			if unit_name == self.filter['slowest unit']:
 				self.combo_speed.setCurrentIndex(count)
@@ -124,4 +124,4 @@ class TabFilter(GridScrollTab):
 			else:
 				self.filter[name] = int(self.comparator_lines[name].text())
 		
-		self.filter['slowest unit'] = sorted(self.game_data.unit_speeds.keys())[self.combo_speed.currentIndex()]
+		self.filter['slowest unit'] = sorted(self.game_data.units.keys())[self.combo_speed.currentIndex()]
