@@ -3,16 +3,16 @@
 [b]Funktionen[/b]
 - Liest Spionage- und Kampfreporte und speichert sie in eine Datenbank
 - Filtern zwischen Spielern und Barbaren
-- Filtern nach Wall-Stufe und Einheitenanzahl (min, max, oder genaue Zahl), Entfernung und min. Loot
+- Filtern nach Wall-Stufe, Einheitenanzahl, Entfernung, letztem Loot, min. Loot bei erreichen des Zieles und/oder erspähten Rohstoffen
 - Zeigt die möglichen Ziele tabelarisch an
 - Berechnet anhand der Gebäude, der Entfernung, Geschwindigkeit der einzusetzenden Einheit und des Berichtsalters wieviel man bei dem jeweiligen Ziel mitnehmen kann und wieviele Einheiten man dafür schicken muss. Speicher&Versteck werden dabei berücksichtigt.
 - Kann nur Spieler anzeigen (default), nur Barbaren, oder beides
 - Programm arbeitet komplett lokal auf eurem Rechner und ist nicht von Webdiensten oder irgendwas abhängig (und es nutzt solche auch nicht)
-- Freie Software, d.h. kann gemäß der AGPL-Lizenz von jedem verändert oder geteilt (wiederveröffentlicht) werden.
+- Freie Software, d.h. kann gemäß der AGPL-Lizenz von jedem verändert oder weitergegeben werden.
 
 [b]Bugreports, Vorschläge, Kommentare[/b]
 Per Die-Stämme-PM, hier im Stammesforum, oder per Mail an steffen@schaumburger.info
-Viele Funktionen ließen sich ganz leicht einbauen also ruhig sagen was ihr braucht.
+Viele Funktionen ließen sich ganz leicht einbauen also ruhig sagen was ihr braucht. Ansonsten baue ich weitere Funktionen nach eigenem Bedarf ein.
 
 [spoiler=Anforderungen]Python 3.4 oder höher und PyQt 5 (verfügbar für alle Betriebssysteme)
 Links zum Download sind in den Installationsabschnitten[/spoiler]
@@ -27,10 +27,8 @@ Die Stämme erlaubt offenbar keine Links zu exe-Dateien. Daher müsst ihr das Le
 PyQt downloaden und installieren: http://sourceforge.net/projects/pyqt/files/PyQt5/PyQt-5.5.1/PyQt5-5.5.1-gpl-Py3.4-Qt5.5.1-x32 exe/download
 Jetzt weitermachen bei "Installation - allgemeiner Teil"[/spoiler]
 
-[spoiler=Installation - andere Betriebssysteme]Bitte anfragen.[/spoiler]
-
 [spoiler=Installation - allgemeiner Teil]Das Programm selbst runterladen, entweder den alpha-Release oder die aktuelle Entwicklerversion:
-aktuelle alpha5: https://github.com/steffen123/pytw/archive/alpha5.zip
+aktuelle alpha6: https://github.com/steffen123/pytw/archive/alpha6.zip
 aktuelle Entwicklerversion: https://github.com/steffen123/pytw/archive/master.zip
 Das Archiv irgendwohin entpacken. Eine "richtige Installation" ist für das eigentliche Tool nicht notwendig.[/spoiler]
 
@@ -46,7 +44,8 @@ Windows: Im Verzeichnis wo es entpackt ist pytw.bat doppelklicken.
 Linux/Mac: Im Verzeichnis wo es entpackt ist pytw.sh doppelklicken.
 
 [b]Berichte importieren[/b]
-Ganz normal im Browser einen Spionage- oder Angriffsbericht aufrufen. Diesen in das "import/reports/" Verzeichnis im Installationsverzeichnis abspeichern. Dies muss für jeden Bericht gemacht werden. Bitte nur die HTML-Datei abspeichern, nicht die komplette Seite (Firefox zumindest erlaubt das, falls andere Browser das nicht können halt die komplette Seite abspeichern). Der Dateiname ist völlig egal. Ich numeriere sie einfach durch. Es ist egal ob Bericht mehrfach gespeichert sind oder ob mehrere Berichte zu einem Ziel vorhanden sind - das Programm ignoriert ältere Berichte falls nötig.
+Ganz normal im Browser einen Spionage- oder Angriffsbericht aufrufen. Diesen in das "import/reports/" Verzeichnis im Installationsverzeichnis abspeichern. Dies muss für jeden Bericht gemacht werden. Bitte nur die HTML-Datei abspeichern, nicht die komplette Seite (Firefox zumindest erlaubt das, falls andere Browser das nicht können halt die komplette Seite abspeichern). Der Dateiname ist völlig egal. Ich numeriere sie einfach durch.
+Es stört nicht wenn man einen Bericht doppelt abspeichert oder mehrere Berichte zu einem Ziel hat, das Programm berücksichtigt momentan nur den jeweils aktuellsten Bericht.
 
 Nun im Programm "Import Reports" anklicken. Das Programm verarbeitet nun alle Berichte und zeigt dann die in Frage kommenden Ziele an.
 
@@ -55,10 +54,10 @@ Für optimale Nutzung des Programms (und sowieso) sollte man bei jedem Angriff e
 
 [b]Angreifen[/b]
 Dies ist optional, aber für die Übersichtlichkeit gut wenn man viele Angriffe macht.
-Wenn du einen Angriff losschickst wähle oben den Einheitentyp der langsamsten Einheit (Bögen und Äxte sind so schnell wie Speere, Katapulte so schnell wie Rämme) und klicke bei dem angegriffenen Ziel auf den Button. Dann versteckt das Programm das Ziel für die Zeitdauer bis die Truppe beim Ziel eintrifft.
+Wenn du einen Angriff losschickst wähle in den Filtern den Einheitentyp der langsamsten Einheit, wechsel in das andere Tab, klick Refresh und klicke dann bei dem angegriffenen Ziel auf den Button. Dann versteckt das Programm das Ziel für die Zeitdauer bis die Truppe beim Ziel eintrifft.
 
 [b]Entwicklungsstand[/b]
-Alpha. Das Programm ist noch sehr ungeschliffen und hat nur grundlegende Funktionen. Eventuelle Probleme kann ich aber i.d.R. schnell beheben. Ich benutze es jetzt seit einigen Tagen für dutzende Angriffe pro Tag und hatte bisher keine Probleme. Es ist auch nur Englisch, aber es kommen insgesamt nur 20 Wörter oder so vor, ich hoffe das geht.
+Alpha. Das Programm ist noch sehr ungeschliffen und hat nur grundlegende Funktionen. Eventuelle Probleme kann ich aber i.d.R. schnell beheben. Ich benutze es jetzt seit einigen Wochen für dutzende Angriffe pro Tag und hatte bisher keine Probleme. Es ist auch nur Englisch, aber es kommen insgesamt nur 20 Wörter oder so vor, ich hoffe das geht.
 
 [b]Bekannte auffällige Probleme[/b]
 1. Nicht direkt ein Bug, aber nervt etwas: Man muss jeden Bericht mit seinem Browser abspeichern.
@@ -82,6 +81,9 @@ Alpha. Das Programm ist noch sehr ungeschliffen und hat nur grundlegende Funktio
 - Verbesserte Anzeige von Ziel-Koordinaten und erwartetem Loot
 - Zeigt Loot vom letzten mal an
 - Neues DB-Schema
+[b]alpha6 17.11.2015[/b]
+- Neues Tab um mehr Filter flexibler und schöner einstellen zu können
+- Kleinigkeiten
 [/spoiler]
 
 [b]Beziehung zu InnoGames/Die Stämme; Spielregeln[/b]
