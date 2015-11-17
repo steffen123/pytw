@@ -1,19 +1,25 @@
-=alpha5=
-change scheduled_attacks to calculate time stamps on click, not on display
-display location like DS does
-pgsql run to ensure data types
+=alpha7=
+move files on import
 
-pytw: speicher+versteck berücksichtigen, display last loot
-pytw: put db in proper locations
-pytw: parser from CLI: use different db
+=next=
+my favourite filter settings dont display some reports (the ones with no resources?)
+detect last activity
+multitown
+multiworld: casual5, de118, de114, de116, de120
+new filter: attack underway
+display calculated points
+
+pgsql run to ensure data types
+reorder methods alphabetically
+
+put db in proper locations
+parser from CLI: use different db
 
 in distance column display: distance/time
-filter by max travel time
-filter by spied res
-check if versteck exceeds/equals speicher
+filter by travel time
 
 =user friendlyness=
-readme: das programm, und alles was es benötigt, läuft komplett lokal.
+emit signal from tabfilter so tabtarget redraws automatically
 screenshot mit beschriftung als anleitung
 save current settings on exit (ini file, with defaults from user_settings.py, overridable at CLI)
 order the loot drop down by speed, display speed, and set spears as default (orderedDict?)
@@ -38,8 +44,8 @@ detect inactive players, filter by that
 avg % of loot capacity gotten for each target (over the last week)
 check sqlite docs if parallel running should work
 DB change: building reductions in battles
-profile support
-sort by date of last attack
+filter profile support
+sorting
 extra scout button or even tab
 make sure i deduct battle losses (of walls and units)
 make sure i parse tribe correctly, make configurable list of dont-attack tribes

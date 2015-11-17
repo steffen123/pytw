@@ -5,9 +5,9 @@
 - Filtern zwischen Spielern und Barbaren
 - Filtern nach Wall-Stufe und Einheitenanzahl (min, max, oder genaue Zahl), Entfernung und min. Loot
 - Zeigt die möglichen Ziele tabelarisch an
-- Berechnet anhand der Gebäude, der Entfernung, Geschwindigkeit der einzusetzenden Einheit und des Berichtsalters wieviel man bei dem jeweiligen Ziel mitnehmen kann. Speicher&Versteck werden dabei berücksichtigt.
+- Berechnet anhand der Gebäude, der Entfernung, Geschwindigkeit der einzusetzenden Einheit und des Berichtsalters wieviel man bei dem jeweiligen Ziel mitnehmen kann und wieviele Einheiten man dafür schicken muss. Speicher&Versteck werden dabei berücksichtigt.
 - Kann nur Spieler anzeigen (default), nur Barbaren, oder beides
-- Programm arbeitet komplett auf eurem Rechner und ist nicht von Webdiensten oder irgendwas abhängig (und es nutzt solche auch nicht)
+- Programm arbeitet komplett lokal auf eurem Rechner und ist nicht von Webdiensten oder irgendwas abhängig (und es nutzt solche auch nicht)
 - Freie Software, d.h. kann gemäß der AGPL-Lizenz von jedem verändert oder geteilt (wiederveröffentlicht) werden.
 
 [b]Bugreports, Vorschläge, Kommentare[/b]
