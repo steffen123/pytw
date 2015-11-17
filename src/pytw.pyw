@@ -14,6 +14,7 @@ import datetime
 import os
 import pickle
 import random
+import shutil
 import signal
 import sys
 
@@ -97,9 +98,11 @@ class Pytw(QMainWindow):
 			file_start = datetime.datetime.now()
 			count += 1
 			file_path = os.path.join('.', 'import', 'reports', filename)
+			target_path = os.path.join('.', 'import', 'reports-imported', datetime.datetime.strftime(file_start, '%Y-%m-%d_%H-%M-%S-%f__') + filename)
 			with open(file_path, 'r') as infile:
 				print("importing", os.path.join('.', 'import', 'reports', filename))
 				self.report_parser.parse(infile.read(), file_path)
+			shutil.move(file_path, target_path) #TODO only iff target filename doesnt exist
 			print("   took", datetime.datetime.now()-file_start)
 		print('\n', count, "files, took", datetime.datetime.now()-overall_start)
 		if count > 0:
