@@ -131,7 +131,7 @@ class TabTargets(GridScrollTab):
 					if self.game_data.units[self.filter['slowest unit']]['loot_capacity'] > 0:
 						button = QPushButton("%dres, %.1f%s" % (expected_loot, expected_loot/self.game_data.units[self.filter['slowest unit']]['loot_capacity'], self.filter['slowest unit']))
 					else:
-						button = QPushButton("%dres" % expected_loot)
+						button = QPushButton("%dres, %s" % (expected_loot, self.filter['slowest unit']))
 					button.setProperty('attacker_village_id', target['attacker_village_id'])
 					button.setProperty('defender_village_id', target['defender_village_id'])
 					button.setProperty('attacking_unit', self.filter['slowest unit'])
