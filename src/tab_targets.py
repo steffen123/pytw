@@ -156,7 +156,9 @@ class TabTargets(GridScrollTab):
 				elif field == "last_loot":
 					self.layout.addWidget(QLabel('%s/%s' % (total_looted, total_loot_capacity)), current_y, current_x, 1, 1)
 				elif field == "location":
-					self.layout.addWidget(QLabel('%d|%d' % (target['location_x'], target['location_y'])), current_y, current_x, 1, 1)
+					edit = QLineEdit()
+					edit.insert('%d|%d' % (target['location_x'], target['location_y']))
+					self.layout.addWidget(edit, current_y, current_x, 1, 1)
 				else:
 					self.layout.addWidget(QLabel(str(target[field])), current_y, current_x, 1, 1)
 				
