@@ -34,7 +34,7 @@ class RecreateTables():
 		with open(os.path.join('src', 'version.ini'), 'r') as infile:
 			self.sql.insert('general', {'id':'created_with_tool_version', 'value':infile.readlines()[0][:-1]})
 		
-		#TODO cage most not_null to True
+		#TODO change most not_null to True
 		table = (
 			{'not_null':True, 'name':'id', 'type':'PKEY'},
 			{'not_null':True, 'name':'world_string', 'type':'VARCHAR(10)'},
@@ -154,14 +154,19 @@ class RecreateTables():
 		
 		table = (
 			{'not_null':True, 'name':'id', 'type':'PKEY'},
-			{'not_null':False, 'name':'file_path', 'type':'VARCHAR(500)'},
+			{'not_null':True, 'name':'file_path_before_move', 'type':'VARCHAR(500)'},
+			{'not_null':True, 'name':'file_path_after_move', 'type':'VARCHAR(500)'},
 			{'not_null':True, 'name':'attacker_village_id', 'type':'FKEY', 'fkey_table':'villages'},
 			{'not_null':True, 'name':'defender_village_id', 'type':'FKEY', 'fkey_table':'villages'},
 			{'not_null':True, 'name':'battle_ts', 'type':'DATETIME'},
 			
-			{'not_null':False, 'name':'flag_attack_strength', 'type':'INT16'}, #TODO change to not_null to True on this block
-			{'not_null':False, 'name':'flag_defense_strength', 'type':'INT16'}, #TODO change to not_null to True on this block
-			{'not_null':False, 'name':'flag_loot_capacity', 'type':'INT16'}, #TODO change to not_null to True on this block
+			{'not_null':False, 'name':'has_latest_units', 'type':'BOOLEAN'}, #TODO change not_null to True on this
+			{'not_null':False, 'name':'has_latest_away_units', 'type':'BOOLEAN'}, #TODO change not_null to True on this
+			{'not_null':False, 'name':'has_latest_buildings', 'type':'BOOLEAN'}, #TODO change not_null to True on this
+			
+			{'not_null':False, 'name':'flag_attack_strength', 'type':'INT16'}, #TODO change not_null to True on this block
+			{'not_null':False, 'name':'flag_defense_strength', 'type':'INT16'}, #TODO change not_null to True on this block
+			{'not_null':False, 'name':'flag_loot_capacity', 'type':'INT16'}, #TODO change not_null to True on this block
 			
 			{'not_null':True, 'name':'attacker_won', 'type':'BOOLEAN'},
 			{'not_null':False, 'name':'looted_wood', 'type':'INT32'},
