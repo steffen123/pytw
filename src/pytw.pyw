@@ -105,11 +105,11 @@ class Pytw(QMainWindow):
 			file_path = os.path.join('.', 'import', 'reports', filename)
 			target_path = os.path.join('.', 'import', 'reports-imported', datetime.datetime.strftime(file_start, '%Y-%m-%d_%H-%M-%S-%f__') + filename)
 			with open(file_path, 'r') as infile:
-				print("importing", os.path.join('.', 'import', 'reports', filename))
+				#print("importing", os.path.join('.', 'import', 'reports', filename))
 				self.report_parser.parse(infile.read(), file_path)
 			shutil.move(file_path, target_path) #TODO only iff target filename doesnt exist
-			print("   took", datetime.datetime.now()-file_start)
-		print('\n', count, "files, took", datetime.datetime.now()-overall_start)
+			#print("   took", datetime.datetime.now()-file_start)
+		print('imported', count, "files, took", datetime.datetime.now()-overall_start, 'seconds')
 		if count > 0:
 			self.current_tab_changed(self.tab_widget.currentIndex()) #to only redraw if active tab is targets
 	

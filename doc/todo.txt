@@ -1,13 +1,19 @@
 =alpha7=
-refresh after activating target tab, refresh after import
+put coordinates into target_filename
+DB: new fields: latest_units, latest_buildings, latest_away_units, filepath_after_move
+DB: change filename to filepath_before_move
+DB: general table: DB create timestamp
+multivillage: initial
+multivillage: only offer targets when in closest village
+readme: separate filter section
 
 =next=
 my favourite filter settings dont display some reports (the ones with no resources?)
 detect last activity
-multitown
 multiworld: casual5, de118, de114, de116, de120
 new filter: attack underway
 display calculated points
+check DB version on startup -> if missing DB or wrong version offer to copy the "empty" default-DB and move the existing DB -> ask if it should import now
 
 pgsql run to ensure data types
 reorder methods alphabetically
