@@ -64,6 +64,7 @@ class Pytw(QMainWindow):
 		
 		#General tab init
 		self.tab_widget = QTabWidget()
+		self.tab_widget.currentChanged.connect(self.current_tab_changed)
 		self.setCentralWidget(self.tab_widget)
 		self.tabs = {}
 		
@@ -89,6 +90,10 @@ class Pytw(QMainWindow):
 		self.tab_widget.addTab(new_tab.scroller, new_tab.name)
 		self.tabs[new_tab.name] = new_tab
 	
+	def current_tab_changed(self, index):
+		if index == 1: #Targets
+			self.tabs['Targets'].draw()
+	
 	def import_reports(self):
 		overall_start = datetime.datetime.now()
 		count = 0
@@ -106,7 +111,7 @@ class Pytw(QMainWindow):
 			print("   took", datetime.datetime.now()-file_start)
 		print('\n', count, "files, took", datetime.datetime.now()-overall_start)
 		if count > 0:
-			self.refresh_views()
+			self.current_tab_changed(self.tab_widget.currentIndex()) #to only redraw if active tab is targets
 	
 	def quit(self): #TODO commit&close DBs
 		print("start of Pytw.quit")

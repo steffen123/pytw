@@ -11,5 +11,5 @@ git commit -m "postrelease for $1"
 
 git push --follow-tags
 
-echo "Update changelog in readme_de.bb.txt"
-echo "Update link+changelog+features in tribe forum and post answer"
+echo "Update link+changelog+features in readme_de.bb.txt"
+echo "Update posts in tribe forum and TEF-BND forum and post answer in both"

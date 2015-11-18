@@ -1,5 +1,5 @@
 =alpha7=
-move files on import
+refresh after activating target tab, refresh after import
 
 =next=
 my favourite filter settings dont display some reports (the ones with no resources?)
