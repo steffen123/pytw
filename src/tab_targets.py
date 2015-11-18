@@ -56,8 +56,6 @@ class TabTargets(GridScrollTab):
 		
 		where_literal += 'wall %s %s ' % (self.filter['wall comparator'], self.filter['wall'])
 		
-		where_literal += 'AND (defender_spears_sent + defender_swords_sent + defender_axes_sent + defender_archers_sent + defender_scouts_sent + defender_lcav_sent + defender_mounted_archers_sent + defender_hcav_sent + defender_rams_sent + defender_catapults_sent + defender_paladin_sent + defender_noblemen_sent + defender_militia_sent) %s %s ' % (self.filter['unit count comparator'], self.filter['unit count'])
-		
 		where_literal += 'AND (spied_wood + spied_clay + spied_iron) %s %s ' % (self.filter['spied res comparator'], self.filter['spied res'])
 		
 		where_literal += 'AND (looted_wood + looted_clay + looted_iron) %s %s ' % (self.filter['last loot comparator'], self.filter['last loot'])
@@ -69,7 +67,7 @@ class TabTargets(GridScrollTab):
 		current_x = 0
 		
 		
-		targets = self.sql.select(table="battles INNER JOIN villages ON battles.defender_village_id = villages.id", param_list=('location_x', 'location_y', 'village_name', 'battle_ts', 'spied_wood', 'spied_clay', 'spied_iron', 'timber_camp', 'clay_pit', 'iron_mine', 'attacker_village_id', 'defender_village_id', 'battles.id', 'file_path_after_move', 'wall', 'defender_spears_sent', 'defender_swords_sent', 'defender_axes_sent', 'defender_archers_sent', 'defender_scouts_sent', 'defender_lcav_sent', 'defender_mounted_archers_sent', 'defender_hcav_sent', 'defender_rams_sent', 'defender_catapults_sent', 'defender_paladin_sent', 'defender_noblemen_sent', 'defender_militia_sent', 'attacker_spears_sent', 'attacker_swords_sent', 'attacker_axes_sent', 'attacker_archers_sent', 'attacker_scouts_sent', 'attacker_lcav_sent', 'attacker_mounted_archers_sent', 'attacker_hcav_sent', 'attacker_rams_sent', 'attacker_catapults_sent', 'attacker_paladin_sent', 'attacker_noblemen_sent', 'attacker_spears_lost', 'attacker_swords_lost', 'attacker_axes_lost', 'attacker_archers_lost', 'attacker_scouts_lost', 'attacker_lcav_lost', 'attacker_mounted_archers_lost', 'attacker_hcav_lost', 'attacker_rams_lost', 'attacker_catapults_lost', 'attacker_paladin_lost', 'attacker_noblemen_lost', 'looted_wood', 'looted_clay', 'looted_iron', 'hiding_place', 'warehouse'), where_param_dicts=None, where_literal=where_literal, debug=False)
+		targets = self.sql.select(table="battles INNER JOIN villages ON battles.defender_village_id = villages.id", param_list=('location_x', 'location_y', 'village_name', 'battle_ts', 'spied_wood', 'spied_clay', 'spied_iron', 'timber_camp', 'clay_pit', 'iron_mine', 'attacker_village_id', 'defender_village_id', 'battles.id', 'file_path_after_move', 'wall', 'defender_spears_sent', 'defender_swords_sent', 'defender_axes_sent', 'defender_archers_sent', 'defender_scouts_sent', 'defender_lcav_sent', 'defender_mounted_archers_sent', 'defender_hcav_sent', 'defender_rams_sent', 'defender_catapults_sent', 'defender_paladin_sent', 'defender_noblemen_sent', 'defender_militia_sent', 'defender_spears_lost', 'defender_swords_lost', 'defender_axes_lost', 'defender_archers_lost', 'defender_scouts_lost', 'defender_lcav_lost', 'defender_mounted_archers_lost', 'defender_hcav_lost', 'defender_rams_lost', 'defender_catapults_lost', 'defender_paladin_lost', 'defender_noblemen_lost', 'defender_militia_lost', 'attacker_spears_sent', 'attacker_swords_sent', 'attacker_axes_sent', 'attacker_archers_sent', 'attacker_scouts_sent', 'attacker_lcav_sent', 'attacker_mounted_archers_sent', 'attacker_hcav_sent', 'attacker_rams_sent', 'attacker_catapults_sent', 'attacker_paladin_sent', 'attacker_noblemen_sent', 'attacker_spears_lost', 'attacker_swords_lost', 'attacker_axes_lost', 'attacker_archers_lost', 'attacker_scouts_lost', 'attacker_lcav_lost', 'attacker_mounted_archers_lost', 'attacker_hcav_lost', 'attacker_rams_lost', 'attacker_catapults_lost', 'attacker_paladin_lost', 'attacker_noblemen_lost', 'looted_wood', 'looted_clay', 'looted_iron', 'hiding_place', 'warehouse'), where_param_dicts=None, where_literal=where_literal, debug=False)
 		
 		for target in targets:
 			is_current_attack_target = self.sql.select(table="scheduled_attacks", param_list=('defender_village_id', ), where_param_dicts=({'field':'defender_village_id', 'comparator':'=', 'value':target['defender_village_id']}, {'field':'arrival_ts', 'comparator':'>', 'value':"'"+str(datetime.datetime.now())+"'"}), debug=False)
@@ -124,7 +122,13 @@ class TabTargets(GridScrollTab):
 				total_loot_capacity += (target['attacker_%s_sent' % unit_name] - target['attacker_%s_lost' % unit_name]) * unit_dict['loot_capacity']
 			total_looted = target['looted_wood'] + target['looted_clay'] + target['looted_iron']
 			
-			target['unit_count'] = target['defender_spears_sent'] + target['defender_swords_sent'] + target['defender_axes_sent'] + target['defender_archers_sent'] + target['defender_scouts_sent'] + target['defender_lcav_sent'] + target['defender_mounted_archers_sent'] + target['defender_hcav_sent'] + target['defender_rams_sent'] + target['defender_catapults_sent'] + target['defender_paladin_sent'] + target['defender_noblemen_sent'] + target['defender_militia_sent']
+			defender_units_sent = target['defender_spears_sent'] + target['defender_swords_sent'] + target['defender_axes_sent'] + target['defender_archers_sent'] + target['defender_scouts_sent'] + target['defender_lcav_sent'] + target['defender_mounted_archers_sent'] + target['defender_hcav_sent'] + target['defender_rams_sent'] + target['defender_catapults_sent'] + target['defender_paladin_sent'] + target['defender_noblemen_sent'] + target['defender_militia_sent']
+			
+			defender_units_lost = target['defender_spears_lost'] + target['defender_swords_lost'] + target['defender_axes_lost'] + target['defender_archers_lost'] + target['defender_scouts_lost'] + target['defender_lcav_lost'] + target['defender_mounted_archers_lost'] + target['defender_hcav_lost'] + target['defender_rams_lost'] + target['defender_catapults_lost'] + target['defender_paladin_lost'] + target['defender_noblemen_lost'] + target['defender_militia_lost']
+			target['unit_count'] = defender_units_sent - defender_units_lost
+			
+			if not self.multi_compare(target['unit_count'], self.filter['unit count comparator'], int(self.filter['unit count'])):
+				continue
 			
 			for field in self.headers:
 				if field == "attack":

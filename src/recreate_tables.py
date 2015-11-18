@@ -135,8 +135,6 @@ class RecreateTables():
 			{'not_null':True, 'name':'village_name', 'type':'VARCHAR(100)'},
 			{'not_null':True, 'name':'location_x', 'type':'INT16'},
 			{'not_null':True, 'name':'location_y', 'type':'INT16'},
-			{'not_null':False, 'name':'score', 'type':'INT32'},
-			{'not_null':False, 'name':'score_ts', 'type':'DATETIME', 'default':'NOW()'},
 		)
 		self.sql.create_table('villages', "TODO", table, False)
 		
@@ -160,9 +158,9 @@ class RecreateTables():
 			{'not_null':True, 'name':'defender_village_id', 'type':'FKEY', 'fkey_table':'villages'},
 			{'not_null':True, 'name':'battle_ts', 'type':'DATETIME'},
 			
-			{'not_null':False, 'name':'has_latest_units', 'type':'BOOLEAN'}, #TODO change not_null to True on this
+			{'not_null':True, 'name':'has_latest_units', 'type':'BOOLEAN'},
 			{'not_null':False, 'name':'has_latest_away_units', 'type':'BOOLEAN'}, #TODO change not_null to True on this
-			{'not_null':False, 'name':'has_latest_buildings', 'type':'BOOLEAN'}, #TODO change not_null to True on this
+			{'not_null':True, 'name':'has_latest_buildings', 'type':'BOOLEAN'},
 			
 			{'not_null':False, 'name':'flag_attack_strength', 'type':'INT16'}, #TODO change not_null to True on this block
 			{'not_null':False, 'name':'flag_defense_strength', 'type':'INT16'}, #TODO change not_null to True on this block
@@ -270,6 +268,9 @@ class RecreateTables():
 			{'not_null':False, 'name':'defender_paladin_lost', 'type':'INT32'},
 			{'not_null':False, 'name':'defender_noblemen_lost', 'type':'INT32'},
 			{'not_null':False, 'name':'defender_militia_lost', 'type':'INT32'},
+			
+			{'not_null':False, 'name':'score', 'type':'INT32'},
+			{'not_null':False, 'name':'score_ts', 'type':'DATETIME', 'default':'NOW()'},
 		)
 		self.sql.create_table('battles', "TODO", table, False)
 		
