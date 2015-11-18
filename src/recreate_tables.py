@@ -8,6 +8,7 @@
 # In the original distribution you can find the license in docs/agpl_3.0.txt.
 
 #python std lib
+from datetime import datetime
 import os
 import sys
 
@@ -31,6 +32,7 @@ class RecreateTables():
 		)
 		self.sql.create_table('general', "general things", table, False)
 		self.sql.insert('general', {'id':'schema_version', 'value':DB_VERSION})
+		self.sql.insert('general', {'id':'db_create_ts', 'value':datetime.now()})
 		with open(os.path.join('src', 'version.ini'), 'r') as infile:
 			self.sql.insert('general', {'id':'created_with_tool_version', 'value':infile.readlines()[0][:-1]})
 		
