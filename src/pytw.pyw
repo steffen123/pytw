@@ -124,6 +124,7 @@ class Pytw(QMainWindow):
 		print('imported', count, "files, took", datetime.datetime.now()-overall_start, 'seconds')
 		if count > 0:
 			self.current_tab_changed(self.tab_widget.currentIndex()) #to only redraw if active tab is targets
+		self.find_attacking_cities()
 	
 	def quit(self): #TODO commit&close DBs
 		print("start of Pytw.quit")
@@ -144,9 +145,9 @@ class Pytw(QMainWindow):
 		action.setShortcut('F5')
 		self.addAction(action)
 		
-		action = self.toolbar.addAction('Find Attacking Cities', self.find_attacking_cities)
-		action.setShortcut('Ctrl+F')
-		self.addAction(action)
+		#action = self.toolbar.addAction('Find Attacking Cities', self.find_attacking_cities)
+		#action.setShortcut('Ctrl+F')
+		#self.addAction(action)
 		
 		action = self.toolbar.addAction('Import Reports', self.import_reports)
 		action.setShortcut('Ctrl+I')
