@@ -1,65 +1,75 @@
-=alpha7=
-readme: separate filter section
-readme: update for new improvements
+=alpha8=
+DB: add paladin names and weapons
+DB: add tribes table
+DB change: building reductions in battles
+filter profile buttons (one row per attacking_city)
+filter by travel time -> for scout auto-reduce filter so it only shows those that would be reachable in this time with lcav
+after import update status bar
+restrict number of displayed targets
+readme: android und iOS
+readme: vertical spacing bug
 
 =next=
-display db_create_ts, schema_version, created_with_tool_version in db info (if available)
-multivillage: only offer targets when in closest village
-import from CLI
-filter profile support
-sorting
-my favourite filter settings dont display some reports (the ones with no resources?)
-detect last activity
-multiworld: casual5, de118, de114, de116, de120
-new filter: attack underway
-display calculated points
-check DB version on startup -> if missing DB or wrong version offer to copy the "empty" default-DB and move the existing DB -> ask if it should import now
+vertical spacing bug
+check it works with FF-complete saves
+check it works with chrome saves
+calculate total en-route res
+check that i handle players with multiple villages correctly
+rename recreate_tables to delete_and_recreate_database
 
-pgsql run to ensure data types
-reorder methods alphabetically
-
-put db in proper locations
-parser from CLI: use different db
-
-in distance column display: distance/time
-filter by travel time
-
-=user friendlyness=
-restrict number of displayed targets
-inotify or something to auto-import
-screenshot mit beschriftung als anleitung
-save current settings on exit (ini file, with defaults from user_settings.py, overridable at CLI)
-order the loot drop down by speed, display speed, and set spears as default (orderedDict?)
 divert all output to file
-on row delete offer to move or delete the report(s)
-after import update status bar
-DB changer: tool that copies scheduled_attacks from an old DB
-
-=bugs=
-on 210 it showed loot, even though it was merely spied
-check >1k looted res, units etc are also parsed correctly
-	let report_parser not commit to DB
-806.htm
-clicking X doesnt cause it to go through regular shutdown
-
-=later alphas=
+make sure i deduct battle losses (of walls and units)
+make sure i parse tribe correctly, make configurable list of dont-attack tribes
 store all reports into DB, not just the newest
 detect inactive players, filter by that
 	confirm with spy save: see if i detected units who are not at home
 		militia means player is active
 avg % of loot capacity gotten for each target (over the last week)
+on 210 it showed loot, even though it was merely spied
+check >1k looted res, units etc are also parsed correctly
+	let report_parser not commit to DB
+my favourite filter settings dont display some reports (the ones with no resources?)
+new filter: attack underway
+display calculated points
+pgsql run to ensure data types
+reorder methods alphabetically
+on row delete offer to move or delete the report(s)
+handle ownership change automatically
+tabAdelungen
+read maps
+list targets i need to spy
+
+=user friendlyness=
+check DB version on startup -> if missing DB or wrong version offer to copy the "empty" default-DB and move the existing DB -> ask if it should import now
+inotify or something to auto-import
+screenshot mit beschriftung als anleitung
+save current settings on exit (ini file, with defaults from user_settings.py, overridable at CLI)
+DB changer: tool that copies scheduled_attacks from an old DB
+display db_create_ts, schema_version, created_with_tool_version in db info (if available)
+sorting
+put db in proper locations
+deutsche übersetzung
+hide wall level/unit count if they are set to max/equal 0
+dont crash on failed import but display error
+shrink button that reduces it to 1 row of displayed data
+parse remaining battle report data
+complete parsing buildings from battle-spy report (4.htm might be "complete") -> cross-check vs points
+
+=bugs=
+806.htm
+clicking X doesnt cause it to go through regular shutdown
+
+=later alphas=
+multivillage: only offer targets when in closest village
+multiworld: casual5
 check sqlite docs if parallel running should work
-DB change: building reductions in battles
 extra scout button or even tab
-make sure i deduct battle losses (of walls and units)
-make sure i parse tribe correctly, make configurable list of dont-attack tribes
 filter by minimum points for barb
 move files that have been imported to backup folder (same structure as main)
 	make recreate_tables move contents of backup folder back to main folder and run import
 maybe: 6h min time between attacks if <50% loot capacity
 PA only?: kampfsim-button
 	https://de122.die-staemme.de/game.php?screen=place&mode=sim&simulate&att_spear=184&def_spear=112&att_sword=100&def_sword=112&att_axe=102&def_axe=156&att_archer=78&att_spy=71&def_spy=14&att_light=135&att_catapult=5&att_knight=1&def_knight=1&building=wall&att_flag=2&def_flag=0&moral=100&luck=0
-update_checker
 make sure i disconnect DB on shutdown
 support multiple worlds
 	check reportparser handles world correctly
@@ -68,70 +78,25 @@ support multiple worlds
 	import necessary details from world html files
 	support world options that differ from de122
 
-read maps
-hide wall level/unit count if they are set to max/equal 0
-calculate total en-route res
-check it works with FF-complete saves
-display target player name and increase window width
-check db version on startup
+display target player name
 restore DB feature
-dont crash on failed import but display error
-shorten ts display to DD. MMM hh:mm
-check that i handle players with multiple villages correctly
-check that i handle conversion from player to barb correctly
-shrink button that reduces it to 1 row of displayed data
-filter max distance
-rename recreate_tables to delete_and_recreate_database
 clear expired scheduled attacks
 convert user_settings to ini file
-mehrdorfunterstützung
-add selector for slowest unit intended to participate in attacks
-umfrage ins forum über künftige features:
-	deutsche übersetzung
-	support für anderssprachige welten
-	einfacher installer
-	kampfsimulator einbauen
-	zeitplaner
-	automatischer datenaustausch mit dem stamm - damit wir nicht sinnlos raids auf die gleichen ziele schicken
-	flaggen
-	auto-erkennung inaktiver spieler
-	anderes
-
-add filter with min. res at arrival, display relevant info
-display original and generated report side by side
-flags (the game concept)
 testsuite like in fpdb
-l10n
 check if it's permissible to use automated sharing with tribe
 take into account hiding_place and storage when calculating res
-list targets i need to spy due to wall=NULL
 make it work with complete site saved (ie instead of html-only)
 return IDs of imports from parser to display details of success in status bar
 make sure it works for incoming spies/attacks, too
-add paladin names and weapons
 add building costs and productions
-add rankings
-add tribes table
-allied tribes
 update checker
-store map
-	egrep -Hrn nix * | grep Ph
-	list what i need to spy
-parse remaining battle report data
-complete parsing buildings from battle-spy report (4.htm might be "complete") -> cross-check vs points
 daylight saving time?
 mypy
 
-=v2=
+=no immediate plans=
 enter available units and have it say optimal sending combo
-optionally use premiums
 take into account target warehouse
-calculate home warehouse requirement for expected raid result and production for user-given itme period
-list outdated records
-
-=vFuture=
+calculate home warehouse requirement for expected raid result and production for user-given time period
+other language versions of TW
 calculate to send units separated by speed so that returns bunch up
-historical data -> check if my calculations were correct and if someone else is raiding it
-inline-display of resulting data
-sorting/filtering
-
+installer
