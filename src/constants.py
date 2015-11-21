@@ -9,7 +9,7 @@
 #other 3rd party libs
 #import typing
 
-DB_VERSION = 3
+DB_VERSION = 4
 DEFAULT_FILTER = {'player or barb':'only players',
 				  'wall comparator':'=', 'wall':0,
 				  'unit count comparator':'=', 'unit count':0,

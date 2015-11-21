@@ -94,6 +94,7 @@ class RecreateTables():
 			{'not_null':False, 'name':'victory_requirements', 'type':'VARCHAR(200)'},
 			{'not_null':False, 'name':'start_date', 'type':'DATETIME'},
 			{'not_null':False, 'name':'version', 'type':'VARCHAR(20)'},
+			{'not_null':False, 'name':'data_ts', 'type':'DATETIME'},
 		)
 		self.sql.create_table('worlds', "TODO", table, False)
 		
@@ -114,19 +115,25 @@ class RecreateTables():
 			{'not_null':True, 'name':'player_name', 'type':'VARCHAR(100)'},
 			{'not_null':False, 'name':'last_activity_detected_ts', 'type':'DATETIME'},
 			{'not_null':False, 'name':'tribe_abbreviation', 'type':'VARCHAR(100)'},
+			{'not_null':False, 'name':'current_score', 'type':'INT32'},
+			{'not_null':False, 'name':'data_ts', 'type':'DATETIME'},
+			{'not_null':False, 'name':'max_known_flag_attack_strength', 'type':'INT16'}, #TODO change not_null to True on this
+			{'not_null':False, 'name':'max_known_flag_defense_strength', 'type':'INT16'}, #TODO change not_null to True on this
+			{'not_null':False, 'name':'max_known_flag_loot_capacity', 'type':'INT16'}, #TODO change not_null to True on this
 		)
 		self.sql.create_table('players', "TODO", table, False)
 		
 		table = (
 			{'not_null':True, 'name':'id', 'type':'PKEY'},
-			{'not_null':True, 'name':'world_id', 'type':'FKEY', 'fkey_table':'worlds'},
-			{'not_null':True, 'name':'inno_player_id', 'type':'INT64'},
+			{'not_null':True, 'name':'player_id', 'type':'FKEY', 'fkey_table':'players'},
 			{'not_null':True, 'name':'continent', 'type':'VARCHAR(4)'},
-			{'not_null':True, 'name':'ranking_ts', 'type':'DATETIME'},
 			{'not_null':True, 'name':'score', 'type':'INT32'},
 			{'not_null':False, 'name':'continent_score', 'type':'INT32'},
 			{'not_null':True, 'name':'rank', 'type':'INT32'},
 			{'not_null':False, 'name':'continent_rank', 'type':'INT32'},
+			{'not_null':True, 'name':'village_count', 'type':'INT32'},
+			{'not_null':True, 'name':'source', 'type':'INT32'},
+			{'not_null':True, 'name':'data_ts', 'type':'DATETIME'},
 		)
 		self.sql.create_table('player_rankings', "TODO", table, False)
 		
@@ -137,8 +144,22 @@ class RecreateTables():
 			{'not_null':True, 'name':'village_name', 'type':'VARCHAR(100)'},
 			{'not_null':True, 'name':'location_x', 'type':'INT16'},
 			{'not_null':True, 'name':'location_y', 'type':'INT16'},
+			{'not_null':False, 'name':'current_score', 'type':'INT32'},
+			{'not_null':False, 'name':'data_ts', 'type':'DATETIME'},
 		)
 		self.sql.create_table('villages', "TODO", table, False)
+		
+		table = (
+			{'not_null':True, 'name':'id', 'type':'PKEY'},
+			{'not_null':True, 'name':'village_id', 'type':'FKEY', 'fkey_table':'villages'},
+			{'not_null':True, 'name':'continent', 'type':'VARCHAR(4)'},
+			{'not_null':True, 'name':'score', 'type':'INT32'},
+			{'not_null':True, 'name':'rank', 'type':'INT32'},
+			{'not_null':False, 'name':'continent_rank', 'type':'INT32'},
+			{'not_null':True, 'name':'source', 'type':'VARCHAR(20)', 'comment':'one of: map, report, ranking'},
+			{'not_null':True, 'name':'data_ts', 'type':'DATETIME'},
+		)
+		self.sql.create_table('village_rankings', "TODO", table, False)
 		
 		table = (
 			{'not_null':True, 'name':'id', 'type':'PKEY'},
@@ -160,13 +181,15 @@ class RecreateTables():
 			{'not_null':True, 'name':'defender_village_id', 'type':'FKEY', 'fkey_table':'villages'},
 			{'not_null':True, 'name':'battle_ts', 'type':'DATETIME'},
 			
+			{'not_null':False, 'name':'has_latest_resources', 'type':'BOOLEAN'}, #TODO change not_null to True on this
 			{'not_null':True, 'name':'has_latest_units', 'type':'BOOLEAN'},
-			{'not_null':False, 'name':'has_latest_away_units', 'type':'BOOLEAN'}, #TODO change not_null to True on this
+			{'not_null':False, 'name':'has_latest_flag', 'type':'BOOLEAN'}, #TODO change not_null to True on this
 			{'not_null':True, 'name':'has_latest_buildings', 'type':'BOOLEAN'},
+			{'not_null':False, 'name':'has_latest_away_units', 'type':'BOOLEAN'}, #TODO change not_null to True on this
 			
-			{'not_null':False, 'name':'flag_attack_strength', 'type':'INT16'}, #TODO change not_null to True on this block
-			{'not_null':False, 'name':'flag_defense_strength', 'type':'INT16'}, #TODO change not_null to True on this block
-			{'not_null':False, 'name':'flag_loot_capacity', 'type':'INT16'}, #TODO change not_null to True on this block
+			{'not_null':False, 'name':'flag_attack_strength', 'type':'INT16'}, #TODO change not_null to True on this
+			{'not_null':False, 'name':'flag_defense_strength', 'type':'INT16'}, #TODO change not_null to True on this
+			{'not_null':False, 'name':'flag_loot_capacity', 'type':'INT16'}, #TODO change not_null to True on this
 			
 			{'not_null':True, 'name':'attacker_won', 'type':'BOOLEAN'},
 			{'not_null':False, 'name':'looted_wood', 'type':'INT32'},
@@ -270,9 +293,6 @@ class RecreateTables():
 			{'not_null':False, 'name':'defender_paladin_lost', 'type':'INT32'},
 			{'not_null':False, 'name':'defender_noblemen_lost', 'type':'INT32'},
 			{'not_null':False, 'name':'defender_militia_lost', 'type':'INT32'},
-			
-			{'not_null':False, 'name':'score', 'type':'INT32'},
-			{'not_null':False, 'name':'score_ts', 'type':'DATETIME', 'default':'NOW()'},
 		)
 		self.sql.create_table('battles', "TODO", table, False)
 		
