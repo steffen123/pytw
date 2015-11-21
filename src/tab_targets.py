@@ -31,7 +31,7 @@ class TabTargets(GridScrollTab):
 		self.game_data = game_data
 		self.filter = filter
 		
-		self.headers = ("report", "village_name", "report date", "coordinates", "wall", "unit_count", "spied_res", "last_loot", "distance", "attack", "delete")
+		self.headers = ("report", "village_name", "report date", "coordinates", "wall", "unit_count", "spied_res", "last_loot", "dist/time", "attack", "delete")
 		
 		self.draw()
 	
@@ -156,6 +156,10 @@ class TabTargets(GridScrollTab):
 					self.layout.addWidget(QLabel('%.1f' % target[field]), current_y, current_x, 1, 1)
 				elif field == "report date":
 					self.layout.addWidget(QLabel(datetime.datetime.strptime(target['battle_ts'], '%Y-%m-%d %H:%M:%S.%f').strftime('%d%b %H:%M')), current_y, current_x, 1, 1) #TODO remove crazy conversion once DB returns it properly +'000'
+				elif field == "dist/time":
+					oneway_h = int(oneway_time)
+					oneway_m = round((oneway_time - oneway_h) * 60)
+					self.layout.addWidget(QLabel('%.1f/%dh%d' % (target['distance'], oneway_h, oneway_m)), current_y, current_x, 1, 1)
 				elif field == "last_loot":
 					self.layout.addWidget(QLabel('%s/%s' % (total_looted, total_loot_capacity)), current_y, current_x, 1, 1)
 				elif field == "coordinates":
