@@ -65,13 +65,14 @@ Zusätzlich hat sich für mich auch dieser bewährt: Default bis auf: Spieler+Ba
 
 [b]Angreifen[/b]
 Dies ist streng genommen optional, aber für die Übersichtlichkeit gut wenn man viele Angriffe macht.
-Wenn du einen Angriff losschickst wähle in den Filtern den Einheitentyp der langsamsten Einheit, wechsel in das andere Tab, klick Refresh und klicke dann bei dem angegriffenen Ziel auf den Button. Dann versteckt das Programm das Ziel für die Zeitdauer bis die Truppe beim Ziel eintrifft.
+Wenn du einen Angriff losschickst wähle in den Filtern den Einheitentyp der langsamsten Einheit, wechsel in das andere Tab und klicke dann bei dem angegriffenen Ziel auf den Button. Dann versteckt das Programm das Ziel für die Zeitdauer bis die Truppe beim Ziel eintrifft.
 
 [b]Entwicklungsstand[/b]
-Alpha. Das Programm ist noch sehr ungeschliffen und hat nur grundlegende Funktionen. Eventuelle Probleme kann ich aber i.d.R. schnell beheben. Ich benutze es jetzt seit einigen Wochen für dutzende Angriffe pro Tag und hatte bisher keine Probleme. Es ist auch nur Englisch, aber es kommen insgesamt nur 20 Wörter oder so vor, ich hoffe das geht.
+Alpha. Das Programm ist noch sehr ungeschliffen und hat nur grundlegende Funktionen. Eventuelle Probleme kann ich aber i.d.R. schnell beheben. Ich benutze es jetzt seit einigen Wochen für dutzende Angriffe pro Tag und hatte bisher keine Probleme. Es ist auch nur Englisch, aber es kommen insgesamt nur 20 Wörter oder so vor, ich hoffe das geht. Der Code hat die Qualität, die Code hat, wenn man im 3/4-Schlaf Code schreibt, ist also extrem peinlich. Funktionieren tut er aber trotzdem ;)
 
 [b]Bekannte auffällige Probleme[/b]
 1. Nicht direkt ein Bug, aber nervt etwas: Man muss jeden Bericht mit seinem Browser abspeichern.
+2. Ziele wo nichts geholt wurde und nichts zu sehen war werden unterschlagen. Da dies ein nützlicher Bug ist habe ich ihn bisher nicht gesucht, aber falls das jemanden stört einfach bescheid geben. 
 
 [spoiler=Changelog]
 [b]alpha1 26.10.2015[/b]
