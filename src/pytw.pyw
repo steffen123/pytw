@@ -81,6 +81,7 @@ class Pytw(QMainWindow):
 		self.add_tab(TabFilter(self.msg, self.game_data))
 		self.add_tab(TabTargets(self.msg, self.sql, self.game_data, self.tabs['Filter'].filter))
 		self.add_tab(TabDBInfo(self.sql))
+		self.find_attacking_cities()
 		
 		self.setup_toolbar()
 		self.show()
@@ -93,6 +94,17 @@ class Pytw(QMainWindow):
 	def current_tab_changed(self, index):
 		if index == 1: #Targets
 			self.tabs['Targets'].draw()
+	
+	def find_attacking_cities(self):
+		self.attacking_cities = []
+		attackers = self.sql.select(table='battles', param_list=('attacker_village_id', 'COUNT(attacker_village_id) as att_count'))
+		for attacker in attackers:
+			if attacker['COUNT(attacker_village_id) as att_count'] > 1:
+				attacker_details = self.sql.select(table='villages', param_list=('id', 'village_name', 'location_x', 'location_y'), where_param_dicts = ({'field':'id', 'comparator':'=', 'value':attacker['attacker_village_id']}, ))
+				self.attacking_cities.append(attacker_details[0])
+		
+		self.tabs["Filter"].replace_attacking_cities(self.attacking_cities)
+		print('found attackers:', self.attacking_cities)
 	
 	def import_reports(self):
 		overall_start = datetime.datetime.now()
@@ -130,6 +142,10 @@ class Pytw(QMainWindow):
 		
 		action = self.toolbar.addAction('Refresh Views', self.refresh_views)
 		action.setShortcut('F5')
+		self.addAction(action)
+		
+		action = self.toolbar.addAction('Find Attacking Cities', self.find_attacking_cities)
+		action.setShortcut('Ctrl+F')
 		self.addAction(action)
 		
 		action = self.toolbar.addAction('Import Reports', self.import_reports)

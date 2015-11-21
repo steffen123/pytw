@@ -234,7 +234,7 @@ class SQLFeeder():
 			print("    on this query:", self.cursor.lastQuery())
 	
 	#def select(self, table: str, param_list: List[str], where_param_dicts: List[Dict[str,Any]], where_literal="", debug=False) -> List[Dict[str,Any]]: #TODO limit
-	def select(self, table: str, param_list, where_param_dicts, where_literal="", debug=False): #TODO limit
+	def select(self, table: str, param_list, where_param_dicts=[], where_literal="", debug=False): #TODO limit
 		#print("where_param_dicts", where_param_dicts)
 		field_list = ''
 		if len(param_list) > 0:
@@ -305,7 +305,7 @@ WHERE c.relkind IN ('r','')
 			self.msg.message_warning("failed DB commit")
 	
 	#def update(self, table: str, param_dict: Dict[str,Any], where_param_dicts: List[Dict[str,Any]], debug=False) -> None: #TODO rename where_param_dict to where_param_tuples
-	def update(self, table: str, param_dict, where_param_dicts, debug=False) -> None: #TODO rename where_param_dict to where_param_tuples
+	def update(self, table: str, param_dict, where_param_dicts=[], debug=False) -> None: #TODO rename where_param_dict to where_param_tuples
 		set_part = ''
 		if len(param_dict) > 0:
 			for key in param_dict.keys():

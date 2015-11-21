@@ -29,6 +29,7 @@ class TabFilter(GridScrollTab):
 		self.name = "Filter"
 		self.msg = msg
 		self.game_data = game_data
+		self.attacking_cities = []
 		self.filter = DEFAULT_FILTER
 		
 		self.draw()
@@ -57,7 +58,7 @@ class TabFilter(GridScrollTab):
 				self.combo_barbarian.setCurrentIndex(count)
 			count += 1
 		self.combo_barbarian.currentIndexChanged.connect(self.filter_changed)
-		self.layout.addWidget(self.combo_barbarian, current_y, current_x, 1, 1)
+		self.layout.addWidget(self.combo_barbarian, current_y, current_x, 1, 2)
 		current_x = 0
 		current_y += 1
 		
@@ -84,6 +85,7 @@ class TabFilter(GridScrollTab):
 			current_x = 0
 			current_y += 1
 		
+		
 		self.layout.addWidget(QLabel("slowest unit"), current_y, current_x, 1, 1)
 		current_x += 1
 		
@@ -95,9 +97,24 @@ class TabFilter(GridScrollTab):
 				self.combo_speed.setCurrentIndex(count)
 			count += 1
 		self.combo_speed.currentIndexChanged.connect(self.filter_changed)
-		self.layout.addWidget(self.combo_speed, current_y, current_x, 1, 1)
+		self.layout.addWidget(self.combo_speed, current_y, current_x, 1, 2)
 		current_x = 0
 		current_y += 1
+		
+		
+		self.layout.addWidget(QLabel("attacking city"), current_y, current_x, 1, 1)
+		current_x += 1
+		
+		self.combo_attacking_city = QComboBox()
+		count = 0
+		for attacking_city in self.attacking_cities:
+			self.combo_attacking_city.addItem('%s (%d|%d)' % (attacking_city['village_name'], attacking_city['location_x'], attacking_city['location_y']))
+		self.combo_attacking_city.currentIndexChanged.connect(self.filter_changed)
+		self.layout.addWidget(self.combo_attacking_city, current_y, current_x, 1, 2)
+		current_x = 0
+		current_y += 1
+		
+		
 	
 	def filter_changed(self, something=None):
 		if self.combo_barbarian.currentIndex() == 0:
@@ -125,3 +142,8 @@ class TabFilter(GridScrollTab):
 				self.filter[name] = int(self.comparator_lines[name].text())
 		
 		self.filter['slowest unit'] = sorted(self.game_data.units.keys())[self.combo_speed.currentIndex()]
+		self.filter['attacking_village_id'] = self.attacking_cities[self.combo_attacking_city.currentIndex()]['id']
+	
+	def replace_attacking_cities(self, attacking_cities):
+		self.attacking_cities = attacking_cities
+		self.draw()

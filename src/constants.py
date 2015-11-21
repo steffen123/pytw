@@ -17,4 +17,5 @@ DEFAULT_FILTER = {'player or barb':'only players',
 				  'last loot comparator':'>=', 'last loot':0,
 				  'expected loot comparator':'>=', 'expected loot':0,
 				  'distance comparator':'>=', 'distance':0.0,
-				  'slowest unit':'lcav'}
+				  'slowest unit':'lcav',
+				  'attacking_village_id':1}

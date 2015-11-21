@@ -1,13 +1,13 @@
 =alpha7=
-put coordinates into target_filename
-DB: new fields: latest_units, latest_buildings, latest_away_units, filepath_after_move
-DB: change filename to filepath_before_move
-DB: general table: DB create timestamp
-multivillage: initial
-multivillage: only offer targets when in closest village
 readme: separate filter section
+readme: update for new improvements
 
 =next=
+display db_create_ts, schema_version, created_with_tool_version in db info (if available)
+multivillage: only offer targets when in closest village
+import from CLI
+filter profile support
+sorting
 my favourite filter settings dont display some reports (the ones with no resources?)
 detect last activity
 multiworld: casual5, de118, de114, de116, de120
@@ -25,7 +25,8 @@ in distance column display: distance/time
 filter by travel time
 
 =user friendlyness=
-emit signal from tabfilter so tabtarget redraws automatically
+restrict number of displayed targets
+inotify or something to auto-import
 screenshot mit beschriftung als anleitung
 save current settings on exit (ini file, with defaults from user_settings.py, overridable at CLI)
 order the loot drop down by speed, display speed, and set spears as default (orderedDict?)
@@ -40,7 +41,6 @@ check >1k looted res, units etc are also parsed correctly
 	let report_parser not commit to DB
 806.htm
 clicking X doesnt cause it to go through regular shutdown
-make sure i deduct deff losses
 
 =later alphas=
 store all reports into DB, not just the newest
@@ -50,8 +50,6 @@ detect inactive players, filter by that
 avg % of loot capacity gotten for each target (over the last week)
 check sqlite docs if parallel running should work
 DB change: building reductions in battles
-filter profile support
-sorting
 extra scout button or even tab
 make sure i deduct battle losses (of walls and units)
 make sure i parse tribe correctly, make configurable list of dont-attack tribes
