@@ -7,6 +7,8 @@
 - Zeigt die möglichen Ziele tabelarisch an
 - Berechnet anhand der Gebäude, der Entfernung, Geschwindigkeit der einzusetzenden Einheit und des Berichtsalters wieviel man bei dem jeweiligen Ziel mitnehmen kann und wieviele Einheiten man dafür schicken muss. Speicher&Versteck werden dabei berücksichtigt.
 - Kann nur Spieler anzeigen (default), nur Barbaren, oder beides
+- Erkennt automatisch aus welchen Dörfern man angreift (Dörfer, aus denen mindestens zwei Trupps geschickt wurden, bzw. wo Berichte dafür vorliegen) und berechnet die Werte anhand des aktiven Dorfes
+- Bisher unterstützt es nur die Einstellungen der Welt 122/deutsch, kann ich aber leicht erweitern
 - Programm arbeitet komplett lokal auf eurem Rechner und ist nicht von Webdiensten oder irgendwas abhängig (und es nutzt solche auch nicht)
 - Freie Software, d.h. kann gemäß der AGPL-Lizenz von jedem verändert oder weitergegeben werden.
 
@@ -28,7 +30,7 @@ PyQt downloaden und installieren: http://sourceforge.net/projects/pyqt/files/PyQ
 Jetzt weitermachen bei "Installation - allgemeiner Teil"[/spoiler]
 
 [spoiler=Installation - allgemeiner Teil]Das Programm selbst runterladen, entweder den alpha-Release oder die aktuelle Entwicklerversion:
-aktuelle alpha6: https://github.com/steffen123/pytw/archive/alpha6.zip
+aktuelle alpha7: https://github.com/steffen123/pytw/archive/alpha7.zip
 aktuelle Entwicklerversion: https://github.com/steffen123/pytw/archive/master.zip
 Das Archiv irgendwohin entpacken. Eine "richtige Installation" ist für das eigentliche Tool nicht notwendig.[/spoiler]
 
@@ -49,11 +51,20 @@ Es stört nicht wenn man einen Bericht doppelt abspeichert oder mehrere Berichte
 
 Nun im Programm "Import Reports" anklicken. Das Programm verarbeitet nun alle Berichte und zeigt dann die in Frage kommenden Ziele an.
 
-Bisher lädt das Programm jedes mal wenn man importiert sämtliche Berichte neu. Auf meinem über 5 Jahre alten PC dauert das für 300 Berichte knapp 5 Sekunden, aber eine Beschleunigung davon werde ich bald implementieren.
+Wenn man sehr viele neue Berichte (hunderte) hat kann das importieren ein paar Sekunden dauern, währenddessen wirkt das Programm so als ob es eingefroren ist.
+
 Für optimale Nutzung des Programms (und sowieso) sollte man bei jedem Angriff einen Späher dabei haben.
 
+[b]Filtern[/b]
+In dem Filter-Tab kann man diverse Filter einstellen und wählt aus aus welchem Dorf Angriffe geschickt werden und stellt die langsamste Einheit ein.
+
+Ich denke die anderen Filter sind selbsterklärend, auf jeder Zeile kann man einen Wert eintragen und den Vergleichsvorgang auswählen.
+
+Default ist mein Lieblingsfilter: Spieler, die irgendetwas haben (durch einen Bug werden Dörfer wo garnichts war sowieso nicht angezeigt, falls jemand die sehen will bitte bescheid geben).
+Zusätzlich hat sich für mich auch dieser bewährt: Default bis auf: Spieler+Barbaren und Mindest-Loot *oder* Mindest-Erspähte über 300.
+
 [b]Angreifen[/b]
-Dies ist optional, aber für die Übersichtlichkeit gut wenn man viele Angriffe macht.
+Dies ist streng genommen optional, aber für die Übersichtlichkeit gut wenn man viele Angriffe macht.
 Wenn du einen Angriff losschickst wähle in den Filtern den Einheitentyp der langsamsten Einheit, wechsel in das andere Tab, klick Refresh und klicke dann bei dem angegriffenen Ziel auf den Button. Dann versteckt das Programm das Ziel für die Zeitdauer bis die Truppe beim Ziel eintrifft.
 
 [b]Entwicklungsstand[/b]
@@ -84,6 +95,12 @@ Alpha. Das Programm ist noch sehr ungeschliffen und hat nur grundlegende Funktio
 [b]alpha6 17.11.2015[/b]
 - Neues Tab um mehr Filter flexibler und schöner einstellen zu können
 - Kleinigkeiten
+[b]alpha7 21.11.2015[/b]
+- Unterstützt jetzt mehrere Dörfer
+- Bessere Ansicht der Filter
+- Koordinaten der Ziele sind jetzt für Copy&Paste geeignet
+- Tabs werden jetzt falls nötig automatisch neu gezeichnet
+- Importierte Dateien werden jetzt verschoben - dies verhindert automatisch, dass die gleichen Reporte jedes mal neu importiert werden
 [/spoiler]
 
 [b]Beziehung zu InnoGames/Die Stämme; Spielregeln[/b]
