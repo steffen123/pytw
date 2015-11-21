@@ -141,9 +141,9 @@ class Pytw(QMainWindow):
 		#TODO action = self.toolbar.addAction('Recreate Tables', self.recreate_tables)
 		#self.addAction(action)
 		
-		action = self.toolbar.addAction('Refresh Views', self.refresh_views)
-		action.setShortcut('F5')
-		self.addAction(action)
+		#action = self.toolbar.addAction('Refresh Views', self.refresh_views)
+		#action.setShortcut('F5')
+		#self.addAction(action)
 		
 		#action = self.toolbar.addAction('Find Attacking Cities', self.find_attacking_cities)
 		#action.setShortcut('Ctrl+F')
