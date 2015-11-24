@@ -97,11 +97,10 @@ class Pytw(QMainWindow):
 	
 	def find_attacking_cities(self):
 		self.attacking_cities = []
-		attackers = self.sql.select(table='battles', param_list=('attacker_village_id', 'COUNT(attacker_village_id) as att_count'))
+		attackers = self.sql.select(table='battles', param_list=('DISTINCT attacker_village_id', ))
 		for attacker in attackers:
-			if attacker['COUNT(attacker_village_id) as att_count'] > 1:
-				attacker_details = self.sql.select(table='villages', param_list=('id', 'village_name', 'location_x', 'location_y'), where_param_dicts = ({'field':'id', 'comparator':'=', 'value':attacker['attacker_village_id']}, ))
-				self.attacking_cities.append(attacker_details[0])
+			attacker_details = self.sql.select(table='villages', param_list=('id', 'village_name', 'location_x', 'location_y'), where_param_dicts = ({'field':'id', 'comparator':'=', 'value':attacker['DISTINCT attacker_village_id']}, ))
+			self.attacking_cities.append(attacker_details[0])
 		
 		self.tabs["Filter"].replace_attacking_cities(self.attacking_cities)
 		print('found attackers:', self.attacking_cities)
