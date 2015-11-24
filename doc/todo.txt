@@ -1,15 +1,20 @@
 =alpha8=
+DB changer: tool that copies scheduled_attacks from an old DB
+check DB version on startup -> if missing DB or wrong version offer to copy the "empty" default-DB and move the existing DB -> ask if it should import now
+multivillage: only offer targets when in closest village
+DB: reserviert
 DB: add paladin names and weapons
 DB: add tribes table
-DB change: building reductions in battles
+DB change: building and support reductions in battles
 filter profile buttons (one row per attacking_city)
 filter by travel time -> for scout auto-reduce filter so it only shows those that would be reachable in this time with lcav
 after import update status bar
 restrict number of displayed targets
-readme: android und iOS
-readme: vertical spacing bug
+new filter: loot + spied
 
 =next=
+https://de122.die-staemme.de/game.php?screen=place&mode=sim&simulate&def_spear=1000&def_sword=1000&att_axe=1500&att_light=250&def_militia=240&def_wall=15&att_flag=0&def_flag=4&moral=100&luck=25
+make delete work on conquered city
 vertical spacing bug
 check it works with FF-complete saves
 check it works with chrome saves
@@ -40,11 +45,9 @@ read maps
 list targets i need to spy
 
 =user friendlyness=
-check DB version on startup -> if missing DB or wrong version offer to copy the "empty" default-DB and move the existing DB -> ask if it should import now
 inotify or something to auto-import
 screenshot mit beschriftung als anleitung
 save current settings on exit (ini file, with defaults from user_settings.py, overridable at CLI)
-DB changer: tool that copies scheduled_attacks from an old DB
 display db_create_ts, schema_version, created_with_tool_version in db info (if available)
 sorting
 put db in proper locations
@@ -60,7 +63,6 @@ complete parsing buildings from battle-spy report (4.htm might be "complete") ->
 clicking X doesnt cause it to go through regular shutdown
 
 =later alphas=
-multivillage: only offer targets when in closest village
 multiworld: casual5
 check sqlite docs if parallel running should work
 extra scout button or even tab

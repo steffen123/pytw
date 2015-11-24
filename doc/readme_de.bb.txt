@@ -19,6 +19,8 @@ Viele Funktionen ließen sich ganz leicht einbauen also ruhig sagen was ihr brau
 [spoiler=Anforderungen]Python 3.4 oder höher und PyQt 5 (verfügbar für alle Betriebssysteme)
 Links zum Download sind in den Installationsabschnitten[/spoiler]
 
+[spoiler=Android/iOS]Habe ich momentan keine Pläne für, aber für einen Programmierer sollte die Anpassung für Android nicht allzu schwer sein[/spoiler]
+
 [spoiler=Installation - Windows (64 bit)]Python downloaden und installieren: https://www.python.org/ftp/python/3.4.3/python-3.4.3.amd64.msi
 Die Stämme erlaubt offenbar keine Links zu exe-Dateien. Daher müsst ihr das Leerzeichen im folgenden Link in "x64 exe" durch einen Punkt ersetzen.
 PyQt downloaden und installieren: http://sourceforge.net/projects/pyqt/files/PyQt5/PyQt-5.5.1/PyQt5-5.5.1-gpl-Py3.4-Qt5.5.1-x64 exe/download
@@ -71,8 +73,9 @@ Wenn du einen Angriff losschickst wähle in den Filtern den Einheitentyp der lan
 Alpha. Das Programm ist noch sehr ungeschliffen und hat nur grundlegende Funktionen. Eventuelle Probleme kann ich aber i.d.R. schnell beheben. Ich benutze es jetzt seit einigen Wochen für dutzende Angriffe pro Tag und hatte bisher keine Probleme. Es ist auch nur Englisch, aber es kommen insgesamt nur 20 Wörter oder so vor, ich hoffe das geht. Der Code hat die Qualität, die Code hat, wenn man im 3/4-Schlaf Code schreibt, ist also extrem peinlich. Funktionieren tut er aber trotzdem ;)
 
 [b]Bekannte auffällige Probleme[/b]
-1. Nicht direkt ein Bug, aber nervt etwas: Man muss jeden Bericht mit seinem Browser abspeichern.
+1. Nicht direkt ein Bug, aber nervt: Man muss jeden Bericht mit seinem Browser abspeichern.
 2. Ziele wo nichts geholt wurde und nichts zu sehen war werden unterschlagen. Da dies ein nützlicher Bug ist habe ich ihn bisher nicht gesucht, aber falls das jemanden stört einfach bescheid geben. 
+3. Das vertikale Arrangement hat einen Bug
 
 [spoiler=Changelog]
 [b]alpha1 26.10.2015[/b]
