@@ -32,7 +32,7 @@ PyQt downloaden und installieren: http://sourceforge.net/projects/pyqt/files/PyQ
 Jetzt weitermachen bei "Installation - allgemeiner Teil"[/spoiler]
 
 [spoiler=Installation - allgemeiner Teil]Das Programm selbst runterladen, entweder den alpha-Release oder die aktuelle Entwicklerversion:
-aktuelle alpha8: https://github.com/steffen123/pytw/archive/alpha8.zip
+aktuelle alpha9: https://github.com/steffen123/pytw/archive/alpha9.zip
 aktuelle Entwicklerversion: https://github.com/steffen123/pytw/archive/master.zip
 Das Archiv irgendwohin entpacken. Eine "richtige Installation" ist für das eigentliche Tool nicht notwendig.[/spoiler]
 
@@ -110,6 +110,8 @@ Alpha. Das Programm ist noch sehr ungeschliffen und hat nur grundlegende Funktio
 - Support für mehrere Dörfer geht jetzt
 - Ist jetzt auf Welt 123 eingestellt (Support für andere Welten auf Anfrage)
 - Zeigt Reisezeit an
+[b]alpha9 15.12.2015[/b]
+- Diverse Bugfixe
 [/spoiler]
 
 [b]Beziehung zu InnoGames/Die Stämme; Spielregeln[/b]
