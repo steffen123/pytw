@@ -196,10 +196,9 @@ class ReportParser(object):
 		#print("attacker_village_id", attacker_village_id, 'defender_village_id', defender_village_id)
 		
 		#print("dict_timestamp", dict_timestamp)
-		if 'millisecond' in dict_timestamp.keys(): #TODO make the if based on world settings here
-			battle_ts = "20%s-%s-%s %s:%s:%s.%s" % (dict_timestamp['year'], dict_timestamp['month'], dict_timestamp['day'], dict_timestamp['hour'], dict_timestamp['minute'], dict_timestamp['second'], dict_timestamp['millisecond'])
-		else:
-			battle_ts = "20%s-%s-%s %s:%s:%s" % (dict_timestamp['year'], dict_timestamp['month'], dict_timestamp['day'], dict_timestamp['hour'], dict_timestamp['minute'], dict_timestamp['second'])
+		if 'millisecond' not in dict_timestamp.keys(): #TODO make the if based on world settings here
+			dict_timestamp['millisecond'] = 0
+		battle_ts = "20%s-%s-%s %s:%s:%s.%s" % (dict_timestamp['year'], dict_timestamp['month'], dict_timestamp['day'], dict_timestamp['hour'], dict_timestamp['minute'], dict_timestamp['second'], dict_timestamp['millisecond'])
 		#print("battle_ts", battle_ts)
 		
 		#print("dicts_unit_counts", dicts_unit_counts)
