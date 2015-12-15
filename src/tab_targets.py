@@ -97,9 +97,11 @@ class TabTargets(GridScrollTab):
 			
 			oneway_time = self.game_data.oneway_time(target["distance"], self.filter['slowest unit'])
 			
-			wood = target['spied_wood'] + round(48 * math.pow(1.163118, target['timber_camp']-1) / 1.6 * (delta_hours + oneway_time))
-			clay = target['spied_clay'] + round(48 * math.pow(1.163118, target['clay_pit']-1) / 1.6 * (delta_hours + oneway_time))
-			iron = target['spied_iron'] + round(48 * math.pow(1.163118, target['iron_mine']-1) / 1.6 * (delta_hours + oneway_time))
+			world_multiplier = 2 #TODO dont hardcode for de123
+			
+			wood = target['spied_wood'] + round(world_multiplier * 48 * math.pow(1.163118, target['timber_camp']-1) / 1.6 * (delta_hours + oneway_time))
+			clay = target['spied_clay'] + round(world_multiplier * 48 * math.pow(1.163118, target['clay_pit']-1) / 1.6 * (delta_hours + oneway_time))
+			iron = target['spied_iron'] + round(world_multiplier * 48 * math.pow(1.163118, target['iron_mine']-1) / 1.6 * (delta_hours + oneway_time))
 			
 			max_storage = self.game_data.max_storage(target['warehouse'], target['hiding_place'])
 			if wood > max_storage:
