@@ -10,9 +10,9 @@
 #import typing
 
 DB_VERSION = 4
-DEFAULT_FILTER = {'player or barb':'only players',
-				  'wall comparator':'=', 'wall':0,
-				  'unit count comparator':'=', 'unit count':0,
+DEFAULT_FILTER = {'player or barb':'both',
+				  'wall comparator':'<=', 'wall':1,
+				  'unit count comparator':'<=', 'unit count':1,
 				  'spied res comparator':'>=', 'spied res':0,
 				  'last loot comparator':'>=', 'last loot':0,
 				  'expected loot comparator':'>=', 'expected loot':0,

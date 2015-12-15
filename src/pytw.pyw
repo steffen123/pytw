@@ -60,7 +60,7 @@ class Pytw(QMainWindow):
 			self.version = infile.readlines()[0][:-1]
 		self.msg.message_debug("Version %s" % self.version)
 		self.setWindowTitle("Pytw %s" % self.version)
-		self.resize(1200, 800) #TODO flexibilise
+		self.resize(1200, 330) #TODO flexibilise
 		
 		#General tab init
 		self.tab_widget = QTabWidget()

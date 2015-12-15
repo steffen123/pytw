@@ -1,16 +1,28 @@
 =alpha8=
-DB changer: tool that copies scheduled_attacks from an old DB
-check DB version on startup -> if missing DB or wrong version offer to copy the "empty" default-DB and move the existing DB -> ask if it should import now
-multivillage: only offer targets when in closest village
+blind raiding support
+DB: village home units
+DB: change scheduled_attacks to record support commands, too
 DB: reserviert
 DB: add paladin names and weapons
 DB: add tribes table
 DB change: building and support reductions in battles
+
+pytw: make new alpha
+pytw: average last (loot+spy)
+pytw: runtime table: columns: attack villages; rows: first units available, then walk distance to selected targets
+
+Effekte:	Speer: +15% Verteidigerstärke
+Schwert: +15% Verteidigerstärke
+
+fix attacking_city selector bug
+check DB version on startup -> if missing DB or wrong version offer to copy the "empty" default-DB and backup the existing DB -> ask if it should import now
+multivillage: only offer targets when in closest village
 filter profile buttons (one row per attacking_city)
 filter by travel time -> for scout auto-reduce filter so it only shows those that would be reachable in this time with lcav
 after import update status bar
 restrict number of displayed targets
 new filter: loot + spied
+set attacker_village_id in scheduled_attacks
 
 =next=
 https://de122.die-staemme.de/game.php?screen=place&mode=sim&simulate&def_spear=1000&def_sword=1000&att_axe=1500&att_light=250&def_militia=240&def_wall=15&att_flag=0&def_flag=4&moral=100&luck=25
@@ -21,6 +33,7 @@ check it works with chrome saves
 calculate total en-route res
 check that i handle players with multiple villages correctly
 rename recreate_tables to delete_and_recreate_database
+deliver world data as sql or something so that users can recreate db
 
 divert all output to file
 make sure i deduct battle losses (of walls and units)
@@ -45,6 +58,7 @@ read maps
 list targets i need to spy
 
 =user friendlyness=
+DB changer: tool that copies scheduled_attacks from an old DB
 inotify or something to auto-import
 screenshot mit beschriftung als anleitung
 save current settings on exit (ini file, with defaults from user_settings.py, overridable at CLI)

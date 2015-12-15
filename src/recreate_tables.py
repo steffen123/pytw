@@ -120,6 +120,7 @@ class RecreateTables():
 			{'not_null':False, 'name':'max_known_flag_attack_strength', 'type':'INT16'}, #TODO change not_null to True on this
 			{'not_null':False, 'name':'max_known_flag_defense_strength', 'type':'INT16'}, #TODO change not_null to True on this
 			{'not_null':False, 'name':'max_known_flag_loot_capacity', 'type':'INT16'}, #TODO change not_null to True on this
+			#{'not_null':False, 'name':'has_paladin_weapon_'
 		)
 		self.sql.create_table('players', "TODO", table, False)
 		
