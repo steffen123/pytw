@@ -32,7 +32,7 @@ PyQt downloaden und installieren: http://sourceforge.net/projects/pyqt/files/PyQ
 Jetzt weitermachen bei "Installation - allgemeiner Teil"[/spoiler]
 
 [spoiler=Installation - allgemeiner Teil]Das Programm selbst runterladen, entweder den alpha-Release oder die aktuelle Entwicklerversion:
-aktuelle alpha7: https://github.com/steffen123/pytw/archive/alpha7.zip
+aktuelle alpha8: https://github.com/steffen123/pytw/archive/alpha8.zip
 aktuelle Entwicklerversion: https://github.com/steffen123/pytw/archive/master.zip
 Das Archiv irgendwohin entpacken. Eine "richtige Installation" ist für das eigentliche Tool nicht notwendig.[/spoiler]
 
@@ -105,6 +105,11 @@ Alpha. Das Programm ist noch sehr ungeschliffen und hat nur grundlegende Funktio
 - Koordinaten der Ziele sind jetzt für Copy&Paste geeignet
 - Tabs werden jetzt falls nötig automatisch neu gezeichnet
 - Importierte Dateien werden jetzt verschoben - dies verhindert automatisch, dass die gleichen Reporte jedes mal neu importiert werden
+[b]alpha8 15.12.2015[/b]
+- diverse Kleinigkeiten
+- Support für mehrere Dörfer geht jetzt
+- Ist jetzt auf Welt 123 eingestellt (Support für andere Welten auf Anfrage)
+- Zeigt Reisezeit an
 [/spoiler]
 
 [b]Beziehung zu InnoGames/Die Stämme; Spielregeln[/b]
